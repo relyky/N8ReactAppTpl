@@ -2,12 +2,7 @@ import { useReducer } from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import { zhTW } from '@mui/material/locale'
-import ErrorPage from "./error-page"
-import MainLayout from './MainLayout'
-import Login from './pages/Account/Login'
-import Counter from './pages/Counter/AppForm'
-import FetchData from './pages/FetchData/AppForm'
-import Home from './pages/Home/AppHome'
+import { appRoutes } from "./AppRoutes"
 
 //-----------------------------------------------------------------------------
 //## Resource
@@ -32,26 +27,10 @@ const darkTheme = createTheme(
 
 //-----------------------------------------------------------------------------
 
-const router = createBrowserRouter([
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "/",
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      { index: true, element: <Home /> },
-      { path: "counter", element: <Counter /> },
-      { path: "fetch-data", element: <FetchData /> },
-    ]
-  },
-]);
+const router = createBrowserRouter(appRoutes);
 
 export default function App() {
-  //# ¯u¥¿¦@¨Éªº¹êÅé¦b¦¹«Ø¥ß
-  const [f_darkTheme, toggleTheme] = useReducer(mode => !mode, true)
+  const [f_darkTheme, toggleTheme] = useReducer(mode => !mode, false) //<--- æ”¹å­˜å…¥ Redux å–æ¨¡å¼
 
   return (
     <ThemeProvider theme={f_darkTheme ? darkTheme : whiteTheme}>
