@@ -1,20 +1,26 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Counter_AppForm from './pages/Counter/AppForm';
-import FetchData_AppForm from './pages/FetchData/AppForm';
+import ErrorPage from "./error-page"
+import MainLayout from './MainLayout'
+import Login from './pages/Account/Login'
+import Counter from './pages/Counter/AppForm'
+import FetchData from './pages/FetchData/AppForm'
+import Home from './pages/Home/AppHome'
 
 const router = createBrowserRouter([
   {
+    path: "login",
+    element: <Login />,
+  },
+  {
     path: "/",
-    element: <div>這是首頁</div>,
-  },
-  {
-    path: "/counter",
-    element: <Counter_AppForm />,
-  },
-  {
-    path: "/fetch-data",
-    element: <FetchData_AppForm />,
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "counter", element: <Counter /> },
+      { path: "fetch-data", element: <FetchData /> },
+    ]
   },
 ]);
 
