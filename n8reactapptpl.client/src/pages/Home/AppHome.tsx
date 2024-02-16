@@ -1,6 +1,9 @@
+import { Container, Typography } from "@mui/material";
 
 export default function Home_AppForm() {
   return (
-    <p style={{ fontSize: 48 }}>這是首頁</p>
+    <Container>
+      <Typography variant='h3'>這是首頁</Typography>
+    </Container>
   )
 }

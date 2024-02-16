@@ -1,5 +1,5 @@
-import './App.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { CssBaseline } from "@mui/material"
 import ErrorPage from "./error-page"
 import MainLayout from './MainLayout'
 import Login from './pages/Account/Login'
@@ -26,6 +26,9 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </>
   )
 }

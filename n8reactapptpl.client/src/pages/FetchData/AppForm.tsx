@@ -1,3 +1,4 @@
+import { Box, Button, Container, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useEffect, useState } from 'react'
 
 interface Forecast {
@@ -8,47 +9,51 @@ interface Forecast {
 }
 
 export default function FetchData_AppForm() {
+  const [f_loading, setLoading] = useState(false);
   const [forecasts, setForecasts] = useState<Forecast[]>();
 
   useEffect(() => {
     populateWeatherData();
   }, []);
 
-  const contents = forecasts === undefined
-    ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-    : <table className="table table-striped" aria-labelledby="tabelLabel">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Temp. (C)</th>
-          <th>Temp. (F)</th>
-          <th>Summary</th>
-        </tr>
-      </thead>
-      <tbody>
-        {forecasts.map(forecast =>
-          <tr key={forecast.date}>
-            <td>{forecast.date}</td>
-            <td>{forecast.temperatureC}</td>
-            <td>{forecast.temperatureF}</td>
-            <td>{forecast.summary}</td>
-          </tr>
-        )}
-      </tbody>
-    </table>;
-
   return (
-    <div>
-      <h1 id="tabelLabel">天氣預報 Weather forecast</h1>
-      <p>This component demonstrates fetching data from the server.</p>
-      <button onClick={() => populateWeatherData()} >刷新</button>
-      {contents}
-    </div>
+    <Container>
+      <Typography variant='h3'>天氣預報 Weather forecast</Typography>
+      <Box>This component demonstrates fetching data from the server.</Box>
+      <Button variant='contained' onClick={populateWeatherData} disabled={f_loading}>刷新</Button>
+
+      {f_loading && <LinearProgress />}
+
+      {forecasts && <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell align="right">Temp. (C)</TableCell>
+              <TableCell align="right">Temp. (F)</TableCell>
+              <TableCell>Summary</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {forecasts.map((item, idx) => (
+              <TableRow key={idx}>
+                <TableCell>{item.date}</TableCell>
+                <TableCell align="right">{item.temperatureC}</TableCell>
+                <TableCell align="right">{item.temperatureF}</TableCell>
+                <TableCell>{item.summary}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>}
+    </Container>
   );
 
   async function populateWeatherData() {
+    setLoading(true)
     const response = await fetch('api/weatherforecast');
     const data = await response.json();
-    setForecasts(data);
+    setForecasts(data)
+    setLoading(false)
   }
 }

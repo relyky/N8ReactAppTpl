@@ -1,33 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace N8ReactAppTpl.Server.Controllers
+namespace N8ReactAppTpl.Server.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class WeatherForecastController(ILogger<WeatherForecastController> _logger) : ControllerBase
 {
-  [ApiController]
-  [Route("api/[controller]")]
-  public class WeatherForecastController : ControllerBase
+  private static readonly string[] Summaries = new[]
   {
-    private static readonly string[] Summaries = new[]
-    {
-          "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-      };
+      "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+  };
 
-    private readonly ILogger<WeatherForecastController> _logger;
+  [HttpGet(Name = "GetWeatherForecast")]
+  public async Task<IEnumerable<WeatherForecast>> Get()
+  {
+    await Task.Delay(800);
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    var result = Enumerable.Range(1, 5).Select(index => new WeatherForecast
     {
-      _logger = logger;
-    }
+      Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+      TemperatureC = Random.Shared.Next(-20, 55),
+      Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+    })
+    .ToArray();
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
-    {
-      return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-      {
-        Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-        TemperatureC = Random.Shared.Next(-20, 55),
-        Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-      })
-      .ToArray();
-    }
+    _logger.LogInformation($"Get {nameof(WeatherForecastController)}");
+    return result;
   }
 }
