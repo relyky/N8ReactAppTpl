@@ -1,0 +1,6 @@
+@N8ReactAppTpl.Server_HostAddress = http://localhost:5062
+
+GET {{N8ReactAppTpl.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
