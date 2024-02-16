@@ -25,7 +25,7 @@ export default function FetchData_AppForm() {
       {f_loading && <LinearProgress />}
 
       {forecasts && <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
