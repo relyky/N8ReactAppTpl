@@ -16,6 +16,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useState } from 'react';
+import NavMenu from './NavMenu';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -168,6 +169,9 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
+
+          <NavMenu />
+
           <Typography
             variant="h6"
             noWrap
