@@ -1,3 +1,5 @@
+using N8ReactAppTpl.Server.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddRinLogger(); // for Rin 監聽 HTTP 封包
@@ -10,6 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddRin(); // for Rin 監聽 HTTP 封包
+
+//## for 健康狀態檢查
+builder.Services.AddHealthChecks()
+       .AddCheck<SimpleHealthCheck>(nameof(SimpleHealthCheck));
 
 var app = builder.Build();
 
