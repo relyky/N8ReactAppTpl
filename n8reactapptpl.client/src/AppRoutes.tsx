@@ -6,6 +6,8 @@ import Counter from './pages/Counter/AppForm'
 import FetchData from './pages/FetchData/AppForm'
 import Home from './pages/Home/AppHome'
 
+/// To register the routing pages 
+/// 預計有百多個功能選單預註冊。
 export const appRoutes: RouteObject[] = [
   {
     path: "login",

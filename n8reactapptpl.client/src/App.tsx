@@ -1,8 +1,9 @@
-import { useReducer } from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import { zhTW } from '@mui/material/locale'
 import { appRoutes } from "./AppRoutes"
+import { useAppSelector } from "./store/hooks"
+import { selectDarkTheme } from "./store/metaSlice"
 
 //-----------------------------------------------------------------------------
 //## Resource
@@ -30,7 +31,7 @@ const darkTheme = createTheme(
 const router = createBrowserRouter(appRoutes);
 
 export default function App() {
-  const [f_darkTheme, toggleTheme] = useReducer(mode => !mode, false) //<--- 改存入 Redux 取模式
+  const f_darkTheme = useAppSelector(selectDarkTheme)
 
   return (
     <ThemeProvider theme={f_darkTheme ? darkTheme : whiteTheme}>

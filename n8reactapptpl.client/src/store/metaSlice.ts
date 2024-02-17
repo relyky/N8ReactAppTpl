@@ -6,13 +6,15 @@ export interface MetaSliceState {
   blocking: boolean
   topAlertSeverity: AlertColor | null
   topAlertText: string | null
+  darkTheme: boolean
   [key: string]: unknown
 }
 
 const initialState: MetaSliceState = {
   blocking: false,
   topAlertSeverity: null,
-  topAlertText: null
+  topAlertText: null,
+  darkTheme: false,
 }
 
 // create simple reducer with `createSlice`.
@@ -34,12 +36,16 @@ const metaSlice = createSlice({
         state.topAlertText = null
       }
     },
+    toggleTheme: (state) => {
+      state.darkTheme = !state.darkTheme
+    },
     assignMeta: (state, action: PayloadAction<object>) => {
       return { ...state, ...action.payload }
     },
   },
   selectors: {
     selectBlocking: meta => meta.blocking,
+    selectDarkTheme: meta => meta.darkTheme,
     selectTopAlert: meta => {
       if (meta.topAlertSeverity && meta.topAlertText)
         return {
@@ -53,6 +59,6 @@ const metaSlice = createSlice({
 // export this slice
 export default metaSlice
 // export this actions
-export const { setBlocking, setTopAlert, assignMeta } = metaSlice.actions
+export const { setBlocking, setTopAlert, toggleTheme, assignMeta } = metaSlice.actions
 // export this selectors
-export const { selectTopAlert, selectBlocking } = metaSlice.selectors
+export const { selectTopAlert, selectBlocking, selectDarkTheme } = metaSlice.selectors

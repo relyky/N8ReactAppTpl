@@ -4,11 +4,13 @@ import { styled, useTheme } from '@mui/material/styles';
 import { AppBar, Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert, Backdrop, CircularProgress } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './store/hooks';
-import { selectBlocking, selectTopAlert, setTopAlert } from './store/metaSlice';
+import { selectBlocking, selectDarkTheme, selectTopAlert, setTopAlert, toggleTheme } from './store/metaSlice';
 import NavMenu from './NavMenu'
 // Icons
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import DarkIcon from '@mui/icons-material/DarkMode'
+import LightIcon from '@mui/icons-material/LightMode'
 
 const drawerWidth = 240;
 const sysVersion: string = 'Version 0.0.1-alpha'
@@ -16,6 +18,8 @@ const sysVersion: string = 'Version 0.0.1-alpha'
 export default function ResponsiveDrawer() {
   const theme = useTheme();
   const matcheSmUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const dispatch = useAppDispatch()
+  const f_darkTheme = useAppSelector(selectDarkTheme)
   const [open, setOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -52,9 +56,17 @@ export default function ResponsiveDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" component="div" noWrap sx={{ flexGrow: 1 }}>
             Logo
           </Typography>
+
+          <IconButton
+            size="large"
+            onClick={() => dispatch(toggleTheme())}
+            color="inherit"
+          >
+            {f_darkTheme ? <DarkIcon /> : <LightIcon />}
+          </IconButton>
         </Toolbar>
       </AppBar>
 
