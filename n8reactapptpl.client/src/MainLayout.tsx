@@ -1,6 +1,6 @@
-import { useDebugValue, useState } from 'react'
+import { useState } from 'react'
 import { styled, useTheme } from '@mui/material/styles';
-import { AppBar, Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery } from '@mui/material'
+import { AppBar, Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider } from '@mui/material'
 // Icons
 import MenuIcon from '@mui/icons-material/Menu'
 import { Outlet } from 'react-router-dom'
@@ -8,8 +8,8 @@ import NavMenu from './NavMenu'
 
 const drawerWidth = 240;
 
-/// ref��[Material - Drawer](https://mui.com/material-ui/react-drawer/)
-/// ref��[Material - App Bar](https://mui.com/material-ui/react-app-bar/)
+/// ref→[Material - Drawer](https://mui.com/material-ui/react-drawer/)
+/// ref→[Material - App Bar](https://mui.com/material-ui/react-app-bar/)
 const Main = styled('main')<{
   open: boolean,
   matcheSmUp: boolean
@@ -29,6 +29,7 @@ const Main = styled('main')<{
   }),
 }));
 
+const sysVersion: string = 'Version 0.0.1-alpha'
 export default function ResponsiveDrawer() {
   const theme = useTheme();
   const matcheSmUp = useMediaQuery(theme.breakpoints.up('sm'));
@@ -50,7 +51,6 @@ export default function ResponsiveDrawer() {
     }
   };
 
-  useDebugValue({ open, matcheSmUp })
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
@@ -100,6 +100,14 @@ export default function ResponsiveDrawer() {
       <Main open={open} matcheSmUp={matcheSmUp}>
         <Toolbar /> {/* hat */}
         <Outlet />
+
+        {/* footer */}
+        <Divider variant="middle" sx={{my:1}} />
+        <footer style={{ textAlign: 'center' }} >
+          <Typography variant='caption'>
+            Copyright &copy; 2024 亞洲志遠科技 {sysVersion}<br />
+            最佳瀏覽器 Chrome, Edge, Safari。</Typography>
+      </footer>
       </Main>
     </Box>
   );

@@ -12,7 +12,7 @@ export default function NavMenu() {
     <div>
       <Toolbar /> {/* hat */}
       <Divider textAlign='left'>功能選單</Divider>
-      <List component="nav" >
+      <List>
         <ListMenuGroup label='功能展示'>
           <ListMenuItem label='Counter' to='/counter' />
           <ListMenuItem label='Fetch data' to='/fetch-data' />
