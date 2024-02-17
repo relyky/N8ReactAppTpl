@@ -11,8 +11,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 
 const drawerWidth = 240;
-
 const sysVersion: string = 'Version 0.0.1-alpha'
+
 export default function ResponsiveDrawer() {
   const theme = useTheme();
   const matcheSmUp = useMediaQuery(theme.breakpoints.up('sm'))

@@ -1,6 +1,18 @@
 @N8ReactAppTpl.Server_HostAddress = http://localhost:5062
 
-GET {{N8ReactAppTpl.Server_HostAddress}}/weatherforecast/
+### ด๚ธี WebAPI
+GET {{N8ReactAppTpl.Server_HostAddress}}/api/weatherforecast/
+Accept: application/json
+
+### 
+GET {{N8ReactAppTpl.Server_HostAddress}}/healthz
 Accept: application/json
 
 ###
+POST https://localhost:5001/api/products
+Content-Type: application/json
+
+{
+    "name": "New Product",
+    "price": 14.99
+}
