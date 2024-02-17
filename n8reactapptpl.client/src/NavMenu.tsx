@@ -1,58 +1,115 @@
-import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, MenuList, Toolbar } from "@mui/material";
+import { FC, ReactNode, useState } from "react"
+import { Collapse, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom"
 // Icons
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import LoginIcon from '@mui/icons-material/Login'
+import LogoutIcon from '@mui/icons-material/Logout'
+import HomeIcon from '@mui/icons-material/Home'
+import MenuGroupIcon from '@mui/icons-material/GridViewRounded'
 
 export default function NavMenu() {
   return (
     <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts', 'All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+      <Toolbar /> {/* hat */}
+      <Divider textAlign='left'>功能選單</Divider>
+      <List component="nav" >
+        <ListMenuGroup label='功能展示'>
+          <ListMenuItem label='Counter' to='/counter' />
+          <ListMenuItem label='Fetch data' to='/fetch-data' />
+        </ListMenuGroup>
+
+        <ListMenuGroup label='功能展示２'>
+          <ListMenuItem label='Counter 1' to='/counter' />
+          <ListMenuItem label='Fetch data 1' to='/fetch-data' />
+          <ListMenuItem label='Counter 2' to='/counter' />
+          <ListMenuItem label='Fetch data 2' to='/fetch-data' />
+          <ListMenuItem label='Counter ' to='/counter' />
+          <ListMenuItem label='Fetch data 3' to='/fetch-data' />
+        </ListMenuGroup>
+
+        <ListMenuGroup label='功能展示３'>
+          <ListMenuItem label='Counter 1' to='/counter' />
+          <ListMenuItem label='Fetch data 1' to='/fetch-data' />
+          <ListMenuItem label='Counter 2' to='/counter' />
+          <ListMenuItem label='Fetch data 2' to='/fetch-data' />
+          <ListMenuItem label='Counter ' to='/counter' />
+          <ListMenuItem label='Fetch data 3' to='/fetch-data' />
+          <ListMenuItem label='Counter 1' to='/counter' />
+          <ListMenuItem label='Fetch data 1' to='/fetch-data' />
+          <ListMenuItem label='Counter 2' to='/counter' />
+          <ListMenuItem label='Fetch data 2' to='/fetch-data' />
+          <ListMenuItem label='Counter ' to='/counter' />
+          <ListMenuItem label='Fetch data 3' to='/fetch-data' />
+          <ListMenuItem label='Counter 1' to='/counter' />
+          <ListMenuItem label='Fetch data 1' to='/fetch-data' />
+          <ListMenuItem label='Counter 2' to='/counter' />
+          <ListMenuItem label='Fetch data 2' to='/fetch-data' />
+          <ListMenuItem label='Counter ' to='/counter' />
+          <ListMenuItem label='Fetch data 3' to='/fetch-data' />
+        </ListMenuGroup>
       </List>
-      <Divider />
+
+      <Divider textAlign='left'>系統</Divider>
       <List>
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/">
-            <ListItemIcon children={<MailIcon />} />
+            <ListItemIcon children={<HomeIcon color='primary' />} />
             <ListItemText primary='首頁' />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component={Link} to="/counter">
-            <ListItemIcon children={<MailIcon />} />
-            <ListItemText primary='Counter' />
+          <ListItemButton component={Link} to="/login">
+            <ListItemIcon children={<LoginIcon color='primary' />} />
+            <ListItemText primary='登入' />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton component={Link} to="/fetch-data">
-            <ListItemIcon children={<MailIcon />} />
-            <ListItemText primary='Fetch data' />
+          <ListItemButton component={Link} to="/logout">
+            <ListItemIcon children={<LogoutIcon color='primary' />} />
+            <ListItemText primary='登出' />
           </ListItemButton>
         </ListItem>
       </List>
-      <Divider />
-      <MenuList>
-        <MenuItem component={Link} to="/login">
-          <ListItemIcon children={<InboxIcon />} />
-          <ListItemText>登入</ListItemText>
-        </MenuItem>
-        <MenuItem component={Link} to="/logout">
-          <ListItemIcon children={<InboxIcon />} />
-          <ListItemText>登出</ListItemText>
-        </MenuItem>
-      </MenuList>
     </div>
   );
 }
+
+const ListMenuGroup: FC<{ label: string, children: ReactNode }> = (props) => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <ListItemButton onClick={() => setOpen(f => !f)}>
+        <ListItemIcon children={<MenuGroupIcon color='primary' />} />
+        <ListItemText primary={props.label} />
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          {props.children}
+          {/*  
+          <ListItemButton sx={{ pl: 4 }} component={Link} to="/counter"  >
+            <ListItemText primary='Counter' />
+          </ListItemButton>
+          <ListItemButton sx={{ pl: 4 }} component={Link} to="/fetch-data"  >
+            <ListItemText primary='Fetch data' />
+          </ListItemButton>            
+          */}
+        </List>
+      </Collapse>
+    </>
+  )
+}
+
+/*
+<ListItemButton sx={{ pl: 4 }} component={Link} to="/fetch-data"  >
+  <ListItemText primary='Fetch data' />
+</ListItemButton>
+*/
+const ListMenuItem: FC<{
+  label: string,
+  to: string
+}> = (props) => (
+  <ListItemButton sx={{ pl: 4 }} component={Link} to={props.to}  >
+    <ListItemText primary={props.label} />
+  </ListItemButton>
+)
