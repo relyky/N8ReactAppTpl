@@ -1,5 +1,5 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { setBlocking } from "../../store/metaSlice"
+import { setBlocking, setTopAlert } from "../../store/metaSlice"
 import { createAppSlice } from "../../store/hooks"
 import { fetchCount } from "./counterAPI"
 
@@ -38,7 +38,13 @@ const counterSlice = createAppSlice({
           thunkAPI.dispatch(setBlocking(true))
           const response = await fetchCount(amount) // Promise
           // The value we return becomes the `fulfilled` action payload
+          thunkAPI.dispatch(setTopAlert({ severity: 'success', text: `æˆåŠŸç´¯åŠ  amount: ${amount}ã€‚` }))
           return response.data
+        }
+        catch (err) {
+          if (typeof err === 'string')
+            thunkAPI.dispatch(setTopAlert({ severity: 'error', text: err }))
+          throw err //â€»ä¸€å®šè¦ throw å¦å‰‡å°‡åˆ¤å®šç‚ºæˆåŠŸã€‚
         }
         finally {
           thunkAPI.dispatch(setBlocking(false))
@@ -62,13 +68,12 @@ const counterSlice = createAppSlice({
   selectors: {
     selectCount: counter => counter.value,
     selectStatus: counter => counter.status,
-  }, // ¤@¯ë¦@¥Î©Ê¤£°ª¡A¬G¤@¯ë¨Ó»¡¨S¦³¹ê§@ªº»ù­È¡C
+  }, // ä¸€èˆ¬å…±ç”¨æ€§ä¸é«˜ï¼Œæ•…ä¸€èˆ¬ä¾†èªªæ²’æœ‰å¯¦ä½œçš„åƒ¹å€¼ã€‚
 });
 
 // export this slice
 export default counterSlice
 // export this actions
 export const { increment, decrement, incrementByAmount, incrementIfOdd, incrementAsync } = counterSlice.actions
-
 // export this selectors
 export const { selectCount, selectStatus } = counterSlice.selectors
