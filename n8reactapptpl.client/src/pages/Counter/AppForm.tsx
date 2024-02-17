@@ -7,26 +7,29 @@ export default function Counter_AppForm() {
   const dispatch = useAppDispatch()
   const count = useAppSelector(selectCount)
   const status = useAppSelector(selectStatus)
-  const f_blocking = useAppSelector(store => store.meta.blocking)
   const [count0, setCount0] = useState(3)
 
   return (
-    <Container>
-      {f_blocking && <Typography variant='h1'>f_blocking</Typography>}
-      
+    <Container>      
       <Typography variant='h3'>計數器</Typography>
       <Box typography='h1' textAlign='center'>
         {count0}
       </Box>
-      <Box textAlign='center'>
+
+      {/* command-bar */}
+      <Stack direction="row" justifyContent='center' spacing={2}>
         <Button variant='contained' onClick={() => setCount0(c => c + 1)}>＋１</Button>
-      </Box>
+        <Button variant='contained' onClick={() => setCount0(c => c - 1)}>－１</Button>
+      </Stack>
 
       <Divider variant='middle' sx={{ my: 2 }} />
+
       <Typography variant='h4'>Redux 計數器</Typography>
       <Box typography='h1' textAlign='center'>
         {count}&nbsp;<span style={{ fontSize:'0.5em'}}>{status}</span>
       </Box>
+
+      {/* command-bar */}
       <Stack direction="row" justifyContent='center' spacing={2}>
         <Button variant='contained' onClick={() => dispatch(increment())}>＋１</Button>
         <Button variant='contained' onClick={() => dispatch(decrement())}>－１</Button>

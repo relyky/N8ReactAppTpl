@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import type { FC } from 'react'
 import { styled, useTheme } from '@mui/material/styles';
-import { AppBar, Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert } from '@mui/material'
+import { AppBar, Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert, Backdrop, CircularProgress } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './store/hooks';
-import { selectTopAlert, setTopAlert } from './store/metaSlice';
+import { selectBlocking, selectTopAlert, setTopAlert } from './store/metaSlice';
 import NavMenu from './NavMenu'
 // Icons
 import MenuIcon from '@mui/icons-material/Menu'
@@ -59,9 +60,9 @@ export default function ResponsiveDrawer() {
 
       {/* nav */}
       <Box component="nav" sx={{
-          width: { sm: drawerWidth },
-          flexShrink: { sm: 0 }
-        }}>
+        width: { sm: drawerWidth },
+        flexShrink: { sm: 0 }
+      }}>
         <Drawer
           variant={matcheSmUp ? 'persistent' : 'temporary'}
           open={open}
@@ -83,6 +84,7 @@ export default function ResponsiveDrawer() {
         <Toolbar /> {/* hat */}
         <TopAlert />
         <Outlet />
+        <Overlay />
         {/* footer */}
         <Divider variant="middle" sx={{ my: 1 }} />
         <footer style={{ textAlign: 'center' }} >
@@ -140,5 +142,18 @@ function TopAlert() {
       }>
       {topAlert.text}
     </Alert>
+  )
+}
+
+//-----------------------------------------------------------------------------
+const Overlay: FC = () => {
+  const blocking = useAppSelector(selectBlocking)
+  return (
+    <Backdrop
+      sx={{ color: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={blocking}
+    >
+      <CircularProgress color="inherit" size='6rem' />
+    </Backdrop>
   )
 }

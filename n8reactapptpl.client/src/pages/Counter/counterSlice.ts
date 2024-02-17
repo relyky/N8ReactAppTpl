@@ -41,7 +41,7 @@ const counterSlice = createAppSlice({
           thunkAPI.dispatch(setTopAlert({ severity: 'success', text: `成功累加 amount: ${amount}。` }))
           return response.data
         }
-        catch (err) {
+        catch(err) {
           if (typeof err === 'string')
             thunkAPI.dispatch(setTopAlert({ severity: 'error', text: err }))
           throw err //※一定要 throw 否則將判定為成功。
