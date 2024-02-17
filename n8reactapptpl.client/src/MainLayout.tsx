@@ -120,7 +120,7 @@ const Main = styled('main')<{
 }));
 
 //-----------------------------------------------------------------------------
-function TopAlert() {
+const TopAlert: FC = () => {
   const dispatch = useAppDispatch()
   const topAlert = useAppSelector(selectTopAlert)
 
