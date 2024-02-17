@@ -1,8 +1,22 @@
 
-// ¼ÒÀÀ»·ºÝ©I¥s WebAPI ¾Þ§@
+// æ¨¡æ“¬é ç«¯å‘¼å« WebAPI æ“ä½œ
+// A mock function to mimic making an async request for data
+//export const fetchCount = (amount = 1) => {
+//  return new Promise<{ data: number }>(resolve =>
+//    setTimeout(() => resolve({ data: amount + 0.1 }), 500),
+//  )
+//}
+
 // A mock function to mimic making an async request for data
 export const fetchCount = (amount = 1) => {
-  return new Promise<{ data: number }>(resolve =>
-    setTimeout(() => resolve({ data: amount + 0.1 }), 500),
+  return new Promise<{ data: number }>((resolve, reject) =>
+    setTimeout(() => {
+      if (amount === 4) {
+        reject('æ¨¡æ“¬æ¸¬è©¦å¤±æ•—')
+        return
+      }
+
+      resolve({ data: amount + 0.1 });
+    }, 1000),
   )
 }
