@@ -17,10 +17,10 @@ const sysVersion: string = 'Version 0.0.1-alpha'
 
 export default function ResponsiveDrawer() {
   const theme = useTheme();
-  const matcheSmUp = useMediaQuery(theme.breakpoints.up('sm'))
+  const matchXs = useMediaQuery(theme.breakpoints.only('xs'))
   const dispatch = useAppDispatch()
   const f_darkTheme = useAppSelector(selectDarkTheme)
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(() => matchXs ? false : true) // 畫面開啟時，若是`手機模式`則預設不顯示選單。
   const [isClosing, setIsClosing] = useState(false);
 
   const handleDrawerClose = () => {
@@ -76,7 +76,7 @@ export default function ResponsiveDrawer() {
         flexShrink: { sm: 0 }
       }}>
         <Drawer
-          variant={matcheSmUp ? 'persistent' : 'temporary'}
+          variant={matchXs ? 'temporary' : 'persistent'}
           open={open}
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
@@ -92,7 +92,7 @@ export default function ResponsiveDrawer() {
       </Box>
 
       {/* main */}
-      <Main open={open} matcheSmUp={matcheSmUp}>
+      <Main open={open} matchXs={matchXs}>
         <Toolbar /> {/* hat */}
         <TopAlert />
         <Outlet />
@@ -114,14 +114,14 @@ export default function ResponsiveDrawer() {
 /// ref→[Material - App Bar](https://mui.com/material-ui/react-app-bar/)
 const Main = styled('main')<{
   open: boolean,
-  matcheSmUp: boolean
-}>(({ theme, open, matcheSmUp }) => ({
+  matchXs: boolean
+}>(({ theme, open, matchXs }) => ({
   flexGrow: 1,
   transition: theme.transitions.create('margin', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  marginLeft: matcheSmUp ? `-${drawerWidth}px` : 0,
+  marginLeft: matchXs ? 0 : `-${drawerWidth}px`,
   ...(open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
