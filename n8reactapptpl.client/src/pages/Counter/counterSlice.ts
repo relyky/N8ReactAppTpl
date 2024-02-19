@@ -2,6 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 import { setBlocking, setTopAlert } from "../../store/metaSlice"
 import { createAppSlice } from "../../store/hooks"
 import { fetchCount } from "./counterAPI"
+import Swal from "sweetalert2"
 
 export interface CounterSliceState {
   value: number
@@ -37,13 +38,22 @@ const counterSlice = createAppSlice({
         try {
           thunkAPI.dispatch(setBlocking(true))
           const response = await fetchCount(amount) // Promise
-          // The value we return becomes the `fulfilled` action payload
+
+          // 可送訊息到 top-alert 區塊
           thunkAPI.dispatch(setTopAlert({ severity: 'success', text: `成功累加 amount: ${amount}。` }))
+          // 或顯示訊息
+          Swal.fire("incrementAsync", `成功累加 amount: ${amount}。`, 'success')
+
+          // The value we return becomes the `fulfilled` action payload
           return response.data
         }
         catch(err) {
-          if (typeof err === 'string')
+          if (typeof err === 'string') {
+            // 可送訊息到 top-alert 區塊
             thunkAPI.dispatch(setTopAlert({ severity: 'error', text: err }))
+            // 或顯示訊息
+            Swal.fire("incrementAsync", err, 'error')
+          }
           throw err //※一定要 throw 否則將判定為成功。
         }
         finally {

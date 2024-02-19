@@ -13,12 +13,13 @@ export default function NavMenu() {
       <Toolbar /> {/* hat */}
       <Divider textAlign='left'>功能選單</Divider>
       <List>
-        <ListMenuGroup label='功能展示'>
+        <ListMenuGroup label='展示功能'>
           <ListMenuItem label='Counter' to='/counter' />
           <ListMenuItem label='Fetch data' to='/fetch-data' />
+          <ListMenuItem label='展示功能０１' to='/demo01' />
         </ListMenuGroup>
 
-        <ListMenuGroup label='功能展示２'>
+        <ListMenuGroup label='展示功能２'>
           <ListMenuItem label='Counter 1' to='/counter' />
           <ListMenuItem label='Fetch data 1' to='/fetch-data' />
           <ListMenuItem label='Counter 2' to='/counter' />
@@ -27,7 +28,7 @@ export default function NavMenu() {
           <ListMenuItem label='Fetch data 3' to='/fetch-data' />
         </ListMenuGroup>
 
-        <ListMenuGroup label='功能展示３'>
+        <ListMenuGroup label='展示功能３'>
           <ListMenuItem label='Counter 1' to='/counter' />
           <ListMenuItem label='Fetch data 1' to='/fetch-data' />
           <ListMenuItem label='Counter 2' to='/counter' />
