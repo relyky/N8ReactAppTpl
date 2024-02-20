@@ -14,14 +14,10 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>8.*-*</Version>
     </PackageReference>
-    <PackageReference Include="MTT" Version="0.7.2" />
+    <PackageReference Include="Reinforced.Typings" Version="1.6.3" />
     <PackageReference Include="Rin" Version="2.6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
-
-  <Target Name="Convert" BeforeTargets="PrepareForBuild">
-    <ConvertMain WorkingDirectory="DTO/" ConvertDirectory="../n8reactapptpl.client/src/dto/" />
-  </Target>
 
   <ItemGroup>
     <ProjectReference Include="..\n8reactapptpl.client\n8reactapptpl.client.esproj">
