@@ -1,16 +1,10 @@
 import { Box, Button, Container, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useEffect, useState } from 'react'
-
-interface Forecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { IWeatherForecast } from '../../server-dto';
 
 export default function FetchData_AppForm() {
   const [f_loading, setLoading] = useState(false);
-  const [forecasts, setForecasts] = useState<Forecast[]>();
+  const [forecasts, setForecasts] = useState<IWeatherForecast[]>();
 
   useEffect(() => {
     populateWeatherData();

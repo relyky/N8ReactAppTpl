@@ -1,4 +1,11 @@
 using N8ReactAppTpl.Server.Models;
+using Reinforced.Typings.Attributes;
+
+[assembly: TsGlobal(CamelCaseForProperties = true, UseModules = true, DiscardNamespacesWhenUsingModules = true)]
+///## Reinforced.Typings 全域設定說明
+/// CamelCaseForProperties = true, 小駱駝命名法
+/// UseModules = true, 啟用 modules
+/// DiscardNamespacesWhenUsingModules = true, 需與參數 UseModules 搭配；不產生 "modules"。
 
 var builder = WebApplication.CreateBuilder(args);
 
