@@ -65,7 +65,6 @@ const counterSlice = createAppSlice({
   selectors: {
     selectAuthed: state => state.status === AuthStatus.Authed && typeof state.authToken === 'string', // && state.expiredTime < new,
     selectAuthing: state => state.status === AuthStatus.Authing,
-    //selectStatus: counter => counter.status,
   },
 });
 

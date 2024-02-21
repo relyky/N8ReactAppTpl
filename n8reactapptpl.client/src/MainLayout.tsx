@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import type { FC } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
 import { AppBar, Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert, Backdrop, CircularProgress } from '@mui/material'
-import { Outlet } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectBlocking, selectDarkTheme, selectTopAlert, setTopAlert, toggleTheme } from './store/metaSlice';
+import { selectAuthed, selectAuthing } from './store/accountSlice';
 import NavMenu from './NavMenu'
 // Icons
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import DarkIcon from '@mui/icons-material/DarkMode'
 import LightIcon from '@mui/icons-material/LightMode'
+import LoopIcon from '@mui/icons-material/Loop'
+import LogoutIcon from '@mui/icons-material/Logout'
+import LoginIcon from '@mui/icons-material/Login'
 
 const drawerWidth = 240;
 const sysVersion: string = 'Version 0.0.1-alpha'
@@ -18,8 +22,11 @@ const sysVersion: string = 'Version 0.0.1-alpha'
 export default function ResponsiveDrawer() {
   const theme = useTheme();
   const matchXs = useMediaQuery(theme.breakpoints.only('xs'))
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const f_darkTheme = useAppSelector(selectDarkTheme)
+  const isAuthed = useAppSelector(selectAuthed)
+  const isAuthing = useAppSelector(selectAuthing)
   const [open, setOpen] = useState(() => matchXs ? false : true) // 畫面開啟時，若是`手機模式`則預設不顯示選單。
   const [isClosing, setIsClosing] = useState(false);
 
@@ -40,6 +47,8 @@ export default function ResponsiveDrawer() {
 
   return (
     <Box sx={{ display: 'flex' }}>
+
+      {/* banner */}
       <AppBar
         position="fixed"
         sx={{
@@ -60,11 +69,21 @@ export default function ResponsiveDrawer() {
             Logo
           </Typography>
 
-          <IconButton
-            size="large"
-            onClick={() => dispatch(toggleTheme())}
-            color="inherit"
-          >
+          {isAuthing ?
+            <IconButton color="inherit" title="驗證中...">
+              <LoopSpinIcon />
+            </IconButton>
+            : isAuthed ?
+              <IconButton color="inherit" title="登出" onClick={handleLogout}>
+                <LogoutIcon />
+              </IconButton>
+              :
+              <IconButton color="inherit" title="登入" onClick={handleLogin}>
+                <LoginIcon />
+              </IconButton>
+          }
+
+          <IconButton color="inherit" onClick={() => dispatch(toggleTheme())}>
             {f_darkTheme ? <DarkIcon /> : <LightIcon />}
           </IconButton>
         </Toolbar>
@@ -107,6 +126,15 @@ export default function ResponsiveDrawer() {
       </Main>
     </Box>
   );
+
+  function handleLogin() {
+    navigate('login')
+  }
+
+  function handleLogout() {
+    navigate('logout')
+  }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -169,3 +197,18 @@ const Overlay: FC = () => {
     </Backdrop>
   )
 }
+
+//-----------------------------------------------------------------------------
+const LoopSpinIcon: FC = () => (
+  <LoopIcon sx={{
+    animation: "spin 2s linear infinite",
+    "@keyframes spin": {
+      "0%": {
+        transform: "rotate(360deg)",
+      },
+      "100%": {
+        transform: "rotate(0deg)",
+      },
+    },
+  }} />
+)
