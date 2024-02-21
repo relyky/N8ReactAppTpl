@@ -7,7 +7,6 @@ export interface ILoginArgs
 	userId: string;
 	credential: string;
 	vcode: string;
-	returnUrl: string;
 }
 export interface ILoginResult
 {

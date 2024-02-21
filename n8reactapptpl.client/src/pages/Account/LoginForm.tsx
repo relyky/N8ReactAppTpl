@@ -1,15 +1,15 @@
+import { useEffect } from 'react'
 import type { FC, FormEvent } from 'react'
-import { Avatar, Button, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { useNavigate } from "react-router-dom"
+import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { ILoginArgs } from '../../server-dto';
-import { useAppDispatch } from '../../store/hooks';
-import { loginAsync } from '../../store/accountSlice';
-// hooks
-//import { useAppDispatch, useAppSelector } from 'store/hooks'
-//import { LoginArgs, AuthStatus } from 'store/accountSlice'
-//import { useNavigate } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { loginAsync, selectAuthed, selectAuthing } from '../../store/accountSlice';
+// icons
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
-const Copyright:FC = () => (
+const Copyright: FC = () => (
   <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 5 }}>
     {'Copyright © '}
     <Link color="inherit" href="https://mui.com/">
@@ -22,8 +22,9 @@ const Copyright:FC = () => (
 
 export default function LoginForm() {
   const dispatch = useAppDispatch()
-  //const navigate = useNavigate()
-  //const account = useAppSelector(s => s.account)
+  const navigate = useNavigate()
+  const isAuthed = useAppSelector(selectAuthed)
+  const isAuthing = useAppSelector(selectAuthing)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -32,17 +33,17 @@ export default function LoginForm() {
     const loginInfo: ILoginArgs = {
       userId: data.get('userId') as string,
       credential: data.get('mima') as string,
-      vcode: '123456',
-      returnUrl: '/'
+      vcode: '123456'
     };
 
     dispatch(loginAsync(loginInfo))
   };
 
-  //useEffect(() => {
-  //  if (account.status === AuthStatus.Authed)
-  //    navigate('/') // 成功後轉址到主畫面
-  //}, [account])
+  //# 成功後轉址到主畫面
+  useEffect(() => {
+    if (isAuthed === true)
+      navigate('/')
+  }, [isAuthed, navigate])
 
   return (
     <Box
@@ -83,14 +84,14 @@ export default function LoginForm() {
           control={<Checkbox value="Y" name="remember" color="primary" />}
           label="Remember me"
         />
-        <Button
+        <LoadingButton loading={isAuthing} 
           type="submit"
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
           登入
-        </Button>
+        </LoadingButton>
         <Grid container>
           <Grid item xs>
             <Link href="#" variant="body2">

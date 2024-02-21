@@ -278,9 +278,6 @@ public class LoginArgs
   [Required]
   [Display(Name = "驗證碼")]
   public string vcode { get; set; } = string.Empty;
-
-  [Display(Name = "回轉網址")]
-  public string returnUrl { get; set; } = "/";
 }
 
 [TsInterface]
