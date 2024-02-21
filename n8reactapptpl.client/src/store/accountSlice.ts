@@ -84,9 +84,19 @@ const counterSlice = createAppSlice({
         rejected: () => initialState,
       },
     ),
+    refreshTokenAsync: create.asyncThunk(
+      async () => {
+        //throw new Error('未實作！');
+      },
+      {
+        pending: (state) => state,
+        fulfilled: (state) => state,
+        rejected: (state) => state,
+      },
+    ),
   }),
   selectors: {
-    selectAuthed: state => state.status === AuthStatus.Authed && typeof state.authToken === 'string', // && state.expiredTime < new,
+    selectAuthed: state => state.status === AuthStatus.Authed && typeof state.authToken === 'string', // && state.expiredTime < NOW,
     selectAuthing: state => state.status === AuthStatus.Authing,
   },
 });
