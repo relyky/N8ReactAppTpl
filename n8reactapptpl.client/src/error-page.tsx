@@ -4,7 +4,7 @@ import { useRouteError } from "react-router-dom";
 /// ref¡÷[React Router\Handling Not Found Errors](https://reactrouter.com/en/main/start/tutorial#handling-not-found-errors)
 export default function ErrorPage() {
   const error = useRouteError() as any;
-  console.error(error);
+  console.error('ErrorPage.error', error);
 
   return (
     <div id="error-page">
