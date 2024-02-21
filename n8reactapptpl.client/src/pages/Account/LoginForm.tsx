@@ -1,9 +1,12 @@
 import type { FC, FormEvent } from 'react'
 import { Avatar, Button, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import { ILoginArgs } from '../../server-dto';
+import { useAppDispatch } from '../../store/hooks';
+import { loginAsync } from '../../store/accountSlice';
 // hooks
 //import { useAppDispatch, useAppSelector } from 'store/hooks'
-//import { signInAsync, LoginArgs, AuthStatus } from 'store/accountSlice'
+//import { LoginArgs, AuthStatus } from 'store/accountSlice'
 //import { useNavigate } from "react-router-dom"
 
 const Copyright:FC = () => (
@@ -18,21 +21,22 @@ const Copyright:FC = () => (
 )
 
 export default function LoginForm() {
-  //const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
   //const navigate = useNavigate()
   //const account = useAppSelector(s => s.account)
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    //event.preventDefault()
-    //const data = new FormData(event.currentTarget);
-    //const loginInfo: LoginArgs = {
-    //  userId: data.get('userId') as string,
-    //  credential: data.get('mima') as string,
-    //  vcode: '123456'
-    //};
+    event.preventDefault()
+    const data = new FormData(event.currentTarget);
+    const loginInfo: ILoginArgs = {
+      userId: data.get('userId') as string,
+      credential: data.get('mima') as string,
+      vcode: '123456',
+      returnUrl: '/'
+    };
 
-    //dispatch(signInAsync(loginInfo))
+    dispatch(loginAsync(loginInfo))
   };
 
   //useEffect(() => {

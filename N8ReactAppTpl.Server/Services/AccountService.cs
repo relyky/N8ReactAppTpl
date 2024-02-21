@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using N8ReactAppTpl.Server.Models;
+using Reinforced.Typings.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
@@ -263,6 +264,7 @@ public class AccountService(ILogger<AccountService> _logger, IConfiguration _con
   }
 }
 
+[TsInterface]
 public class LoginArgs
 {
   [Required]
@@ -281,10 +283,12 @@ public class LoginArgs
   public string returnUrl { get; set; } = "/";
 }
 
+[TsInterface]
 public class LoginResult
 {
   public string LoginUserId { get; set; } = string.Empty;
   public string LoginUserName { get; set; } = string.Empty;
+  [TsProperty(Type = "Date")]
   public DateTimeOffset ExpiredTime { get; set; }
   public string AuthToken { get; set; } = string.Empty;
 }

@@ -2,6 +2,20 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
+export interface ILoginArgs
+{
+	userId: string;
+	credential: string;
+	vcode: string;
+	returnUrl: string;
+}
+export interface ILoginResult
+{
+	loginUserId: string;
+	loginUserName: string;
+	expiredTime: Date;
+	authToken: string;
+}
 export interface IWeatherForecast
 {
 	date: string;
