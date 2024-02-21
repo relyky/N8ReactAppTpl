@@ -15,6 +15,8 @@ export class ResponseError extends Error {
   }
 }
 
+/// 說明:
+/// response 只接受: 200 JSON object 與 204 NoConennt。
 export function postData<TResult>(url: string, args?: object, authToken?: string): Promise<TResult> {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -33,12 +35,12 @@ export function postData<TResult>(url: string, args?: object, authToken?: string
       cache: 'no-cache',
       referrer: 'no-referrer',
     }).then(resp => {
-      if (resp.ok) {
+      if (resp.status === 204) // NoContent
+        resolve(undefined as TResult);
+      else if (resp.ok)
         resolve(resp.json());
-        return;
-      }
-
-      throw resp;
+      else 
+        throw resp;
     }).catch((xhr: Response) => {
       xhr.text().then(errMsg => {
         reject(new ResponseError(errMsg, xhr.status, xhr.statusText))
@@ -47,5 +49,3 @@ export function postData<TResult>(url: string, args?: object, authToken?: string
     });
   });
 }
-
-

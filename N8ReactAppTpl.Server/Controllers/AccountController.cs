@@ -72,7 +72,7 @@ public class AccountController(ILogger<AccountController> _logger, AccountServic
     var id = HttpContext.User.Identity;
     _account.SignOut(id);
     _logger.LogInformation($"使用者[{id!.Name}]登出完成。");
-    return Ok(new { message = "已登出" });
+    return NoContent();
   }
 
   /// <summary>
