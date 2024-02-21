@@ -1,4 +1,5 @@
 using N8ReactAppTpl.Server.Models;
+using N8ReactAppTpl.Server.Services;
 using Reinforced.Typings.Attributes;
 
 [assembly: TsGlobal(CamelCaseForProperties = true, UseModules = true, DiscardNamespacesWhenUsingModules = true)]
@@ -7,7 +8,7 @@ using Reinforced.Typings.Attributes;
 /// UseModules = true, 啟用 modules
 /// DiscardNamespacesWhenUsingModules = true, 需與參數 UseModules 搭配；不產生 "modules"。
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args); //--------------------------------------------------
 
 builder.Logging.AddRinLogger(); // for Rin 監聽 HTTP 封包
 
@@ -24,7 +25,10 @@ builder.Services.AddRin(); // for Rin 監聽 HTTP 封包
 builder.Services.AddHealthChecks()
        .AddCheck<SimpleHealthCheck>(nameof(SimpleHealthCheck));
 
-var app = builder.Build();
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<AccountService>();
+
+var app = builder.Build(); //--------------------------------------------------
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

@@ -1,18 +1,20 @@
 @N8ReactAppTpl.Server_HostAddress = http://localhost:5062
 
-### 測試 WebAPI
+### WebAPI 測試 
 GET {{N8ReactAppTpl.Server_HostAddress}}/api/weatherforecast/
 Accept: application/json
 
-### 
+### 健康測試
 GET {{N8ReactAppTpl.Server_HostAddress}}/healthz
 Accept: application/json
 
-###
-POST https://localhost:5001/api/products
+### 登入測試
+POST {{N8ReactAppTpl.Server_HostAddress}}/api/account/login
 Content-Type: application/json
 
 {
-    "name": "New Product",
-    "price": 14.99
+  "userId": "smart",
+  "credential": "foo",
+  "vcode": "123456",
+  "returnUrl": "/"
 }
