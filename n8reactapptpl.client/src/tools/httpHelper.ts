@@ -49,3 +49,24 @@ export function postData<TResult>(url: string, args?: object, authToken?: string
     });
   });
 }
+
+//-----------------------------------------------------------------------------
+export function uploadFile() 
+{
+  /* 未實作 */
+}
+
+export function downloadFile()
+{
+  /* 未實作 */
+}
+
+//-----------------------------------------------------------------------------
+//option: {
+//  noblock: false,
+//  manual: false,
+//}
+//
+//function useLoadData(apiPath: string, args?: object, options?: object) {
+//  return [data, loading, error, refetch];
+//} <---- hooks 加入商業邏輯，不適合共用

@@ -2,7 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "./hooks";
 import { ILoginArgs, ILoginResult } from "../server-dto";
 import Swal from "sweetalert2"
-import { ResponseError, postData } from "../hooks/useHttp";
+import { ResponseError, postData } from "../tools/httpHelper";
 import type { RootState } from "./store";
 
 export enum AuthStatus {
