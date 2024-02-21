@@ -5,18 +5,7 @@ import { appRoutes } from "./AppRoutes"
 import { useAppSelector } from "./store/hooks"
 import { selectDarkTheme } from "./store/metaSlice"
 
-//-----------------------------------------------------------------------------
-// 在全域宣告 ResponseError 類別。
-// ※注意：真的只有宣告而已。實作在 index.html。
-declare global {
-  class ResponseError extends Error {
-    status: number;
-    statusText: string;
-    message: string;
 
-    constructor(message: string, status: number, statusText: string);
-  }
-}
 //-----------------------------------------------------------------------------
 //## Resource
 

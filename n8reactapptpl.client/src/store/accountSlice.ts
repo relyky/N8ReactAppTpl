@@ -2,6 +2,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "./hooks";
 import { ILoginArgs, ILoginResult } from "../server-dto";
 import Swal from "sweetalert2"
+import { ResponseError, postData } from "../hooks/useHttp";
 
 export enum AuthStatus {
   Guest = "Guest",
@@ -15,35 +16,6 @@ export interface AccountState {
   status: AuthStatus
   authToken?: string
   expiredTime?: Date
-}
-
-function postData<TResult>(url: string, args?: object): Promise<TResult> {
-  const headers = {
-    'Content-Type': 'application/json'
-  }
-
-  return new Promise<TResult>((resolve, reject) => {
-    fetch(url, {
-      headers,
-      body: JSON.stringify(args),
-      cache: 'no-cache',
-      credentials: 'omit',
-      method: 'POST',
-      referrer: 'no-referrer',
-    }).then(resp => {
-      if (resp.ok) {
-        resolve(resp.json());
-        return;
-      }
-
-      throw resp;
-    }).catch((xhr: Response) => {
-      xhr.text().then(errMsg => {
-        reject(new ResponseError(errMsg, xhr.status, xhr.statusText))
-        return;
-      });
-    });
-  });
 }
 
 //-----------------------------------------------------------------------------
