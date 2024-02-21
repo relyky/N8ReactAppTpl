@@ -61,8 +61,8 @@ public class AccountController(ILogger<AccountController> _logger, AccountServic
   /// <summary>
   /// 登出
   /// </summary>
-  [HttpPost("[action]")]
   [Authorize]
+  [HttpPost("[action]")]
   public ActionResult Logout()
   {
     // 模擬長時間運算
@@ -72,14 +72,14 @@ public class AccountController(ILogger<AccountController> _logger, AccountServic
     var id = HttpContext.User.Identity;
     _account.SignOut(id);
     _logger.LogInformation($"使用者[{id!.Name}]登出完成。");
-    return Ok();
+    return Ok(new { message = "已登出" });
   }
 
   /// <summary>
   /// 取得現在連線會話中的使用者
   /// </summary>
-  [HttpPost("[action]")]
   [Authorize]
+  [HttpPost("[action]")]
   public ActionResult<LoginResult> GetAuthInfo()
   {
     // 模擬長時間運算

@@ -5,7 +5,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { AppBar, Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert, Backdrop, CircularProgress } from '@mui/material'
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectBlocking, selectDarkTheme, selectTopAlert, setTopAlert, toggleTheme } from './store/metaSlice';
-import { selectAuthed, selectAuthing } from './store/accountSlice';
+import { logoutAsync, selectAuthed, selectAuthing } from './store/accountSlice';
 import NavMenu from './NavMenu'
 // Icons
 import MenuIcon from '@mui/icons-material/Menu'
@@ -132,7 +132,7 @@ export default function ResponsiveDrawer() {
   }
 
   function handleLogout() {
-    navigate('logout')
+    dispatch(logoutAsync())
   }
 
 }
