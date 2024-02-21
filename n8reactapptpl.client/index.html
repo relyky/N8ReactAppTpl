@@ -1,13 +1,25 @@
 <!doctype html>
 <html lang="zh-tw">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + React + TS</title>
+  <script>
+    //## 定義 ResponseError 類別，繼承自內建的 Error 類別
+    class ResponseError extends Error {
+      constructor(message /* string */, status /* number */, statusText /* string */) {
+        super(message);
+        this.name = 'ResponseError';
+        // 新增自定義屬性
+        this.status = status;
+        this.statusText = statusText;
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
 </html>

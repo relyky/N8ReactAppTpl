@@ -38,11 +38,8 @@ function postData<TResult>(url: string, args?: object): Promise<TResult> {
 
       throw resp;
     }).catch((xhr: Response) => {
-      xhr.status;
-      xhr.statusText
       xhr.text().then(errMsg => {
-        console.log('postData.catch', { xhr, errMsg })
-        reject(errMsg);
+        reject(new ResponseError(errMsg, xhr.status, xhr.statusText))
         return;
       });
     });
@@ -71,9 +68,10 @@ const counterSlice = createAppSlice({
           const data = await postData<ILoginResult>('api/Account/Login', args)
           return data
         }
-        catch (err) {
-          Swal.fire("登入失敗！", err as string, 'error')
-          throw err //※一定要 throw 否則將判定為成功。
+        catch (err: unknown) {
+          if (err instanceof ResponseError)
+            Swal.fire("登入失敗！", `${err.status} ${err.statusText}`, 'error');
+          throw err; //※一定要 throw 否則將判定為成功。
         }
       },
       {
