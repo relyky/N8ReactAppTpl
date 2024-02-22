@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useAppSelector } from "../../store/hooks";
 import { selectAccount } from "../../store/accountSlice";
 
@@ -8,9 +8,9 @@ export default function Demo01_AppForm() {
     <Container>
       <Typography variant='h3'>環境參數與授權狀態</Typography>
 
-      <pre>
+      <Box component='pre' sx={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
         {JSON.stringify(accountState, null, ' ')}
-      </pre>
+      </Box>
 
     </Container>
   )
