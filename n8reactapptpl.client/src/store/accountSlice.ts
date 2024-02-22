@@ -99,6 +99,7 @@ const counterSlice = createAppSlice({
   selectors: {
     selectAuthed: state => state.status === AuthStatus.Authed && typeof state.authToken === 'string', // && state.expiredTime < NOW,
     selectAuthing: state => state.status === AuthStatus.Authing,
+    selectAccount: state => state,
   },
 });
 
@@ -107,4 +108,4 @@ export default counterSlice
 // export this actions
 export const { loginAsync, logoutAsync } = counterSlice.actions
 // export this selectors
-export const { selectAuthed, selectAuthing } = counterSlice.selectors
+export const { selectAuthed, selectAuthing, selectAccount } = counterSlice.selectors
