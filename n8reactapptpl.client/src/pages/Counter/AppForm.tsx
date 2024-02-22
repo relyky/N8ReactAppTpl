@@ -2,6 +2,7 @@ import { Box, Button, Container, Divider, Stack, Typography } from "@mui/materia
 import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { decrement, increment, incrementAsync, incrementByAmount, incrementIfOdd, selectCount, selectStatus } from "./counterSlice"
+import MyCounter from "./MyCounter"
 
 export default function Counter_AppForm() {
   const dispatch = useAppDispatch()
@@ -12,6 +13,12 @@ export default function Counter_AppForm() {
   return (
     <Container>      
       <Typography variant='h3'>計數器</Typography>
+      <Box typography='body1'>展示三種不同實作方法的計數器。</Box>
+
+      {/* 第一種計數器 */}
+      <MyCounter value={count0} onChange={setCount0} />
+
+      {/* 第二種計數器 */}
       <Box typography='h1' textAlign='center'>
         {count0}
       </Box>
@@ -24,6 +31,7 @@ export default function Counter_AppForm() {
 
       <Divider variant='middle' sx={{ my: 2 }} />
 
+      {/* 第三種計數器 */}
       <Typography variant='h4'>Redux 計數器</Typography>
       <Box typography='h1' textAlign='center'>
         {count}&nbsp;<span style={{ fontSize:'0.5em'}}>{status}</span>

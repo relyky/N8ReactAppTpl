@@ -1,0 +1,23 @@
+.box {
+  display:inline-block;
+  padding: 8px;
+  border: solid 2px darkgray;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.header {
+  margin-block: 0;
+}
+
+.paragraph {
+  margin-block: 0;
+  margin-bottom: 0.25em;
+}
+
+.bigtext {
+  font-size: 6em;
+  font-weight: 600;
+  color: purple;
+  line-height: 1;
+}
