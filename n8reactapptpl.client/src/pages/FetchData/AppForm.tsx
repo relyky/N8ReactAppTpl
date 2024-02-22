@@ -1,6 +1,6 @@
-import { Box, Button, Container, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useEffect, useState } from 'react'
-import { IWeatherForecast } from '../../server-dto';
+import { Box, Button, Container, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { IWeatherForecast } from '../../DTO/Demo/IWeatherForecast'
 
 export default function FetchData_AppForm() {
   const [f_loading, setLoading] = useState(false);

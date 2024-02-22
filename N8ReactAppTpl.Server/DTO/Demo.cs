@@ -1,6 +1,7 @@
 using Reinforced.Typings.Attributes;
 
-namespace N8ReactAppTpl.Server.DTO;
+// 配合 Reinforced.Typings 生成規則來設定 namespace。
+namespace DTO.Demo;
 
 [TsInterface]
 public record WeatherForecast

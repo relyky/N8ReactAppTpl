@@ -3,9 +3,9 @@ import type { FC, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { ILoginArgs } from '../../server-dto';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginAsync, selectAuthed, selectAuthing } from '../../store/accountSlice';
+import { ILoginArgs } from '../../DTO/Account/ILoginArgs';
 // icons
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
@@ -26,7 +26,6 @@ export default function LoginForm() {
   const isAuthed = useAppSelector(selectAuthed)
   const isAuthing = useAppSelector(selectAuthing)
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget);

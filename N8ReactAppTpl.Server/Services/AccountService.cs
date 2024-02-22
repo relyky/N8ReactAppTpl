@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using DTO.Account;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using N8ReactAppTpl.Server.Models;
 using Reinforced.Typings.Attributes;
@@ -264,28 +265,28 @@ public class AccountService(ILogger<AccountService> _logger, IConfiguration _con
   }
 }
 
-[TsInterface]
-public class LoginArgs
-{
-  [Required]
-  [Display(Name = "帳號")]
-  public string userId { get; set; } = string.Empty;
+//[TsInterface]
+//public class LoginArgs
+//{
+//  [Required]
+//  [Display(Name = "帳號")]
+//  public string userId { get; set; } = string.Empty;
+//
+//  [Required]
+//  [Display(Name = "通關密語")]
+//  public string credential { get; set; } = string.Empty;
+//
+//  [Required]
+//  [Display(Name = "驗證碼")]
+//  public string vcode { get; set; } = string.Empty;
+//}
 
-  [Required]
-  [Display(Name = "通關密語")]
-  public string credential { get; set; } = string.Empty;
-
-  [Required]
-  [Display(Name = "驗證碼")]
-  public string vcode { get; set; } = string.Empty;
-}
-
-[TsInterface]
-public class LoginResult
-{
-  public string LoginUserId { get; set; } = string.Empty;
-  public string LoginUserName { get; set; } = string.Empty;
-  [TsProperty(Type = "Date")]
-  public DateTimeOffset ExpiredTime { get; set; }
-  public string AuthToken { get; set; } = string.Empty;
-}
+//[TsInterface]
+//public class LoginResult
+//{
+//  public string LoginUserId { get; set; } = string.Empty;
+//  public string LoginUserName { get; set; } = string.Empty;
+//  [TsProperty(Type = "Date")]
+//  public DateTimeOffset ExpiredTime { get; set; }
+//  public string AuthToken { get; set; } = string.Empty;
+//}
