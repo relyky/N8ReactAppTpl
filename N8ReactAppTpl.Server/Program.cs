@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using MultiLingualWASMLab.Server.Models;
 using N8ReactAppTpl.Server.Models;
 using N8ReactAppTpl.Server.Services;
 using Reinforced.Typings.Attributes;
@@ -18,38 +19,27 @@ var _config = builder.Configuration;
 
 builder.Logging.AddRinLogger(); // for Rin 監聽 HTTP 封包
 
-/// 使用 Token-based 身份認證與授權 (JWT),ref→[https://blog.miniasp.com/post/2022/02/13/How-to-use-JWT-token-based-auth-in-aspnet-core-60]
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-      // 當驗證失敗時，回應標頭會包含 WWW-Authenticate 標頭，這裡會顯示失敗的詳細錯誤原因
-      options.IncludeErrorDetails = true; // 預設值為 true，有時會特別關閉
-
-      options.TokenValidationParameters = new TokenValidationParameters
-      {
-        // 透過這項宣告，就可以從 "sub" 取值並設定給 User.Identity.Name
-        NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
-        // 透過這項宣告，就可以從 "roles" 取值，並可讓 [Authorize] 判斷角色
-        RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
-
-        // 一般我們都會驗證 Issuer
-        ValidateIssuer = true,
-        ValidIssuer = _config["JwtSettings:Issuer"],
-
-        // 通常不太需要驗證 Audience
-        ValidateAudience = false,
-        //ValidAudience = "JwtAuthDemo", // 不驗證就不需要填寫
-
-        // 一般我們都會驗證 Token 的有效期間
-        ValidateLifetime = true,
-
-        // 如果 Token 中包含 key 才需要驗證，一般都只有簽章而已
-        ValidateIssuerSigningKey = false,
-
-        // "1234567890123456" 應該從 IConfiguration 取得
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["JwtSettings:SignKey"]!))
-      };
-    });
+//## for Authentication & Authorization
+var tokenValidationParameters = JwtAuthenticationTool.GenerateTokenValidationParameters(_config);
+builder.Services.AddAuthentication(option =>
+{
+  option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+  option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+  option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(option =>
+{
+#if DEBUG
+  option.RequireHttpsMetadata = false;
+#endif
+  option.SaveToken = true;
+  option.TokenValidationParameters = tokenValidationParameters;
+});
+builder.Services.AddAuthorization(option =>
+{
+  option.AddPolicy(IdentityAttr.AdminPolicyName, p =>
+    p.RequireClaim(IdentityAttr.AdminClaimName, "true"));
+});
+builder.Services.AddSingleton(tokenValidationParameters);
 
 // Add services to the container.
 
@@ -83,6 +73,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//## for Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
