@@ -17,13 +17,16 @@ export class ResponseError extends Error {
 
 /// 說明:
 /// response 只接受: 200 JSON object 與 204 NoConennt。
-export function postData<TResult>(url: string, args?: object, authToken?: string): Promise<TResult> {
+export function postData<TResult>(url: string, args?: object, authToken?: string, apiKey?: string): Promise<TResult> {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   }
 
   if (typeof authToken === 'string')
     headers['Authorization'] = `Bearer ${authToken}`
+
+  if (typeof apiKey === 'string')
+    headers['X-Api-Key'] = apiKey
 
   return new Promise<TResult>((resolve, reject) => {
     fetch(url, {

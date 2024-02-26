@@ -9,15 +9,15 @@ public record LoginArgs
 {
   [Required]
   [Display(Name = "帳號")]
-  public string userId { get; set; } = string.Empty;
+  public string UserId { get; set; } = string.Empty;
 
   [Required]
   [Display(Name = "通關密語")]
-  public string credential { get; set; } = string.Empty;
+  public string Credential { get; set; } = string.Empty;
 
   [Required]
   [Display(Name = "驗證碼")]
-  public string vcode { get; set; } = string.Empty;
+  public string Vcode { get; set; } = string.Empty;
 }
 
 [TsInterface]

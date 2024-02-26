@@ -28,14 +28,14 @@ public class AccountService(ILogger<AccountService> _logger, IConfiguration _con
   {
     try
     {
-      if (String.IsNullOrWhiteSpace(ln.userId))
+      if (String.IsNullOrWhiteSpace(ln.UserId))
         throw new ApplicationException("登入認證失敗！");
 
-      if (String.IsNullOrWhiteSpace(ln.credential))
+      if (String.IsNullOrWhiteSpace(ln.Credential))
         throw new ApplicationException("登入認證失敗！");
 
       //## verify vcode;
-      if (!"123456".Equals(ln.vcode))
+      if (!"123456".Equals(ln.Vcode))
         throw new ApplicationException("登入認證失敗！");
 
       //## 驗證帳號與密碼
@@ -52,7 +52,7 @@ public class AccountService(ILogger<AccountService> _logger, IConfiguration _con
       //}
 
       //## 帳號特例:測試
-      if (ln.userId == "smart" || ln.userId == "beauty")
+      if (ln.UserId == "smart" || ln.UserId == "beauty")
         return true;
 
       // 預設失敗
@@ -60,7 +60,7 @@ public class AccountService(ILogger<AccountService> _logger, IConfiguration _con
     }
     catch (Exception ex)
     {
-      _logger.LogError(ex, $"Authenticate FAIL, userId:{ln.userId}.");
+      _logger.LogError(ex, $"Authenticate FAIL, userId:{ln.UserId}.");
       return false;
     }
   }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Box, Button, Container, LinearProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { IWeatherForecast } from '../../DTO/Demo/IWeatherForecast'
+import { postData } from '../../tools/httpHelper';
 
 export default function FetchData_AppForm() {
   const [f_loading, setLoading] = useState(false);
@@ -45,9 +46,17 @@ export default function FetchData_AppForm() {
 
   async function populateWeatherData() {
     setLoading(true)
-    const response = await fetch('api/weatherforecast');
-    const data = await response.json();
+    const data = await postData<IWeatherForecast[]>('api/weatherforecast', undefined, undefined, '1234567')
     setForecasts(data)
     setLoading(false)
   }
+
+
+//  async function populateWeatherData() {
+//    setLoading(true)
+//    const response = await fetch('api/weatherforecast');
+//    const data = await response.json();
+//    setForecasts(data)
+//    setLoading(false)
+//  }
 }

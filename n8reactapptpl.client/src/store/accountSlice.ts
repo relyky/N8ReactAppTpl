@@ -37,9 +37,10 @@ const counterSlice = createAppSlice({
     resetAccount: create.reducer(() => ({ ...initialState })),
     setAccount: create.reducer((_, action: PayloadAction<AccountState>) => ({ ...action.payload })),
     loginAsync: create.asyncThunk(
-      async (args: ILoginArgs) => {
+      async (args: { loginArgs: ILoginArgs, apiKey: string }) => {
         try {
-          const data = await postData<ILoginResult>('api/Account/Login', args)
+          const { loginArgs, apiKey } = args
+          const data = await postData<ILoginResult>('api/Account/Login', loginArgs, undefined, apiKey)
           return data
         }
         catch (err: unknown) {

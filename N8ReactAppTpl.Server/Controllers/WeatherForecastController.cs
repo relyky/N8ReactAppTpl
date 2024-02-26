@@ -1,9 +1,11 @@
 using DTO.Demo;
 using Microsoft.AspNetCore.Mvc;
+using N8ReactAppTpl.Server.Models;
 
 namespace N8ReactAppTpl.Server.Controllers;
 
 [ApiController]
+[ServiceFilter<ApiKeyAuthFilter>]
 [Route("api/[controller]")]
 public class WeatherForecastController(ILogger<WeatherForecastController> _logger) : ControllerBase
 {
@@ -12,8 +14,8 @@ public class WeatherForecastController(ILogger<WeatherForecastController> _logge
       "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
   };
 
-  [HttpGet(Name = "GetWeatherForecast")]
-  public async Task<IEnumerable<WeatherForecast>> Get()
+  [HttpPost(Name = "GetWeatherForecast")]
+  public async Task<IEnumerable<WeatherForecast>> Post()
   {
     await Task.Delay(800);
 
