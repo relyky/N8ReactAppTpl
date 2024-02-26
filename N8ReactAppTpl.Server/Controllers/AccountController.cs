@@ -24,6 +24,16 @@ public class AccountController(ILogger<AccountController> _logger, IMemoryCache 
     Guid loginSid = Guid.NewGuid();
     string cypher = Utils.AesSimpleEncrypt(loginSid);
     _cache.Set($"ApiKey:{loginSid}", cypher, TimeSpan.FromMinutes(3)); // ３分鐘內需完成登入
+
+    //// 可以送回 cookie - 正式部署後無效的樣子！
+    //Response.Cookies.Append("my-sec-cookie", cypher, new CookieOptions()
+    //{
+    //  Expires = DateTimeOffset.Now.AddMinutes(3),
+    //  SameSite = SameSiteMode.Strict,
+    //  Secure = true,
+    //  HttpOnly = true,
+    //});
+
     return Ok(new { message = cypher });
   }
 
