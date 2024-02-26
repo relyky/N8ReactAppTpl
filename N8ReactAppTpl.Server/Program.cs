@@ -41,9 +41,6 @@ builder.Services.AddAuthorization(option =>
 });
 builder.Services.AddSingleton(tokenValidationParameters);
 
-//## for ApiKeyAtuhFilter
-builder.Services.AddScoped<ApiKeyAuthFilter>();
-
 // Add services to the container.
 
 builder.Services.AddControllers();

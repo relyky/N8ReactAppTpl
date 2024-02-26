@@ -16,7 +16,7 @@ namespace N8ReactAppTpl.Server.Controllers;
 public class AccountController(ILogger<AccountController> _logger, IMemoryCache _cache,  AccountService _account) : ControllerBase
 {
   /// <summary>
-  /// 未完成；未驗證；
+  /// for Anti-Forgery
   /// </summary>
   [HttpPost("[action]")]
   public ActionResult<string> GetApiKey()
@@ -45,6 +45,7 @@ public class AccountController(ILogger<AccountController> _logger, IMemoryCache 
       // 模擬長時間運算。正式版移除。
       SpinWait.SpinUntil(() => false, 2000);
 
+      #region verify X-Api-Key
       if (String.IsNullOrWhiteSpace(cypher))
         return Unauthorized();
 
@@ -54,6 +55,7 @@ public class AccountController(ILogger<AccountController> _logger, IMemoryCache 
 
       if (cypher != _cypher)
         return Unauthorized();
+      #endregion
 
       if (!_account.Authenticate(login))
         return Unauthorized();
@@ -64,7 +66,7 @@ public class AccountController(ILogger<AccountController> _logger, IMemoryCache 
 
       var token = _account.GenerateJwtToken(auth);
 
-      // 已完成登入驗證，可移除 loginSid
+      //# 已完成登入驗證，可移除 loginSid
       _cache.Remove($"ApiKey:{loginSid}");
 
       _logger.LogInformation($"使用者[{auth.UserId}]登入完成。");

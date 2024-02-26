@@ -5,7 +5,6 @@ using N8ReactAppTpl.Server.Models;
 namespace N8ReactAppTpl.Server.Controllers;
 
 [ApiController]
-[ServiceFilter<ApiKeyAuthFilter>]
 [Route("api/[controller]")]
 public class WeatherForecastController(ILogger<WeatherForecastController> _logger) : ControllerBase
 {
