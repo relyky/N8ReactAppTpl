@@ -174,10 +174,10 @@ public class AccountService(ILogger<AccountService> _logger, IConfiguration _con
     var identity = id as ClaimsIdentity;
     if (identity == null) return null;
 
-    var jtiClaim = identity.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Jti);
-    if (jtiClaim == null) return null;
+    var sidClaim = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid);
+    if (sidClaim == null) return null;
 
-    if (!Guid.TryParse(jtiClaim.Value, out Guid authGuid))
+    if (!Guid.TryParse(sidClaim.Value, out Guid authGuid))
       return null;
 
     lock (_lockObj)

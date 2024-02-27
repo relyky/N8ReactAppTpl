@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using MultiLingualWASMLab.Server.Models;
 using N8ReactAppTpl.Server.Models;
 using N8ReactAppTpl.Server.Services;
 using Reinforced.Typings.Attributes;
@@ -33,11 +32,6 @@ builder.Services.AddAuthentication(option =>
 #endif
   option.SaveToken = true;
   option.TokenValidationParameters = tokenValidationParameters;
-});
-builder.Services.AddAuthorization(option =>
-{
-  option.AddPolicy(IdentityAttr.AdminPolicyName, p =>
-    p.RequireClaim(IdentityAttr.AdminClaimName, "true"));
 });
 builder.Services.AddSingleton(tokenValidationParameters);
 

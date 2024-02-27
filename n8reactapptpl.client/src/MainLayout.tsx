@@ -2,14 +2,14 @@ import { useState } from 'react'
 import type { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert, Backdrop, CircularProgress, Container } from '@mui/material'
+import { Box, Drawer, Typography, Toolbar, useMediaQuery, Divider, Backdrop, CircularProgress, Container, Snackbar, Alert } from '@mui/material'
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectBlocking, selectTopAlert, setTopAlert } from './store/metaSlice';
 import { selectAuthed } from './store/accountSlice';
 import Banner from './Banner';
 import NavMenu from './NavMenu'
 // Icons
-import CloseIcon from '@mui/icons-material/Close'
+//import CloseIcon from '@mui/icons-material/Close'
 
 const drawerWidth = 240;
 const sysVersion: string = 'Version 0.0.1-alpha'
@@ -107,26 +107,31 @@ const Main = styled('main')<{
 //-----------------------------------------------------------------------------
 const TopAlert: FC = () => {
   const dispatch = useAppDispatch()
-  const topAlert = useAppSelector(selectTopAlert)
+  const topAlert = useAppSelector(selectTopAlert);
+
+  const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway')
+      return;
+
+    dispatch(setTopAlert(null))
+  };
 
   if (!topAlert) return; // 不顯示離開。
   return (
-    <Alert severity={topAlert.severity}
-      variant='filled'
-      action={
-        <IconButton
-          aria-label="close"
-          color="inherit"
-          size="small"
-          onClick={() => {
-            dispatch(setTopAlert(null))
-          }}
-        >
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
-      }>
-      {topAlert.text}
-    </Alert>
+    <Snackbar
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      open={!!topAlert}
+      autoHideDuration={6000}
+      onClose={handleClose}>
+      <Alert
+        sx={{ minWidth: '50vw' }}
+        onClose={handleClose}
+        severity={topAlert.severity}
+        variant="filled"
+      >
+        {topAlert.text}
+      </Alert>
+    </Snackbar>
   )
 }
 

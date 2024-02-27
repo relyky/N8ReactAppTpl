@@ -9,17 +9,9 @@ using System.Threading.Tasks;
 namespace N8ReactAppTpl.Server.Models;
 
 /// <summary>
-/// 取得現在使用者授權明細
-/// </summary>
-interface IAuthUser
-{
-  AuthUser GetCurrentUser();
-}
-
-/// <summary>
 /// 使用者授權明細(no public)
 /// </summary>
-record AuthUser
+public record AuthUser
 {
   public string UserId { get; init; } = String.Empty;
   public string UserName { get; init; } = String.Empty;
@@ -40,7 +32,7 @@ record AuthUser
   public string[] AuthFuncList() => AuthMenu.groupList.SelectMany(g => g.funcList, (g, f) => f.funcId).ToArray();
 }
 
-class MenuInfo
+public class MenuInfo
 {
   public List<MenuGroup> groupList { get; set; } = new List<MenuGroup>();
 
@@ -51,7 +43,7 @@ class MenuInfo
   }
 }
 
-class MenuGroup
+public record MenuGroup
 {
   public string groupName { get; set; } = String.Empty;
   public string groupId { get; set; } = String.Empty;
@@ -64,7 +56,7 @@ class MenuGroup
   }
 }
 
-class MenuItem
+public record MenuItem
 {
   public string funcId { get; set; } = String.Empty;
   public string funcName { get; set; } = String.Empty;
