@@ -28,7 +28,7 @@ class JwtAuthenticationTool(IConfiguration _config)
   /// <summary>
   /// 登入程序必要步驟。需與驗證程序呼應。
   /// </summary>
-  public string MakeToken(ClaimsIdentity userIdentity, DateTime expiresUtcTime)
+  public string MakeToken(ClaimsIdentity userIdentity, DateTimeOffset expiresUtcTime)
   {
     var signingKey = Encoding.ASCII.GetBytes(_config["JwtSettings:SigningKey"]!);
     var secretKey = Encoding.ASCII.GetBytes(_config["JwtSettings:SecretKey"]!);
@@ -37,7 +37,7 @@ class JwtAuthenticationTool(IConfiguration _config)
     var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
     {
       Subject = userIdentity,
-      Expires = expiresUtcTime,
+      Expires = expiresUtcTime.UtcDateTime,
       Issuer = _config["JwtSettings:Issuer"],
       Audience = _config["JwtSettings:Audience"],
       SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(signingKey), SecurityAlgorithms.HmacSha256Signature),

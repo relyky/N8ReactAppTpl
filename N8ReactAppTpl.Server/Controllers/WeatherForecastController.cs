@@ -1,4 +1,5 @@
 using DTO.Demo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using N8ReactAppTpl.Server.Models;
 
@@ -6,6 +7,7 @@ namespace N8ReactAppTpl.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class WeatherForecastController(ILogger<WeatherForecastController> _logger) : ControllerBase
 {
   private static readonly string[] Summaries = new[]

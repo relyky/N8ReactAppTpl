@@ -164,7 +164,7 @@ public class AccountService(ILogger<AccountService> _logger, IConfiguration _con
     userIdentity.AddClaim(new Claim(ClaimTypes.Sid, auth.AuthGuid.ToString()));
     userIdentity.AddClaims(auth.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-    string jwtToken = jwtTool.MakeToken(userIdentity, auth.ExpiresUtc.DateTime);
+    string jwtToken = jwtTool.MakeToken(userIdentity, auth.ExpiresUtc);
 
     return jwtToken;
   }

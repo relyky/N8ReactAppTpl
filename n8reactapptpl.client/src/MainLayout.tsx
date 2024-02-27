@@ -2,9 +2,10 @@ import { useState } from 'react'
 import type { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert, Backdrop, CircularProgress } from '@mui/material'
+import { Box, Drawer, IconButton, Typography, Toolbar, useMediaQuery, Divider, Alert, Backdrop, CircularProgress, Container } from '@mui/material'
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectBlocking, selectTopAlert, setTopAlert } from './store/metaSlice';
+import { selectAuthed } from './store/accountSlice';
 import Banner from './Banner';
 import NavMenu from './NavMenu'
 // Icons
@@ -17,7 +18,8 @@ export default function ResponsiveDrawer() {
   const theme = useTheme();
   const matchXs = useMediaQuery(theme.breakpoints.only('xs'))
   const [open, setOpen] = useState(() => matchXs ? false : true) // 畫面開啟時，若是`手機模式`則預設不顯示選單。
-  const [isClosing, setIsClosing] = useState(false);
+  const [isClosing, setIsClosing] = useState(false)
+  const isAuthed = useAppSelector(selectAuthed)
 
   function handleDrawerClose() {
     setIsClosing(true);
@@ -38,7 +40,7 @@ export default function ResponsiveDrawer() {
     <Box sx={{ display: 'flex' }}>
 
       <Banner onOpenDrawer={toggleDrawer} />
- 
+
       {/* nav */}
       <Box component="nav" sx={{
         width: { sm: drawerWidth },
@@ -64,8 +66,9 @@ export default function ResponsiveDrawer() {
       <Main open={open} matchXs={matchXs}>
         <Toolbar /> {/* hat */}
         <TopAlert />
-        <Outlet />
-        <Overlay />
+        {isAuthed
+          ? <Outlet />
+          : <NotAuthorized />}
         {/* footer */}
         <Divider variant="middle" sx={{ my: 1 }} />
         <footer style={{ textAlign: 'center' }} >
@@ -74,6 +77,7 @@ export default function ResponsiveDrawer() {
             最佳瀏覽器 Chrome, Edge, Safari。</Typography>
         </footer>
       </Main>
+      <Overlay />
     </Box>
   );
 }
@@ -138,3 +142,13 @@ const Overlay: FC = () => {
     </Backdrop>
   )
 }
+
+//-----------------------------------------------------------------------------
+const NotAuthorized: FC = () => {
+  return (
+    <Container>
+      <Typography variant='h1'>401 NotAuthorized</Typography>
+    </Container>
+  )
+}
+
