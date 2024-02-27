@@ -1,7 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "./hooks";
 import Swal from "sweetalert2"
-import { ResponseError, postData } from "../tools/httpHelper";
+import { ResponseError, postAuth, postData } from "../tools/httpHelper";
 import type { RootState } from "./store";
 import { ILoginArgs } from "../DTO/Account/ILoginArgs";
 import { ILoginResult } from "../DTO/Account/ILoginResult";
@@ -37,10 +37,9 @@ const counterSlice = createAppSlice({
     resetAccount: create.reducer(() => ({ ...initialState })),
     setAccount: create.reducer((_, action: PayloadAction<AccountState>) => ({ ...action.payload })),
     loginAsync: create.asyncThunk(
-      async (args: { loginArgs: ILoginArgs, apiKey: string }) => {
+      async (args: ILoginArgs) => {
         try {
-          const { loginArgs, apiKey } = args
-          const data = await postData<ILoginResult>('api/Account/Login', loginArgs, undefined, apiKey)
+          const data = await postAuth<ILoginResult>('api/Account/Login', args)
           return data
         }
         catch (err: unknown) {

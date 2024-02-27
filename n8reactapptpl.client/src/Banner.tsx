@@ -53,9 +53,14 @@ export default function Banner(props: {
               <LoopSpinIcon />
             </IconButton>
             : isAuthed ?
-              <IconButton color="inherit" title={accountState.loginUserName} onClick={e => setAnchorEl(e.currentTarget)}>
-                <AccountIcon />
-              </IconButton>
+              <>
+                <IconButton color="inherit" title={accountState.loginUserName} onClick={e => setAnchorEl(e.currentTarget)}>
+                  <AccountIcon />
+                </IconButton>
+                <Typography variant='body2'>
+                  {accountState.loginUserName}
+                </Typography>
+              </>
               :
               <IconButton color="inherit" title="登入" onClick={handleLogin}>
                 <LoginIcon />

@@ -41,6 +41,9 @@ builder.Services.AddAuthorization(option =>
 });
 builder.Services.AddSingleton(tokenValidationParameters);
 
+//¡± for Anit-Forgery
+builder.Services.AddScoped<ValidateXsrfTokenFilter>();
+
 // Add services to the container.
 
 builder.Services.AddControllers();

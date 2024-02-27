@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import type { FC, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginAsync, selectAuthed, selectAuthing } from '../../store/accountSlice';
-import { postData } from '../../tools/httpHelper';
+import { postAuth } from '../../tools/httpHelper';
 import { ILoginArgs } from '../../DTO/Account/ILoginArgs';
 // icons
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
@@ -26,11 +26,9 @@ export default function LoginForm() {
   const navigate = useNavigate()
   const isAuthed = useAppSelector(selectAuthed)
   const isAuthing = useAppSelector(selectAuthing)
-  const [apiKey, setApiKey] = useState('nil')
 
   useEffect(() => {
-    postData<MsgObj>('api/Account/GetApiKey')
-      .then(m => setApiKey(m.message))
+    postAuth('api/Account/GetXsrfToken')
   }, [])
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -42,7 +40,7 @@ export default function LoginForm() {
       vcode: '123456'
     };
 
-    dispatch(loginAsync({ loginArgs, apiKey }))
+    dispatch(loginAsync(loginArgs))
   };
 
   //# 成功後轉址到主畫面
