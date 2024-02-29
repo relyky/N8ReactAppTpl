@@ -11,11 +11,13 @@ namespace N8ReactAppTpl.Server.Models;
 /// </summary>
 public class ValidateXsrfTokenFilter(ILogger<ValidateXsrfTokenFilter> _logger, IMemoryCache _cache) : Attribute, IAuthorizationFilter
 {
+  const string XSRF_TOKEN_NAME = ".N8ReactAppTpl.Server.XSRF-TOKEN-of83";
+
   public void OnAuthorization(AuthorizationFilterContext context)
   {
     try
     {
-      if (!context.HttpContext.Request.Cookies.TryGetValue("XSRF-TOKEN", out string? extractedToken))
+      if (!context.HttpContext.Request.Cookies.TryGetValue(XSRF_TOKEN_NAME, out string? extractedToken))
       {
         _logger.LogError("XSRF-TOKEN is missing.");
         context.Result = new UnauthorizedResult();
@@ -60,7 +62,7 @@ public class ValidateXsrfTokenFilter(ILogger<ValidateXsrfTokenFilter> _logger, I
     cache.Set($"XSRF-TOKEN:{loginSid}", token, TimeSpan.FromMinutes(3)); // ３分鐘內需完成登入
 
     // 可以送回 cookie - 正式部署後無效的樣子！
-    context.Response.Cookies.Append("XSRF-TOKEN", token, new CookieOptions()
+    context.Response.Cookies.Append(XSRF_TOKEN_NAME, token, new CookieOptions()
     {
       Expires = DateTimeOffset.Now.AddMinutes(3),
       SameSite = SameSiteMode.Lax, // SameSiteMode.Strict,
