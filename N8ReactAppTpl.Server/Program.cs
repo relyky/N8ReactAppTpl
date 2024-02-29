@@ -40,6 +40,11 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 });
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+  .AddCookie(cfg =>
+  {
+    cfg.LoginPath = "/login"; // default: /Accout/Login
+    cfg.Cookie.Name = ".N8ReactAppTpl.Server.Cookies"; //default:.AspNetCore.Cookies
+  })
   .AddJwtBearer(option =>
   {
 #if DEBUG
@@ -47,10 +52,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 #endif
     option.SaveToken = true;
     option.TokenValidationParameters = jwtTokenValidationParameters;
-  }).AddCookie(cfg =>
-  {
-    cfg.LoginPath = "/Accout/Login"; // default: /Accout/Login
-    cfg.Cookie.Name = ".N8ReactAppTpl.Server.Cookies"; //default:.AspNetCore.Cookies
   });
 
 builder.Services.AddSingleton(jwtTokenValidationParameters);

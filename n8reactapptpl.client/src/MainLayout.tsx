@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { FC } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Drawer, Typography, Toolbar, useMediaQuery, Divider, Backdrop, CircularProgress, Container, Snackbar, Alert } from '@mui/material'
 import { useAppDispatch, useAppSelector } from './store/hooks';
@@ -20,6 +20,9 @@ export default function ResponsiveDrawer() {
   const [open, setOpen] = useState(() => matchXs ? false : true) // 畫面開啟時，若是`手機模式`則預設不顯示選單。
   const [isClosing, setIsClosing] = useState(false)
   const isAuthed = useAppSelector(selectAuthed)
+  const location = useLocation()
+
+  const isHomePage = useMemo(()=> location.pathname === '/', [location.pathname])
 
   function handleDrawerClose() {
     setIsClosing(true);
@@ -66,7 +69,7 @@ export default function ResponsiveDrawer() {
       <Main open={open} matchXs={matchXs}>
         <Toolbar /> {/* hat */}
         <TopAlert />
-        {isAuthed
+        {isAuthed || isHomePage /* 首頁為特例不用登入 */
           ? <Outlet />
           : <NotAuthorized />}
         {/* footer */}

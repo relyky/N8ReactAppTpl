@@ -15,6 +15,7 @@ export default function FetchData_AppForm() {
   return (
     <Container>
       <Typography variant='h3'>天氣預報 Weather forecast</Typography>
+      <Typography variant='h4'>報表類的就不用存入 store。</Typography>
       <Box>This component demonstrates fetching data from the server.</Box>
       <Button variant='contained' onClick={populateWeatherData} disabled={f_loading}>刷新</Button>
 
