@@ -1,21 +1,18 @@
 import { useCallback } from "react";
 import { ResponseError, postData } from "../tools/httpHelper";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { selectAccount } from "../store/accountSlice";
+import { useAppDispatch } from "../store/hooks";
 import { setBlocking, setTopAlert } from "../store/metaSlice";
 import Swal from "sweetalert2";
 
 
-
 export function usePostData() {
   const dispatch = useAppDispatch()
-  const account = useAppSelector(selectAccount)
 
   const post = useCallback(
     async <T>(url: string, args?: object): Promise<T> => {
       try {
         dispatch(setBlocking(true))
-        const data = await postData<T>(url, args, account?.authToken)
+        const data = await postData<T>(url, args)
         return data
       }
       catch (err) {
@@ -31,7 +28,7 @@ export function usePostData() {
         dispatch(setBlocking(false))
       }
     }
-    , [account?.authToken, dispatch]);
+    , [dispatch]);
 
   return post;
 }
