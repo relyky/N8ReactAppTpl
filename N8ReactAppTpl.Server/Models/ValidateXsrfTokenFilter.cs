@@ -66,6 +66,7 @@ public class ValidateXsrfTokenFilter(ILogger<ValidateXsrfTokenFilter> _logger, I
       SameSite = SameSiteMode.Lax, // SameSiteMode.Strict,
       Secure = true,
       HttpOnly = true,
+      IsEssential = true, // for GDPR Consent. 若該 cookie 為 essential 就不需使用者同意就可寫入。.
     });
   }
 }

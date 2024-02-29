@@ -2,10 +2,9 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
-export interface ILoginResult
+export interface ILoginUserInfo
 {
 	loginUserId: string;
 	loginUserName: string;
 	expiredTime: Date;
-	authToken: string;
 }

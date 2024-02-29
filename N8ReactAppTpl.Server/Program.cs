@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using N8ReactAppTpl.Server.Models;
@@ -19,21 +20,40 @@ var _config = builder.Configuration;
 builder.Logging.AddRinLogger(); // for Rin 監聽 HTTP 封包
 
 //## for Authentication & Authorization
-var tokenValidationParameters = JwtAuthenticationTool.GenerateTokenValidationParameters(_config);
-builder.Services.AddAuthentication(option =>
+// for JwtBearer Auth
+var jwtTokenValidationParameters = JwtAuthenticationTool.GenerateTokenValidationParameters(_config);
+
+// for COOKIE Auth
+// ref → https://blazorhelpwebsite.com/ViewBlogPost/36
+builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-  option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-  option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-  option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(option =>
-{
-#if DEBUG
-  option.RequireHttpsMetadata = false;
-#endif
-  option.SaveToken = true;
-  option.TokenValidationParameters = tokenValidationParameters;
+  options.MinimumSameSitePolicy = SameSiteMode.Lax; // SameSiteMode.Strict;
+
+  //§§ for GDPR Consent
+  // AspNetCore2.1 supports the GDPR specification introduced on May 25, 2018,
+  // which considers cookies to be private data of users.If they are to be used,
+  // they must obtain user consent.
+  options.CheckConsentNeeded = context => true; // 啟用 GDPR 政策檢查
+  options.ConsentCookie.Name = ".AspNet.Consent"; // ".AspNet.Consent"
+  options.ConsentCookie.HttpOnly = false;
+  options.ConsentCookie.Expiration = TimeSpan.FromDays(365);
 });
-builder.Services.AddSingleton(tokenValidationParameters);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+  .AddJwtBearer(option =>
+  {
+#if DEBUG
+    option.RequireHttpsMetadata = false;
+#endif
+    option.SaveToken = true;
+    option.TokenValidationParameters = jwtTokenValidationParameters;
+  }).AddCookie(cfg =>
+  {
+    cfg.LoginPath = "/Accout/Login"; // default: /Accout/Login
+    cfg.Cookie.Name = ".N8ReactAppTpl.Server.Cookies"; //default:.AspNetCore.Cookies
+  });
+
+builder.Services.AddSingleton(jwtTokenValidationParameters);
 
 //§ for Anit-Forgery
 builder.Services.AddScoped<ValidateXsrfTokenFilter>();
@@ -71,6 +91,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //## for Authentication & Authorization
+app.UseCookiePolicy(); // for COOKIE Auth
 app.UseAuthentication();
 app.UseAuthorization();
 

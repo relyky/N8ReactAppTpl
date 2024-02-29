@@ -21,11 +21,19 @@ public record LoginArgs
 }
 
 [TsInterface]
-public record LoginResult
+public record LoginUserInfo
 {
   public string LoginUserId { get; set; } = string.Empty;
   public string LoginUserName { get; set; } = string.Empty;
   [TsProperty(Type = "Date")]
   public DateTimeOffset ExpiredTime { get; set; }
+}
+
+[TsInterface]
+public record AccessTokenResult
+{
+  [TsProperty(Type = "Date")]
+  public DateTimeOffset ExpiredTime { get; set; }
   public string AuthToken { get; set; } = string.Empty;
 }
+

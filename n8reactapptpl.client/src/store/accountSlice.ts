@@ -1,10 +1,10 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { createAppSlice } from "./hooks";
+import type { PayloadAction } from "@reduxjs/toolkit"
+import { createAppSlice } from "./hooks"
 import Swal from "sweetalert2"
-import { ResponseError, postAuth, postData } from "../tools/httpHelper";
-import type { RootState } from "./store";
-import { ILoginArgs } from "../DTO/Account/ILoginArgs";
-import { ILoginResult } from "../DTO/Account/ILoginResult";
+import { ResponseError, postData } from "../tools/httpHelper"
+import { ILoginArgs } from "../DTO/Account/ILoginArgs"
+import { ILoginUserInfo } from "../DTO/Account/ILoginUserInfo"
+//import type { RootState } from "./store"
 
 export enum AuthStatus {
   Guest = "Guest",
@@ -16,7 +16,6 @@ export interface AccountState {
   loginUserId: string
   loginUserName: string
   status: AuthStatus
-  authToken?: string
   expiredTime?: Date
 }
 
@@ -26,7 +25,6 @@ const initialState: AccountState = {
   loginUserId: '',
   loginUserName: '來賓',
   status: AuthStatus.Guest,
-  authToken: undefined,
   expiredTime: undefined,
 }
 
@@ -39,8 +37,12 @@ const counterSlice = createAppSlice({
     loginAsync: create.asyncThunk(
       async (args: ILoginArgs) => {
         try {
-          const data = await postAuth<ILoginResult>('api/Account/Login', args)
-          return data
+          const msg = await postData<MsgObj>('api/Account/Login', args)
+          if (msg.message !== 'Login success.')
+            throw new ResponseError(msg.message, 401, 'Unauthorized');
+
+          const loginUser = await postData<ILoginUserInfo>('api/Account/GetLoginUser')
+          return loginUser
         }
         catch (err: unknown) {
           if (err instanceof ResponseError)
@@ -53,22 +55,20 @@ const counterSlice = createAppSlice({
           state.status = AuthStatus.Authing
         },
         fulfilled: (state, action) => {
-          const { loginUserId, loginUserName, expiredTime, authToken } = action.payload
+          const { loginUserId, loginUserName, expiredTime } = action.payload
           state.loginUserId = loginUserId
           state.loginUserName = loginUserName
           state.expiredTime = expiredTime
-          state.authToken = authToken
           state.status = AuthStatus.Authed
         },
         rejected: () => initialState,
       },
     ),
     logoutAsync: create.asyncThunk(
-      async (_: undefined, thunkAPI) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      async (_: undefined) => {
         try {
-          const store = thunkAPI.getState() as RootState
-          const { authToken } = store.account
-          await postData('api/Account/Logout', undefined, authToken)
+          await postData('api/Account/Logout');
         }
         catch (err: unknown) {
           console.error('logoutAsync.catch', { err })
@@ -85,7 +85,37 @@ const counterSlice = createAppSlice({
         rejected: () => initialState,
       },
     ),
-    refreshTokenAsync: create.asyncThunk(
+    refillLoginUserAsync: create.asyncThunk(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      async (_: undefined) => {
+        const loginUser = await postData<ILoginUserInfo>('api/Account/GetLoginUser')
+        return loginUser
+      },
+      {
+        pending: (state) => {
+          state.status = AuthStatus.Authing
+        },
+        fulfilled: (state, action) => {
+          const { loginUserId, loginUserName, expiredTime } = action.payload
+          state.loginUserId = loginUserId
+          state.loginUserName = loginUserName
+          state.expiredTime = expiredTime
+          state.status = AuthStatus.Authed
+        },
+        rejected: () => initialState,
+      },
+    ),
+    requestAccessTokenAsync: create.asyncThunk(
+      async () => {
+        //throw new Error('未實作！');
+      },
+      {
+        pending: (state) => state,
+        fulfilled: (state) => state,
+        rejected: (state) => state,
+      },
+    ),
+    refreshAccessTokenAsync: create.asyncThunk(
       async () => {
         //throw new Error('未實作！');
       },
@@ -97,7 +127,7 @@ const counterSlice = createAppSlice({
     ),
   }),
   selectors: {
-    selectAuthed: state => state.status === AuthStatus.Authed && typeof state.authToken === 'string', // && state.expiredTime < NOW,
+    selectAuthed: state => state.status === AuthStatus.Authed, // && state.expiredTime < NOW,
     selectAuthing: state => state.status === AuthStatus.Authing,
     selectAccount: state => state,
   },
@@ -106,6 +136,6 @@ const counterSlice = createAppSlice({
 // export this slice
 export default counterSlice
 // export this actions
-export const { loginAsync, logoutAsync } = counterSlice.actions
+export const { loginAsync, logoutAsync, refillLoginUserAsync } = counterSlice.actions
 // export this selectors
 export const { selectAuthed, selectAuthing, selectAccount } = counterSlice.selectors

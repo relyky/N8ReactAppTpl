@@ -5,7 +5,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import { Box, Drawer, Typography, Toolbar, useMediaQuery, Divider, Backdrop, CircularProgress, Container, Snackbar, Alert } from '@mui/material'
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { selectBlocking, selectTopAlert, setTopAlert } from './store/metaSlice';
-import { selectAuthed } from './store/accountSlice';
+import { selectAuthed, selectAuthing } from './store/accountSlice';
 import Banner from './Banner';
 import NavMenu from './NavMenu'
 // Icons
@@ -138,10 +138,11 @@ const TopAlert: FC = () => {
 //-----------------------------------------------------------------------------
 const Overlay: FC = () => {
   const blocking = useAppSelector(selectBlocking)
+  const isAuthing = useAppSelector(selectAuthing)
   return (
     <Backdrop
       sx={{ color: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      open={blocking}
+      open={blocking || isAuthing}
     >
       <CircularProgress color="inherit" size='6rem' />
     </Backdrop>

@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import type { FC, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom"
-import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { loginAsync, selectAuthed, selectAuthing } from '../../store/accountSlice';
-import { postAuth } from '../../tools/httpHelper';
-import { ILoginArgs } from '../../DTO/Account/ILoginArgs';
+import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { postData } from '../../tools/httpHelper'
+import { loginAsync, selectAuthed, selectAuthing } from '../../store/accountSlice'
+import { ILoginArgs } from '../../DTO/Account/ILoginArgs'
 // icons
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
@@ -28,7 +28,7 @@ export default function LoginForm() {
   const isAuthing = useAppSelector(selectAuthing)
 
   useEffect(() => {
-    postAuth('api/Account/GetXsrfToken')
+    postData('api/Account/GetXsrfToken')
   }, [])
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
