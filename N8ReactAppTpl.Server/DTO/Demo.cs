@@ -16,6 +16,14 @@ public record WeatherForecast
   public string? Summary { get; set; }
 }
 
+
+[TsInterface]
+public record Demo05_QryArgs
+{
+  public int Count { get; set; }
+  public string City { get; set; } = string.Empty;
+}
+
 [TsInterface]
 public record MyTestDto
 {

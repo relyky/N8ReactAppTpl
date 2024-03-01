@@ -17,9 +17,9 @@ export default function NavMenu() {
       <Divider textAlign='left'>功能選單</Divider>
       <List>
         <ListMenuGroup label='展示功能'>
-          <ListMenuItem label='Counter' to='/counter' />
-          <ListMenuItem label='Fetch data' to='/fetch-data' />
           <ListMenuItem label='展示功能０１' to='/demo01' />
+          <ListMenuItem label='展示功能０５' to='/demo05' />
+          <ListMenuItem label='Counter' to='/counter' />
         </ListMenuGroup>
 
         <ListMenuGroup label='展示功能２'>

@@ -18,6 +18,7 @@
     <PackageReference Include="Reinforced.Typings" Version="1.6.3" />
     <PackageReference Include="Rin" Version="2.6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
