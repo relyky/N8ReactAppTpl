@@ -6,7 +6,11 @@ import { useAppDispatch, useAppSelector } from "./store/hooks"
 import { selectDarkTheme } from "./store/metaSlice"
 import { refillLoginUserAsync, selectAuthed } from "./store/accountSlice"
 import { useEffect } from "react"
-
+import { LocalizationProvider } from '@mui/x-date-pickers';
+//import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
+//import 'dayjs/locale/zh-tw'
+import { zhTW as datefns_zhTW } from 'date-fns/locale/zh-TW'
 //-----------------------------------------------------------------------------
 //## Resource
 
@@ -44,9 +48,11 @@ export default function App() {
   }, [dispatch, isAuthed])
 
   return (
-    <ThemeProvider theme={f_darkTheme ? darkTheme : whiteTheme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={datefns_zhTW} dateFormats={{ keyboardDate: 'yyyy-MM-dd' }} >
+      <ThemeProvider theme={f_darkTheme ? darkTheme : whiteTheme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </LocalizationProvider>
   )
 }
