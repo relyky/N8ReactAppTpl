@@ -1,24 +1,24 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { format, isValid, addDays } from "date-fns";
+import { isValid, addDays, startOfToday } from "date-fns";
 import { useState } from "react";
 
 interface FormState {
   fieldA: string
   fieldB: string
   fieldC: number
-  fieldD: string | null
+  fieldD: Date | null
 }
 
 const initState: FormState = {
   fieldA: '',
   fieldB: '',
   fieldC: 0,
-  fieldD: format(new Date(), 'yyyy/MM/dd')
+  fieldD: startOfToday()
 }
 
-const minDate = format(addDays(new Date(), 2), 'yyyy/MM/dd') // dayjs().add(2, 'day')
+const minDate = addDays(startOfToday(), 2) // dayjs().add(2, 'day')
 
 export default function TabPageC() {
   const [formData, setFormData] = useState(initState)
@@ -36,7 +36,7 @@ export default function TabPageC() {
 
   return (
     <Box>
-      <Typography variant='h5'>@MUI input/react-hook-form validation</Typography>
+      <Typography variant='h5'>@MUI input/React Hook Form validation</Typography>
       <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }} >
         <TextField label='Field A' name='fieldA' value={formData.fieldA} onChange={handleChange} required placeholder='ABC'
           inputProps={{ pattern: "ABC" }} />
@@ -60,9 +60,8 @@ export default function TabPageC() {
     </Box>
   )
 
-  function handleDateChange(value: string | null, context: PickerChangeHandlerContext<DateValidationError>) {
+  function handleDateChange(value: Date | null, context: PickerChangeHandlerContext<DateValidationError>) {
     console.log('handleDateChange', { value, context })
-
-    setFormData({ ...formData, fieldD: value && isValid(value) ? format(value, 'yyyy-MM-dd') : null });
+    setFormData({ ...formData, fieldD: isValid(value) ? value : null });
   }
 }
