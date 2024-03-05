@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Box, Button, Chip, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as dfs from "date-fns";
@@ -26,30 +27,32 @@ export default function TabPageC() {
     handleSubmit,
     formState: { errors, isValid, isValidating, isDirty, isSubmitSuccessful, isSubmitted, isSubmitting, submitCount },
     getValues,
+    setValue,
     control,
   } = useForm<FormValues>({ defaultValues: initState, criteriaMode: "all", });
 
   const onSubmit = handleSubmit((data) => {
     const json = JSON.stringify(data, null, ' ')
     alert('已送出封包。' + json)
-    reset()
+    //reset()
   });
 
-  //required
-  //min
-  //max
-  //minLength
-  //maxLength
-  //pattern: /^[A-Za-z]+$/i
-  //validate
+  //rules:
+  // required
+  // min
+  // max
+  // minLength
+  // maxLength
+  // pattern: /^[A-Za-z]+$/i
+  // validate
 
-  const errorsMsg = Object.entries(errors).map(
+  const errorsMsg = useMemo(() => Object.entries(errors).map(
     ([name, value]) => ({
       name,
       type: value.type,
       message: value.message
     })
-  );
+  ), [errors]);
 
   //console.log('TabPageC.errors', errors)
   return (
@@ -58,17 +61,17 @@ export default function TabPageC() {
 
       <Stack direction="row" spacing={1}>
         <Chip label="isDirty" color="warning" disabled={!isDirty} />
-        <Chip label="isValid" color="info" disabled={!isValid} />
         <Chip label="isValidating" color="info" disabled={!isValidating} />
-        <Chip label={`isSubmitted (${submitCount})`} color="info" disabled={!isSubmitted} />
+        <Chip label="isValid" color="info" disabled={!isValid} />
         <Chip label="isSubmitting" color="info" disabled={!isSubmitting} />
+        <Chip label={`isSubmitted (${submitCount})`} color="info" disabled={!isSubmitted} />
         <Chip label="isSubmitSuccessful" color="success" disabled={!isSubmitSuccessful} />
       </Stack>
 
       <p>{`isDirty:${isDirty} | isValid:${isValid} | isValidating:${isValidating} | isSubmitSuccessful:${isSubmitSuccessful}`}</p>
 
       <Box typography='h6'>errors</Box>
-      <Box component='pre' sx={{color: 'error.main'}}>
+      <Box component='pre' sx={{ color: 'error.main' }}>
         {Array.isArray(errorsMsg) && errorsMsg.map((msg) =>
           (<div>{JSON.stringify(msg)}</div>)
         )}
@@ -149,6 +152,10 @@ export default function TabPageC() {
                   required: true,
                   error: !!fieldState.error,
                   helperText: fieldState.error?.message,
+                  onChange: (value: Date) => {
+                    console.log('DatePicker.textField.onChange', { value })
+                    setValue(field.name, dfs.isValid(value) ? value : null, { shouldDirty: true, shouldValidate: true })
+                  }
                 },
               }}
             />
@@ -156,6 +163,7 @@ export default function TabPageC() {
         />
 
         <Button variant='contained' type='submit'>送出封包</Button>
+        <Button variant='outlined' onClick={() => reset()} >重置</Button>
       </Box>
 
       <Typography variant='h6'>formData</Typography>
