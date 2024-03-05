@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Chip, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as dfs from "date-fns";
 import { Controller, useForm } from "react-hook-form";
@@ -24,7 +24,7 @@ export default function TabPageC() {
     register,
     reset,
     handleSubmit,
-    formState: { errors, isValid, isValidating, isDirty, isSubmitSuccessful, },
+    formState: { errors, isValid, isValidating, isDirty, isSubmitSuccessful, isSubmitted, isSubmitting, submitCount },
     getValues,
     control,
   } = useForm<FormValues>({ defaultValues: initState, criteriaMode: "all", });
@@ -56,14 +56,23 @@ export default function TabPageC() {
     <Box>
       <Typography variant='h5'>@MUI input/React Hook Form validation</Typography>
 
-      <p>{`isDirty:${isDirty} | isValid:${isValid} | isValidating:${isValidating} | isSubmitSuccessful:${isSubmitSuccessful}`}</p>
-      <Box typography='h6'>errors</Box>
+      <Stack direction="row" spacing={1}>
+        <Chip label="isDirty" color="warning" disabled={!isDirty} />
+        <Chip label="isValid" color="info" disabled={!isValid} />
+        <Chip label="isValidating" color="info" disabled={!isValidating} />
+        <Chip label={`isSubmitted (${submitCount})`} color="info" disabled={!isSubmitted} />
+        <Chip label="isSubmitting" color="info" disabled={!isSubmitting} />
+        <Chip label="isSubmitSuccessful" color="success" disabled={!isSubmitSuccessful} />
+      </Stack>
 
-      <pre>
+      <p>{`isDirty:${isDirty} | isValid:${isValid} | isValidating:${isValidating} | isSubmitSuccessful:${isSubmitSuccessful}`}</p>
+
+      <Box typography='h6'>errors</Box>
+      <Box component='pre' sx={{color: 'error.main'}}>
         {Array.isArray(errorsMsg) && errorsMsg.map((msg) =>
           (<div>{JSON.stringify(msg)}</div>)
         )}
-      </pre>
+      </Box>
 
       <Box component='form' noValidate onSubmit={onSubmit} sx={{ p: 2 }} >
         <TextField
@@ -117,7 +126,7 @@ export default function TabPageC() {
           })}
         />
 
-        {/* 讓人無言的 DatePicker。
+        {/* 讓人無言的 DatePicker！包了三層元件才做出想要的結果。
             因 DatePicker 與 date-fns 綁定所以只接受 Date 型別。 */}
         <Controller
           control={control}
