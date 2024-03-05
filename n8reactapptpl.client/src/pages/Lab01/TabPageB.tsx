@@ -4,14 +4,14 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { isValid, addDays, startOfToday } from "date-fns";
 import { useState } from "react";
 
-interface FormState {
+interface FormValues {
   fieldA: string
   fieldB: string
   fieldC: number
   fieldD: Date | null
 }
 
-const initState: FormState = {
+const initState: FormValues = {
   fieldA: '',
   fieldB: '',
   fieldC: 0,

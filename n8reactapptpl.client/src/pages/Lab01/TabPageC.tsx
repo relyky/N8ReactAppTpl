@@ -1,67 +1,158 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { DateValidationError, PickerChangeHandlerContext } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { isValid, addDays, startOfToday } from "date-fns";
-import { useState } from "react";
+import * as dfs from "date-fns";
+import { Controller, useForm } from "react-hook-form";
 
-interface FormState {
+interface FormValues {
   fieldA: string
   fieldB: string
   fieldC: number
   fieldD: Date | null
 }
 
-const initState: FormState = {
-  fieldA: '',
-  fieldB: '',
-  fieldC: 0,
-  fieldD: startOfToday()
+const initState: FormValues = {
+  fieldA: 'ABC',
+  fieldB: '中文',
+  fieldC: 4,
+  fieldD: dfs.startOfToday()
 }
 
-const minDate = addDays(startOfToday(), 2) // dayjs().add(2, 'day')
+const minDate = dfs.addDays(dfs.startOfToday(), 2) // dayjs().add(2, 'day')
 
 export default function TabPageC() {
-  const [formData, setFormData] = useState(initState)
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors, isValid, isValidating, isDirty, isSubmitSuccessful, },
+    getValues,
+    control,
+  } = useForm<FormValues>({ defaultValues: initState, criteriaMode: "all", });
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
+  const onSubmit = handleSubmit((data) => {
+    const json = JSON.stringify(data, null, ' ')
+    alert('已送出封包。' + json)
+    reset()
+  });
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    alert('�w�e�X�ʥ]�C')
-    setFormData(initState)
-  }
+  //required
+  //min
+  //max
+  //minLength
+  //maxLength
+  //pattern: /^[A-Za-z]+$/i
+  //validate
 
+  const errorsMsg = Object.entries(errors).map(
+    ([name, value]) => ({
+      name,
+      type: value.type,
+      message: value.message
+    })
+  );
+
+  //console.log('TabPageC.errors', errors)
   return (
     <Box>
       <Typography variant='h5'>@MUI input/React Hook Form validation</Typography>
-      <Box component='form' onSubmit={handleSubmit} sx={{ p: 2 }} >
-        <TextField label='Field A' name='fieldA' value={formData.fieldA} onChange={handleChange} required placeholder='ABC'
-          inputProps={{ pattern: "ABC" }} />
 
-        <TextField label='����' name='fieldB' value={formData.fieldB} onChange={handleChange} required placeholder='����'
-          inputProps={{ pattern: "����" }} />
+      <p>{`isDirty:${isDirty} | isValid:${isValid} | isValidating:${isValidating} | isSubmitSuccessful:${isSubmitSuccessful}`}</p>
+      <Box typography='h6'>errors</Box>
 
-        <TextField label='Field C' name='fieldC' type='number' value={formData.fieldC} onChange={handleChange} required
-          inputProps={{ min: 3, max: 7 }} />
+      <pre>
+        {Array.isArray(errorsMsg) && errorsMsg.map((msg) =>
+          (<div>{JSON.stringify(msg)}</div>)
+        )}
+      </pre>
 
-        <DatePicker label='���' name='fieldD' value={formData.fieldD} onChange={handleDateChange}
-          minDate={minDate} /* required */ />
+      <Box component='form' noValidate onSubmit={onSubmit} sx={{ p: 2 }} >
+        <TextField
+          label='Field A'
+          required
+          error={!!errors['fieldA']}
+          helperText={errors['fieldA'] ? errors['fieldA'].message : '我是此欄位說明'}
+          {...register('fieldA', {
+            required: '為必填欄位',
+            minLength: {
+              value: 3,
+              message: '長度必需為3'
+            },
+            pattern: {
+              value: /ABC/,
+              message: '必需是ABC'
+            }
+          })}
+        />
 
-        <Button variant='contained' type='submit'>�e�X�ʥ]</Button>
+        <TextField
+          label='欄位Ｂ'
+          required
+          error={!!errors['fieldB']}
+          helperText={errors['fieldB'] ? errors['fieldB'].message : '我是此欄位說明'}
+          {...register('fieldB', {
+            required: '必填欄位',
+            pattern: {
+              value: /中文/,
+              message: '值必需是"中文"'
+            }
+          })}
+        />
+
+        <TextField
+          label='Field C'
+          type='number'
+          required
+          error={!!errors['fieldC']}
+          helperText={errors['fieldC'] ? errors['fieldC'].message : '我是此欄位說明'}
+          {...register('fieldC', {
+            required: '為必填欄位',
+            min: {
+              value: 3,
+              message: '必需3以上'
+            },
+            max: {
+              value: 7,
+              message: '必需7以下'
+            }
+          })}
+        />
+
+        {/* 讓人無言的 DatePicker。
+            因 DatePicker 與 date-fns 綁定所以只接受 Date 型別。 */}
+        <Controller
+          control={control}
+          name="fieldD"
+          rules={{
+            required: '為必填欄位',
+            min: {
+              value: minDate as unknown as number, //※(囧)此處只能強制轉型讓 IntelliSense 判斷為成功
+              message: `日期需在${dfs.format(minDate, 'yyyy/MM/dd')}之後。`
+            }
+          }}
+          render={({ field, fieldState }) => (
+            <DatePicker
+              {...field}
+              label='日期'
+              minDate={minDate}
+              maxDate={undefined}
+              slotProps={{
+                textField: {
+                  required: true,
+                  error: !!fieldState.error,
+                  helperText: fieldState.error?.message,
+                },
+              }}
+            />
+          )}
+        />
+
+        <Button variant='contained' type='submit'>送出封包</Button>
       </Box>
 
       <Typography variant='h6'>formData</Typography>
       <pre>
-        {JSON.stringify(formData, null, ' ')}
+        {JSON.stringify(getValues(), null, ' ')}
       </pre>
     </Box>
   )
-
-  function handleDateChange(value: Date | null, context: PickerChangeHandlerContext<DateValidationError>) {
-    console.log('handleDateChange', { value, context })
-    setFormData({ ...formData, fieldD: isValid(value) ? value : null });
-  }
 }

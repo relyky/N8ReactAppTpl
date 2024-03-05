@@ -49,6 +49,8 @@ export default function App() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={datefns_zhTW} dateFormats={{ keyboardDate: 'yyyy-MM-dd' }} >
+      {/* ※ 因 DatePicker 與 date-fns 綁定所以只接受 Date 型別。 */}
+
       <ThemeProvider theme={f_darkTheme ? darkTheme : whiteTheme}>
         <CssBaseline />
         <RouterProvider router={router} />

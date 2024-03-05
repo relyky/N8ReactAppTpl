@@ -15,13 +15,15 @@ export default function Labbing01() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isValidating, isDirty },
+    formState,
   } = useForm<FormValues>({ defaultValues: initFormState });
+  const { errors, isValid, isValidating, isDirty } = formState
 
   const onSubmit = handleSubmit((data) => alert(JSON.stringify(data)));
 
   const handlePost = handleSubmit((data) => alert(JSON.stringify({ ...data, isPost: true })));
 
+  console.log('Labbing01.formState', formState)
   return (
     <Box sx={{ border: 'red 2px solid' }}>
       <h1>React Hook Form - useForm</h1>

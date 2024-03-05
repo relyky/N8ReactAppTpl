@@ -2,14 +2,14 @@ import { Box, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-interface FormState {
+interface FormValues {
   fieldA: string
   fieldB: string
   fieldC: number
   fieldD: string // Date:yyyy-mm-dd
 }
 
-const initState: FormState = {
+const initState: FormValues = {
   fieldA: '',
   fieldB: '',
   fieldC: 0,
