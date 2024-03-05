@@ -7,10 +7,15 @@ import Counter from './pages/Counter/AppForm'
 import Demo01 from "./pages/Demo01/AppForm"
 import Demo05 from './pages/Demo05/AppForm'
 import Lab01 from './pages/Lab01/AppForm'
+import Labbing from "./pages/Labbing/AppForm"
 
 /// To register the routing pages 
 /// 預計有百多個功能選單預註冊。
 export const appRoutes: RouteObject[] = [
+  {
+    path: "labbing",
+    element: <Labbing />,
+  },
   {
     path: "login",
     element: <Login />,

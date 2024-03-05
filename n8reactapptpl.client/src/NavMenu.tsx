@@ -74,6 +74,12 @@ export default function NavMenu() {
             <ListItemText primary='登出' />
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton component={Link} to="/labbing">
+            <ListItemIcon children={<HomeIcon color='primary' />} />
+            <ListItemText primary='臨床實驗室' />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
