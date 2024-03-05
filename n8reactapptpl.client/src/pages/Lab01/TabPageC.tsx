@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { Box, Button, Chip, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as dfs from "date-fns";
@@ -46,15 +45,14 @@ export default function TabPageC() {
   // pattern: /^[A-Za-z]+$/i
   // validate
 
-  const errorsMsg = useMemo(() => Object.entries(errors).map(
+  const errorsMsg = errors && Object.entries(errors).map(
     ([name, value]) => ({
       name,
       type: value.type,
       message: value.message
-    })
-  ), [errors]);
+    }));
 
-  //console.log('TabPageC.errors', errors)
+  //console.log('TabPageC.errors', { errors, errorsMsg })
   return (
     <Box>
       <Typography variant='h5'>@MUI input/React Hook Form validation</Typography>
@@ -70,8 +68,8 @@ export default function TabPageC() {
 
       <Box typography='h6'>errors</Box>
       <Box component='pre' sx={{ color: 'error.main' }}>
-        {Array.isArray(errorsMsg) && errorsMsg.map((msg) =>
-          (<div>{JSON.stringify(msg)}</div>)
+        {Array.isArray(errorsMsg) && errorsMsg.map((msg, idx) =>
+          (<div key={idx}>{JSON.stringify(msg)}</div>)
         )}
       </Box>
 
