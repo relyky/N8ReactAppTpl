@@ -68,8 +68,6 @@ export default function TabPageC() {
         <Chip label="isSubmitSuccessful" color="success" disabled={!isSubmitSuccessful} />
       </Stack>
 
-      <p>{`isDirty:${isDirty} | isValid:${isValid} | isValidating:${isValidating} | isSubmitSuccessful:${isSubmitSuccessful}`}</p>
-
       <Box typography='h6'>errors</Box>
       <Box component='pre' sx={{ color: 'error.main' }}>
         {Array.isArray(errorsMsg) && errorsMsg.map((msg) =>
@@ -151,7 +149,7 @@ export default function TabPageC() {
                 textField: {
                   required: true,
                   error: !!fieldState.error,
-                  helperText: fieldState.error?.message,
+                  helperText: fieldState.error?.message || '我是此欄位說明',
                   onChange: (value: Date) => {
                     //※ 此處 onChange: (value:Date) => void 已驗證為正確。系統此處推論了錯誤的型別！
                     //console.log('DatePicker.textField.onChange', { value }) // for debug
