@@ -20,7 +20,11 @@ export const appRoutes: RouteObject[] = [
     path: "login",
     element: <Login />,
   },
-  {
+  /* { //# 首頁放此處就不用登入。
+    path: "/",
+    element: <Home />,
+  }, */
+  { //# 此處外掛上 MainLayout，一定要登入才能開啟作業。
     path: "/",
     element: <MainLayout />,
     errorElement: <ErrorPage />,

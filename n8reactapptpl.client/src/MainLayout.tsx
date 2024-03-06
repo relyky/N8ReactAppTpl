@@ -22,8 +22,7 @@ export default function ResponsiveDrawer() {
   const isAuthed = useAppSelector(selectAuthed)
   const location = useLocation()
 
-  //const isHomePage = useMemo(()=> location.pathname === '/', [location.pathname])
-  const isHomePage = useMemo(() => ['/','labbing'].includes(location.pathname), [location.pathname])
+  const isHomePage = useMemo(()=> location.pathname === '/', [location.pathname])
 
   function handleDrawerClose() {
     setIsClosing(true);
