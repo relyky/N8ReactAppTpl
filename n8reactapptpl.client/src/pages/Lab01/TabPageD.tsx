@@ -1,4 +1,4 @@
-import { Box, Button, Chip, Divider, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Paper, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as dfs from "date-fns";
 import { Controller, useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import FormContainer from "./formComponents/FormContainer";
 import ATextField from "./formComponents/ATextField";
 import ValidationSummary from "./formComponents/ValidationSummary";
 import ADateField from "./formComponents/ADateField";
+import FormStatePeeker from "./formComponents/FormStatePeeker";
 
 interface FormValues {
   fieldA: string
@@ -74,34 +75,60 @@ export default function TabPageD() {
           console.log('FormContainer.onError', { errors })
         }}
       >
-        <ATextField name='fieldA' label='Field A' required helperText='我是此欄位說明'
-          rules={{
-            minLength: { value: 3, message: '長度必需為3' },
-            pattern: { value: /ABC/, message: '必需是ABC' }
-          }} />
 
-        <ATextField name='fieldB' label='欄位Ｂ' required helperText='我是此欄位說明'
-          rules={{
-            pattern: { value: /中文/, message: '值必需是`中文`' }
-          }} />
+        <FormStatePeeker render={({
+          formState: { isDirty, isValidating, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount }
+        }) => (
+          <Stack direction="row" spacing={1}>
+            <Chip label="isDirty" color="warning" disabled={!isDirty} />
+            <Chip label="isValidating" color="info" disabled={!isValidating} />
+            <Chip label="isValid" color="info" disabled={!isValid} />
+            <Chip label="isSubmitting" color="info" disabled={!isSubmitting} />
+            <Chip label={`isSubmitted (${submitCount})`} color="info" disabled={!isSubmitted} />
+            <Chip label="isSubmitSuccessful" color="success" disabled={!isSubmitSuccessful} />
+          </Stack>
+        )} />
 
-        <ATextField name='fieldC' type='number' label='Field C' required helperText='我是此欄位說明'
-          rules={{
-            min: { value: 3, message: '必需3以上' },
-            max: { value: 7, message: '必需7以下' }
-          }} />
+        <Paper sx={{ p: 2, my: 2 }}>
+          <ATextField name='fieldA' label='Field A' required helperText='我是此欄位說明'
+            rules={{
+              minLength: { value: 3, message: '長度必需為3' },
+              pattern: { value: /ABC/, message: '必需是ABC' }
+            }} />
 
-        <ADateField name='fieldD' label='日期' required helperText='我是此欄位說明' minDate={minDate}
-          rules={{
-            min: {
-              value: minDate as unknown as number, //※(囧)此處只能強制轉型讓 IntelliSense 判斷為成功
-              message: `日期需在${dfs.format(minDate, 'yyyy/MM/dd')}之後。`
-            }
-          }} />
+          <ATextField name='fieldB' label='欄位Ｂ' required helperText='我是此欄位說明'
+            rules={{
+              pattern: { value: /中文/, message: '值必需是`中文`' }
+            }} />
 
-        <Button variant='contained' type='submit'>送出封包</Button>
+          <ATextField name='fieldC' type='number' label='Field C' required helperText='我是此欄位說明'
+            rules={{
+              min: { value: 3, message: '必需3以上' },
+              max: { value: 7, message: '必需7以下' }
+            }} />
+
+          <ADateField name='fieldD' label='日期' required helperText='我是此欄位說明' minDate={minDate}
+            rules={{
+              min: {
+                value: minDate as unknown as number, //※(囧)此處只能強制轉型讓 IntelliSense 判斷為成功
+                message: `日期需在${dfs.format(minDate, 'yyyy/MM/dd')}之後。`
+              }
+            }} />
+
+          <Button variant='contained' type='submit'>送出封包</Button>
+        </Paper>
 
         <ValidationSummary />
+
+        <FormStatePeeker render={({ getValues }) => (
+          <Box>
+            <Typography variant='h6'>formData</Typography>
+            <pre>
+              {JSON.stringify(getValues(), null, ' ')}
+            </pre>
+          </Box>
+        )} />
+
       </FormContainer>
 
       <Divider sx={{ my: 3 }} />
@@ -210,7 +237,7 @@ export default function TabPageD() {
 
         <Button variant='contained' type='submit'>送出封包</Button>
         <Button variant='outlined' onClick={() => reset()} >重置</Button>
-        Formp</Box>
+      </Box>
 
       <Typography variant='h6'>formData</Typography>
       <pre>
