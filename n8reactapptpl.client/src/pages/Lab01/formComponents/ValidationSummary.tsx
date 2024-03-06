@@ -13,6 +13,7 @@ export default function ValidationSummary() {
       message: value!.message
     }));
 
+  //console.log('TabPageC.errors', { errors, errorsMsg })
   return (
     <Box>
       <Box typography='h6'>validation summary</Box>
