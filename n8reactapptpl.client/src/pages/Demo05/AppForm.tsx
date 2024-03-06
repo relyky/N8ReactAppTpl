@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { Box, Button, Container, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import { useAppSelector } from '../../store/hooks'
 import { selectFormState } from './useFormSlice'
@@ -9,7 +9,8 @@ export default function Demo05_AppForm() {
   const handler = useFormHand()
 
   // form init
-  useState(() => handler.qryDataList())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => handler.qryDataList(),[])
 
   return (
     <Container>
