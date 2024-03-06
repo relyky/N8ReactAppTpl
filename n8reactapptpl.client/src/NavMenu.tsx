@@ -18,6 +18,7 @@ export default function NavMenu() {
       <List>
         <ListMenuGroup label='展示功能'>
           <ListMenuItem label='展示功能０１' to='/demo01' />
+          <ListMenuItem label='展示功能０２' to='/demo02' />
           <ListMenuItem label='展示功能０５' to='/demo05' />
           <ListMenuItem label='Lab 01' to='/lab01' />
           <ListMenuItem label='Counter' to='/counter' />
