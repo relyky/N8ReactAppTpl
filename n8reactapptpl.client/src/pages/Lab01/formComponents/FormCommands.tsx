@@ -1,8 +1,8 @@
 import { Button } from "@mui/material"
-import { FieldValues, UseFormReset, useFormContext } from "react-hook-form"
+import { FieldValues, useFormContext } from "react-hook-form"
 
 export function SubmitCommand<TFieldValues extends FieldValues>(props: {
-  onSubmit: (data: TFieldValues, reset: UseFormReset<TFieldValues>) => void,
+  onSubmit: (data: TFieldValues, reset: () => void) => void,
   label?: string,
 }) {
   const {

@@ -11,20 +11,40 @@ export default function ADateField(props: {
   label?: string,
   required?: boolean,
   helperText?: string,
-  rules?: RegisterOptions<FieldValues, string>,
   minDate?: Date,
   maxDate?: Date,
+  //rules?: RegisterOptions<FieldValues, string>,
+  min?: [value: Date, message: string],
+  max?: [value: Date, message: string],
+  validate?: (value: Date, formValues: FieldValues) => string | boolean,
 }) {
   const {
     control,
     setValue,
   } = useFormContext() // retrieve all hook methods
 
-  const rules = useMemo(() => (
-    props.required
-      ? { ...(props.rules ?? {}), required: `${props.label} 為必填欄位` }
-      : props.rules
-  ), [props.label, props.required, props.rules])
+  const rules = useMemo(() => {
+    const rules: RegisterOptions<FieldValues, string> = {}
+    if (props.required)
+      rules.required = `${props.label} 為必填欄位`
+
+    if (props.min)
+      rules.min = {
+        value: props.min[0] as unknown as number, //※ Date 的原生 type 為 number。(囧)此處只能強制轉型讓 IntelliSense 判斷為成功
+        message: `${props.label} ${props.min[1]}`
+      }
+
+    if (props.max)
+      rules.max = {
+        value: props.max[0] as unknown as number, //※ Date 的原生 type 為 number。(囧)此處只能強制轉型讓 IntelliSense 判斷為成功
+        message: `${props.label} ${props.max[1]}`
+      }
+
+    if (props.validate)
+      rules.validate = props.validate
+
+    return rules
+  }, [props.label, props.max, props.min, props.required, props.validate])
 
   return (
     <Controller

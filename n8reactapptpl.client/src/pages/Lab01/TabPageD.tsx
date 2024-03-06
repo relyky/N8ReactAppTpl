@@ -1,6 +1,5 @@
 import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import * as dfs from "date-fns";
-import { FieldValues, UseFormReset } from "react-hook-form";
 import FormContainer from "./formComponents/FormContainer";
 import ATextField from "./formComponents/ATextField";
 import ValidationSummary from "./formComponents/ValidationSummary";
@@ -27,12 +26,13 @@ const minDate = dfs.addDays(dfs.startOfToday(), 2) // dayjs().add(2, 'day')
 
 export default function TabPageD() {
 
-  function handleSubmit(data: FormValues, reset: UseFormReset<FormValues>) {
+  function handleSubmit(data: FormValues, reset: () => void) {
     const json = JSON.stringify(data, null, ' ')
-    Swal.fire('已送出封包。\n將重置表單。', json, 'success')
+    Swal.fire('已送出封包。', json, 'success')
       .then(() => {
         // 成功送出後重置表單輸入狀態。
         reset()
+        Swal.fire('已重置表單。', undefined, 'info')
       })
   }
 
@@ -43,7 +43,7 @@ export default function TabPageD() {
         console.log('FormContainer.onError', { errors })
       }}
     >
-      <Typography variant='h5'>@MUI input/React Hook Form validation</Typography>
+      <Typography variant='h5'>@MUI/Hook Form as <b>high-order components</b></Typography>
 
       <FormStatePeeker render={({
         formState: { isDirty, isValidating, isValid, isSubmitting, isSubmitted, isSubmitSuccessful, submitCount }
@@ -71,13 +71,8 @@ export default function TabPageD() {
           min={[3, '必需3以上。']}
           max={[7, '必需7以下。']} />
 
-        <ADateField name='fieldD' label='日期' required helperText='我是此欄位說明' minDate={minDate}
-          rules={{
-            min: {
-              value: minDate as unknown as number, //※(囧)此處只能強制轉型讓 IntelliSense 判斷為成功
-              message: `日期需在${dfs.format(minDate, 'yyyy/MM/dd')}之後。`
-            }
-          }} />
+        <ADateField name='fieldD' label='選擇日期' required helperText='我是此欄位說明' minDate={minDate}
+          min={[minDate, `需在${dfs.format(minDate, 'yyyy/MM/dd')}之後。`]} />
 
         <SubmitCommand onSubmit={handleSubmit} />
         <ResetCommand />
