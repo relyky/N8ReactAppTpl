@@ -1,6 +1,6 @@
 import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
 import * as dfs from "date-fns";
-import { UseFormReset } from "react-hook-form";
+import { FieldValues, UseFormReset } from "react-hook-form";
 import FormContainer from "./formComponents/FormContainer";
 import ATextField from "./formComponents/ATextField";
 import ValidationSummary from "./formComponents/ValidationSummary";
@@ -26,23 +26,15 @@ const initState: FormValues = {
 const minDate = dfs.addDays(dfs.startOfToday(), 2) // dayjs().add(2, 'day')
 
 export default function TabPageD() {
-  const handleSubmit = (data: FormValues, reset: UseFormReset<FormValues>) => {
+
+  function handleSubmit(data: FormValues, reset: UseFormReset<FormValues>) {
     const json = JSON.stringify(data, null, ' ')
-    Swal.fire('已送出封包。\n將重置表單。', json,'success')
+    Swal.fire('已送出封包。\n將重置表單。', json, 'success')
       .then(() => {
         // 成功送出後重置表單輸入狀態。
         reset()
       })
-  };
-
-  //rules:
-  // required
-  // min
-  // max
-  // minLength
-  // maxLength
-  // pattern: /^[A-Za-z]+$/i
-  // validate
+  }
 
   return (
     <FormContainer<FormValues>
@@ -68,21 +60,16 @@ export default function TabPageD() {
 
       <Paper sx={{ p: 2, my: 2 }}>
         <ATextField name='fieldA' label='Field A' required helperText='我是此欄位說明'
-          rules={{
-            minLength: { value: 3, message: '長度必需為3' },
-            pattern: { value: /ABC/, message: '必需是ABC' }
-          }} />
+          minLength={[3, '長度必需為3。']}
+          pattern={[/ABC\w*/, '必需是ABCx。']}
+          validate={(value: string) => !value.endsWith('Z') ? '必需用Z結束。' : true} />
 
         <ATextField name='fieldB' label='欄位Ｂ' required helperText='我是此欄位說明'
-          rules={{
-            pattern: { value: /中文/, message: '值必需是`中文`' }
-          }} />
+          pattern={[/中文/, '值必需是`中文`。']} />
 
         <ATextField name='fieldC' type='number' label='Field C' required helperText='我是此欄位說明'
-          rules={{
-            min: { value: 3, message: '必需3以上' },
-            max: { value: 7, message: '必需7以下' }
-          }} />
+          min={[3, '必需3以上。']}
+          max={[7, '必需7以下。']} />
 
         <ADateField name='fieldD' label='日期' required helperText='我是此欄位說明' minDate={minDate}
           rules={{
