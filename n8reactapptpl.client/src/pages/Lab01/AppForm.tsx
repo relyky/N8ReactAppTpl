@@ -4,6 +4,7 @@ import { Box, Container, Tab, Typography } from "@mui/material";
 import TabPageA from "./TabPageA";
 import TabPageB from "./TabPageB";
 import TabPageC from "./TabPageC";
+import TabPageD from "./TabPageD";
 
 export default function Lab01_AppForm() {
   const [tabIdx, setTabIdx] = useState('1');
@@ -18,11 +19,13 @@ export default function Lab01_AppForm() {
             <Tab label="Item One" value="1" />
             <Tab label="Item Two" value="2" />
             <Tab label="Item Three" value="3" />
+            <Tab label="Item Four" value="4" />
           </TabList>
         </Box>
         <TabPanel value="1"><TabPageA /></TabPanel>
         <TabPanel value="2"><TabPageB /></TabPanel>
         <TabPanel value="3"><TabPageC /></TabPanel>
+        <TabPanel value="4"><TabPageD /></TabPanel>
       </TabContext>
 
 

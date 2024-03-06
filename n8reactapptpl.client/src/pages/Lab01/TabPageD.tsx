@@ -1,7 +1,11 @@
-import { Box, Button, Chip, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Chip, Divider, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import * as dfs from "date-fns";
 import { Controller, useForm } from "react-hook-form";
+import FormContainer from "./formComponents/FormContainer";
+import ATextField from "./formComponents/ATextField";
+import ValidationSummary from "./formComponents/ValidationSummary";
+import ADateField from "./formComponents/ADateField";
 
 interface FormValues {
   fieldA: string
@@ -19,7 +23,7 @@ const initState: FormValues = {
 
 const minDate = dfs.addDays(dfs.startOfToday(), 2) // dayjs().add(2, 'day')
 
-export default function TabPageC() {
+export default function TabPageD() {
   const {
     register,
     reset,
@@ -35,6 +39,12 @@ export default function TabPageC() {
     alert('已送出封包。' + json)
     //reset()
   });
+
+  const onSubmit2 = (data: FormValues) => {
+    const json = JSON.stringify(data, null, ' ')
+    alert('已送出封包。' + json)
+    //reset()
+  };
 
   //rules:
   // required
@@ -56,6 +66,45 @@ export default function TabPageC() {
   return (
     <Box>
       <Typography variant='h5'>@MUI input/React Hook Form validation</Typography>
+
+      <FormContainer<FormValues>
+        defaultValues={initState}
+        onSuccess={onSubmit2}
+        onError={(errors) => {
+          console.log('FormContainer.onError', { errors })
+        }}
+      >
+        <ATextField name='fieldA' label='Field A' required helperText='我是此欄位說明'
+          rules={{
+            minLength: { value: 3, message: '長度必需為3' },
+            pattern: { value: /ABC/, message: '必需是ABC' }
+          }} />
+
+        <ATextField name='fieldB' label='欄位Ｂ' required helperText='我是此欄位說明'
+          rules={{
+            pattern: { value: /中文/, message: '值必需是`中文`' }
+          }} />
+
+        <ATextField name='fieldC' type='number' label='Field C' required helperText='我是此欄位說明'
+          rules={{
+            min: { value: 3, message: '必需3以上' },
+            max: { value: 7, message: '必需7以下' }
+          }} />
+
+        <ADateField name='fieldD' label='日期' required helperText='我是此欄位說明' minDate={minDate}
+          rules={{
+            min: {
+              value: minDate as unknown as number, //※(囧)此處只能強制轉型讓 IntelliSense 判斷為成功
+              message: `日期需在${dfs.format(minDate, 'yyyy/MM/dd')}之後。`
+            }
+          }} />
+
+        <Button variant='contained' type='submit'>送出封包</Button>
+
+        <ValidationSummary />
+      </FormContainer>
+
+      <Divider sx={{ my: 3 }} />
 
       <Stack direction="row" spacing={1}>
         <Chip label="isDirty" color="warning" disabled={!isDirty} />
@@ -161,7 +210,7 @@ export default function TabPageC() {
 
         <Button variant='contained' type='submit'>送出封包</Button>
         <Button variant='outlined' onClick={() => reset()} >重置</Button>
-      </Box>
+        Formp</Box>
 
       <Typography variant='h6'>formData</Typography>
       <pre>
