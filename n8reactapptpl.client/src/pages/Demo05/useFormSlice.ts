@@ -23,10 +23,10 @@ const formSlice = createSlice({
   name: "demo05",
   initialState,
   reducers: {
-    inputQryArgs: (state, action: PayloadAction<{ name: string, value: unknown }>) => {
-      const { name, value } = action.payload
-      state.qryArgs = { ...state.qryArgs, [name]: value }
-    },
+    //inputQryArgs: (state, action: PayloadAction<{ name: string, value: unknown }>) => {
+    //  const { name, value } = action.payload
+    //  state.qryArgs = { ...state.qryArgs, [name]: value }
+    //},
     setQryArgs: (state, action: PayloadAction<IDemo05_QryArgs>) => {
       state.qryArgs = { ...action.payload }
     },
@@ -42,6 +42,6 @@ const formSlice = createSlice({
 // export this slice
 export default formSlice
 // export this actions
-export const { setDataList, setQryArgs, inputQryArgs } = formSlice.actions
+export const { setDataList, setQryArgs } = formSlice.actions
 // export this selectors
 export const { selectFormState } = formSlice.selectors

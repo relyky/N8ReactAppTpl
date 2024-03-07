@@ -1,8 +1,12 @@
 import { useEffect } from 'react'
-import { Box, Button, Container, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
+import { Box, Container, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import { useAppSelector } from '../../store/hooks'
 import { selectFormState } from './useFormSlice'
 import useFormHand from './useFormHand'
+import { IDemo05_QryArgs } from '../../DTO/Demo/IDemo05_QryArgs'
+import FormContainer from '../../highorder/formComponents/FormContainer'
+import ATextField from '../../highorder/formComponents/ATextField'
+import { ResetCommand, SubmitCommand } from '../../highorder/formComponents/FormCommands'
 
 export default function Demo05_AppForm() {
   const { qryArgs, dataList } = useAppSelector(selectFormState)
@@ -10,22 +14,31 @@ export default function Demo05_AppForm() {
 
   // form init
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => handler.qryDataList(),[])
+  useEffect(() => handler.qryDataList2(qryArgs), [])
 
   return (
     <Container>
       <Typography variant='h3'>Demo05 天氣預報/查詢報表</Typography>
       <Box color='info.main' sx={{ pb: 2 }}>This component demonstrates fetching data from the server.</Box>
 
-      {/* toolbar */}
-      <Stack spacing={{ xs: 1 }} direction="row" sx={{p:1}}>
+      <FormContainer<IDemo05_QryArgs> defaultValues={qryArgs}>
+        <Stack spacing={1} direction="row" alignItems='flex-start' sx={{ p: 1 }}>
+          <ATextField name='city' label='City' size='small' />
+          <ATextField name='count' type='number' label='Count' placeholder='需 6 筆以上。' size='small'
+            min={[6, '需 6 筆以上']} />
+          <SubmitCommand onSubmit={handler.qryDataList2} />
+          <ResetCommand />
+        </Stack>
+      </FormContainer>
+
+      {/* toolbar 
+      <Stack spacing={{ xs: 1 }} direction="row" sx={{ p: 1 }}>
         <TextField label='City' name='city' value={qryArgs.city} onChange={handler.changeQryArgs} size='small' />
         <TextField label='Count' name='count' value={qryArgs.count} onChange={handler.changeQryArgs} size='small' type='number'
           placeholder='需 5 筆以上。' />
-
         <Button variant='contained' onClick={handler.qryDataList}>查詢</Button>
         <Button variant='outlined' onClick={handler.resetQryArgs}>重置</Button>
-      </Stack>
+      </Stack> */}
 
       {dataList && <TableContainer component={Paper}>
         <Table>

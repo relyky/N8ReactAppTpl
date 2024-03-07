@@ -24,13 +24,13 @@ export default function Labbing02() {
       <Typography variant='h3'>欄位部局 Field Layout</Typography>
 
       <Paper sx={{ p: 2, my: 2 }}>
-        <FormRow size={[12, 6, 4, 3, 2]} >
+        <FormRow gridSize={[12, 6, 4, 3, 2]} >
           <ATextField name='firstName' label='名稱' />
           <ATextField name='lastName' label='姓氏' />
           <ADateField name='birtyday' label='生日' />
-          <ATextField name='firstName' label='名稱' size={[12, 6]} />
+          <ATextField name='firstName' label='名稱' gridSize={[12, 6]} size='small' placeholder='abc' />
           <ATextField name='lastName' label='姓氏' />
-          <ADateField name='birtyday' label='生日' size={[12, 6]} />
+          <ADateField name='birtyday' label='生日' gridSize={[12, 6]} size='small' placeholder='我是日期' />
           <ATextField name='firstName' label='名稱' />
           <ATextField name='lastName' label='姓氏' />
           <ADateField name='birtyday' label='生日' />

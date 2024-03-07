@@ -1,5 +1,6 @@
 import { useContext, useMemo } from "react"
-import { Grid, TextField } from "@mui/material"
+import { Grid, TextField, TextFieldPropsSizeOverrides } from "@mui/material"
+import { OverridableStringUnion } from '@mui/types';
 import { FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
 import { FormRowContext, FormRowFieldSize } from "./FormRow"
 
@@ -17,8 +18,10 @@ export default function ATextField(props: {
   type?: string,
   label?: string,
   required?: boolean,
+  placeholder?: string,
   helperText?: string,
-  size?: FormRowFieldSize
+  size?: OverridableStringUnion<'small' | 'medium', TextFieldPropsSizeOverrides>,
+  gridSize?: FormRowFieldSize
   //rules?: RegisterOptions<FieldValues, string>,
   minLength?: [value: number, message: string],
   maxLength?: [value: number, message: string],
@@ -80,15 +83,17 @@ export default function ATextField(props: {
       label={props.label}
       type={props.type}
       required={props.required}
+      placeholder={props.placeholder}
       error={Boolean(errors[props.name])}
       helperText={(errors[props.name] ? errors[props.name]?.message : props.helperText) as string}
+      size={props.size}
       fullWidth={Boolean(formRow)} /* 有 FormRow 就填滿格子 */
       {...register(props.name, rules)}
     />
   )
 
   if (formRow) {
-    const [xs, sm, md, lg, xl] = props.size ?? formRow.size
+    const [xs, sm, md, lg, xl] = props.gridSize ?? formRow.gridSize
     return (
       <Grid item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
         {fieldElement}

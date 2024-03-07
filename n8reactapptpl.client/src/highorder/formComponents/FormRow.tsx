@@ -12,12 +12,12 @@ export type FormRowFieldSize = [
 
 interface FormRowProps {
   spacing?: ResponsiveStyleValue<GridSpacing>,
-  size: FormRowFieldSize,
+  gridSize: FormRowFieldSize,
 }
 
 const initProps: FormRowProps = {
   spacing: 2,
-  size: [12, 6, 4, 3]
+  gridSize: [12, 6, 4, 3]
 }
 
 export const FormRowContext = createContext<FormRowProps | null>(null);

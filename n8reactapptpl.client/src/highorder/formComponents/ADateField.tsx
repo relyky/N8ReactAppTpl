@@ -3,7 +3,8 @@ import { useContext, useMemo } from "react"
 import { Controller, FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
 import * as dfs from "date-fns"
 import { FormRowContext, FormRowFieldSize } from "./FormRow"
-import { Grid } from "@mui/material"
+import { Grid, TextFieldPropsSizeOverrides } from "@mui/material"
+import { OverridableStringUnion } from '@mui/types';
 
 // ※注意：此元件的 value 屬性只接受 Date 型別。
 // 因 DatePicker 與 date-fns 綁定所以只接受 Date 型別。
@@ -12,10 +13,12 @@ export default function ADateField(props: {
   name: string,
   label?: string,
   required?: boolean,
+  placeholder?: string,
   helperText?: string,
   minDate?: Date,
   maxDate?: Date,
-  size?: FormRowFieldSize
+  size?: OverridableStringUnion<'small' | 'medium', TextFieldPropsSizeOverrides>,
+  gridSize?: FormRowFieldSize
   //rules?: RegisterOptions<FieldValues, string>,
   min?: [value: Date, message: string],
   max?: [value: Date, message: string],
@@ -61,12 +64,14 @@ export default function ADateField(props: {
           {...field}
           label={props.label}
           minDate={props.minDate}
-          maxDate={props.maxDate}
+          maxDate={props.maxDate}          
           slotProps={{
             textField: { // fill-in TextField
-              required: props.required ,
+              required: props.required,
+              placeholder: props.placeholder,
               error: !!fieldState.error,
               helperText: fieldState.error?.message || props.helperText,
+              size: props.size,
               fullWidth: Boolean(formRow), // 有 FormRow 就填滿格子
               onChange: (value: Date) => {
                 //※ 此處 onChange: (value:Date) => void 已驗證為正確。系統此處推論了錯誤的型別！
@@ -81,7 +86,7 @@ export default function ADateField(props: {
   )
 
   if (formRow) {
-    const [xs, sm, md, lg, xl] = props.size ?? formRow.size
+    const [xs, sm, md, lg, xl] = props.gridSize ?? formRow.gridSize
     return (
       <Grid item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
         {fieldElement}
