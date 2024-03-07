@@ -2,7 +2,7 @@ import { DatePicker } from "@mui/x-date-pickers"
 import { useContext, useMemo } from "react"
 import { Controller, FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
 import * as dfs from "date-fns"
-import { FormRowContext } from "./FormRow"
+import { FormRowContext, FormRowFieldSize } from "./FormRow"
 import { Grid } from "@mui/material"
 
 // ※注意：此元件的 value 屬性只接受 Date 型別。
@@ -15,6 +15,7 @@ export default function ADateField(props: {
   helperText?: string,
   minDate?: Date,
   maxDate?: Date,
+  size?: FormRowFieldSize
   //rules?: RegisterOptions<FieldValues, string>,
   min?: [value: Date, message: string],
   max?: [value: Date, message: string],
@@ -80,7 +81,7 @@ export default function ADateField(props: {
   )
 
   if (formRow) {
-    const [xs, sm, md, lg, xl] = formRow.size
+    const [xs, sm, md, lg, xl] = props.size ?? formRow.size
     return (
       <Grid item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
         {fieldElement}

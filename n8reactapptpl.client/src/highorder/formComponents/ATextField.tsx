@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react"
 import { Grid, TextField } from "@mui/material"
 import { FieldValues, RegisterOptions, useFormContext } from "react-hook-form"
-import { FormRowContext } from "./FormRow"
+import { FormRowContext, FormRowFieldSize } from "./FormRow"
 
 //rules:
 // required: string
@@ -18,6 +18,7 @@ export default function ATextField(props: {
   label?: string,
   required?: boolean,
   helperText?: string,
+  size?: FormRowFieldSize
   //rules?: RegisterOptions<FieldValues, string>,
   minLength?: [value: number, message: string],
   maxLength?: [value: number, message: string],
@@ -87,7 +88,7 @@ export default function ATextField(props: {
   )
 
   if (formRow) {
-    const [xs, sm, md, lg, xl] = formRow.size
+    const [xs, sm, md, lg, xl] = props.size ?? formRow.size
     return (
       <Grid item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
         {fieldElement}

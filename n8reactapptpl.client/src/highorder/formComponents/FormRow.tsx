@@ -2,23 +2,17 @@ import { createContext } from "react";
 import { Grid, GridSize, GridSpacing } from "@mui/material"
 import { ResponsiveStyleValue } from "@mui/system"
 
-//type FormFieldSize = [
-//  xs: boolean | GridSize,
-//  sm?: boolean | GridSize,
-//  md?: boolean | GridSize,
-//  lg?: boolean | GridSize,
-//  xl?: boolean | GridSize
-//]
+export type FormRowFieldSize = [
+  xs: boolean | GridSize,
+  sm?: boolean | GridSize,
+  md?: boolean | GridSize,
+  lg?: boolean | GridSize,
+  xl?: boolean | GridSize
+]
 
 interface FormRowProps {
   spacing?: ResponsiveStyleValue<GridSpacing>,
-  size: [
-    xs: boolean | GridSize,
-    sm?: boolean | GridSize,
-    md?: boolean | GridSize,
-    lg?: boolean | GridSize,
-    xl?: boolean | GridSize
-  ],
+  size: FormRowFieldSize,
 }
 
 const initProps: FormRowProps = {
