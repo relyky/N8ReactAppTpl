@@ -6,6 +6,7 @@ import Login from './pages/Account/Login'
 import Counter from './pages/Counter/AppForm'
 import Demo01 from "./pages/Demo01/AppForm"
 import Demo02 from "./pages/Demo02/AppForm"
+import Demo03 from "./pages/Demo03/AppForm"
 import Demo05 from './pages/Demo05/AppForm'
 import Lab01 from './pages/Lab01/AppForm'
 import Labbing from "./pages/Labbing/AppForm"
@@ -34,6 +35,7 @@ export const appRoutes: RouteObject[] = [
       { path: "counter", element: <Counter /> },
       { path: "demo01", element: <Demo01 /> },
       { path: "demo02", element: <Demo02 /> },
+      { path: "demo03", element: <Demo03 /> },
       { path: "demo05", element: <Demo05 /> },
       { path: "lab01", element: <Lab01 /> },
     ]

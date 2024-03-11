@@ -21,6 +21,7 @@ export default function Demo05_AppForm() {
       <Typography variant='h3'>Demo05 天氣預報/查詢報表</Typography>
       <Box color='info.main' sx={{ pb: 2 }}>This component demonstrates fetching data from the server.</Box>
 
+      {/* 查詢面板 */}
       <FormContainer<IDemo05_QryArgs> defaultValues={qryArgs}>
         <Stack spacing={1} direction="row" alignItems='flex-start' sx={{ p: 1 }}>
           <ATextField name='city' label='City' size='small' />
@@ -28,10 +29,11 @@ export default function Demo05_AppForm() {
             min={[6, '需 6 筆以上']} />
           <SubmitCommand onSubmit={handler.qryDataList2} />
           <ResetCommand />
+          <SubmitCommand onSubmit={handler.qryDataList2} label='匯出' />          
         </Stack>
       </FormContainer>
 
-      {/* toolbar 
+      {/* 查詢面板(舊)
       <Stack spacing={{ xs: 1 }} direction="row" sx={{ p: 1 }}>
         <TextField label='City' name='city' value={qryArgs.city} onChange={handler.changeQryArgs} size='small' />
         <TextField label='Count' name='count' value={qryArgs.count} onChange={handler.changeQryArgs} size='small' type='number'

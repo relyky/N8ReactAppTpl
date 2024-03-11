@@ -1,6 +1,7 @@
 using DTO.Demo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using N8ReactAppTpl.Server.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -38,7 +39,8 @@ public class Demo05Controller(ILogger<Demo05Controller> _logger) : ControllerBas
     if (qryArgs.Count < 5)
       return BadRequest("輸入參數格式錯誤！ 必需 5 筆以上。");
 
-    if (qryArgs.Count < 0) {
+    if (qryArgs.Count < 0)
+    {
       qryArgs.Count = 0;
     }
 
@@ -52,5 +54,20 @@ public class Demo05Controller(ILogger<Demo05Controller> _logger) : ControllerBas
 
     _logger.LogInformation($"Call {nameof(GetWeatherForecast)}");
     return Ok(result);
+  }
+
+  [SwaggerResponse(200, Type = typeof(byte[]))]
+  [SwaggerResponse(400, Type = typeof(string))]
+  [HttpPost("[action]")]
+  public IActionResult DownloadFile([FromQuery] string filename)
+  {
+    //return BadRequest("模擬下載檔案失敗！");
+
+    FileInfo file = new FileInfo("Assets/附件一：民國112年政府行政機關辦公日曆表.xls");
+    using var fs = file.OpenRead();
+    using var ms = new MemoryStream();
+    fs.CopyTo(ms);
+    ms.GetBuffer();
+    return File(ms.GetBuffer(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
   }
 }

@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../store/hooks';
 import { setDataList, setQryArgs } from './useFormSlice';
 import { IDemo05_QryArgs } from '../../DTO/Demo/IDemo05_QryArgs';
 
-export default function Demo05_AppForm() {
+export default function Demo05_Handler() {
   const dispatch = useAppDispatch()
   const postData = usePostData()
   //const state = useAppSelector(selectFormState)
@@ -20,6 +20,11 @@ export default function Demo05_AppForm() {
         dispatch(setDataList(dataList))
       })
   }, [dispatch, postData])
+
+  const downloadFile = useCallback((qryArgs: IDemo05_QryArgs) => {
+    throw new Erroe('未實作')
+    downloadFile('api/Demo05/DownloadFile', qryArgs)
+  }, [])
 
   //// 直接用 call Promise
   //const qryDataList = useCallback(() => {
