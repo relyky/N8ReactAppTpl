@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using N8ReactAppTpl.Server.Models;
 using Swashbuckle.AspNetCore.Annotations;
+using Vista.Biz;
 
 namespace N8ReactAppTpl.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class Demo05Controller(ILogger<Demo05Controller> _logger) : ControllerBase
+public class Demo05Controller(ILogger<Demo05Controller> _logger, DemoBiz _biz) : ControllerBase
 {
   private static readonly string[] Summaries = new[]
   {
@@ -70,4 +71,24 @@ public class Demo05Controller(ILogger<Demo05Controller> _logger) : ControllerBas
     ms.GetBuffer();
     return File(ms.GetBuffer(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", filename);
   }
+
+  [SwaggerResponse(200, Type = typeof(IEnumerable<DemoBiz_UploadDetail>))]
+  [SwaggerResponse(400, Type = typeof(string))]
+  [HttpPost("[action]")]
+  public IActionResult UploadFile(List<IFormFile> files)
+  {
+    try
+    {
+      var uploadFile = files[0];
+      using var fs = uploadFile.OpenReadStream();
+      var dataList = _biz.ParseUploadFile(fs);
+      return Ok(dataList);
+    }
+    catch(Exception ex)
+    {
+      return BadRequest(ex.Message);
+    }
+  }
+
+
 }

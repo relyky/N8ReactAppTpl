@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace N8ReactAppTpl.Server.Models;
+namespace Vista.Models;
 
 class Utils
 {

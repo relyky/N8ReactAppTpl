@@ -154,17 +154,36 @@ export async function downloadFile(url: string, args?: object, authToken?: strin
     throw xhr;
   }
 }
-//-----------------------------------------------------------------------------
-export function uploadFile() {
-  /* 未實作 */
-}
 
 //-----------------------------------------------------------------------------
-//option: {
-//  noblock: false,
-//  manual: false,
-//}
-//
-//function useLoadData(apiPath: string, args?: object, options?: object) {
-//  return [data, loading, error, refetch];
-//} <---- hooks 加入商業邏輯，不適合共用
+/// 說明:
+/// response 只接受: 200 JSON object 與 204 NoConennt。
+export function uploadFile<TResult>(url: string, formData: FormData, authToken?: string): Promise<TResult> {
+  const headers: HeadersInit = {}
+
+  if (typeof authToken === 'string')
+    headers['Authorization'] = `Bearer ${authToken}`
+
+  return new Promise<TResult>((resolve, reject) => {
+    fetch(url, {
+      headers,
+      body: formData,
+      method: 'POST',
+      mode: 'same-origin', // no-cors, cors, *same-origin
+      credentials: 'same-origin', // include, same-origin, *omit // 夾帶 Cookie 進行認證。
+      cache: 'no-cache',
+      referrer: 'no-referrer',
+    }).then(resp => {
+      if (resp.status === 204) // NoContent
+        resolve(undefined as TResult);
+      else if (resp.ok)
+        resolve(resp.json());
+      else
+        throw resp;
+    }).catch((xhr: Response) =>
+      xhr.text().then(errMsg =>
+        reject(new ResponseError(errMsg, xhr.status, xhr.statusText))
+      ).catch(fail => reject(fail))
+    );
+  });
+}

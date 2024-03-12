@@ -21,11 +21,6 @@ export default function Demo05_Handler() {
       })
   }, [dispatch, postData])
 
-  const downloadFile = useCallback((qryArgs: IDemo05_QryArgs) => {
-    throw new Erroe('未實作')
-    downloadFile('api/Demo05/DownloadFile', qryArgs)
-  }, [])
-
   //// 直接用 call Promise
   //const qryDataList = useCallback(() => {
   //  postData<IWeatherForecast[]>('api/demo05/getweatherforecast', state.qryArgs)

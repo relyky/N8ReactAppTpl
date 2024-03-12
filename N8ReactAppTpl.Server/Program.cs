@@ -3,16 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using N8ReactAppTpl.Server.Models;
 using N8ReactAppTpl.Server.Services;
-using Reinforced.Typings.Attributes;
+using System.Reflection;
 using System.Text;
-
-//## Reinforced.Typings 全域設定說明
-[assembly: TsGlobal(
-  CamelCaseForProperties = true,            // 小駱駝命名法
-  UseModules = true,                        // 啟用 modules
-  DiscardNamespacesWhenUsingModules = true, // 需與參數 UseModules 搭配；不產生 "modules"。
-  ExportPureTypings = true                  // 生成純宣告檔 .d.ts。 
-)]
 
 var builder = WebApplication.CreateBuilder(args); //--------------------------------------------------
 var _config = builder.Configuration;
@@ -74,6 +66,14 @@ builder.Services.AddHealthChecks()
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<AccountService>();
+
+//## 註冊 Vista.Biz 中名稱結尾為 "Biz" 的服務
+builder.Services.AddScoped<Vista.Biz.DemoBiz>();
+//foreach (var bizType in (Assembly.GetAssembly(typeof(SampleBiz))?.GetTypes() ?? Array.Empty<Type>())
+//  .Where(t => t.Name.EndsWith("Biz")))
+//{
+//  builder.Services.AddScoped(bizType);
+//}
 
 var app = builder.Build(); //--------------------------------------------------
 

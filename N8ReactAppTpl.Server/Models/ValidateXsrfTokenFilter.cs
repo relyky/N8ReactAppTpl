@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
-using System.Net;
+using Vista.Models;
 
 namespace N8ReactAppTpl.Server.Models;
 

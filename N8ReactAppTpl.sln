@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "N8ReactAppTpl.Server", "N8R
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "n8reactapptpl.client", "n8reactapptpl.client\n8reactapptpl.client.esproj", "{5D29241D-E73A-4C11-95C9-7B4C4FC0A462}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vista.Biz", "Vista.Biz\Vista.Biz.csproj", "{1FD99208-A943-41C3-ADEC-790320B644E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vista.DB", "Vista.DB\Vista.DB.csproj", "{B7147142-F322-4597-91FA-43267E5D26D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,14 @@ Global
 		{5D29241D-E73A-4C11-95C9-7B4C4FC0A462}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D29241D-E73A-4C11-95C9-7B4C4FC0A462}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D29241D-E73A-4C11-95C9-7B4C4FC0A462}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1FD99208-A943-41C3-ADEC-790320B644E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FD99208-A943-41C3-ADEC-790320B644E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FD99208-A943-41C3-ADEC-790320B644E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FD99208-A943-41C3-ADEC-790320B644E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7147142-F322-4597-91FA-43267E5D26D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7147142-F322-4597-91FA-43267E5D26D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7147142-F322-4597-91FA-43267E5D26D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7147142-F322-4597-91FA-43267E5D26D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

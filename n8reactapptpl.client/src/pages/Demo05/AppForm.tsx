@@ -28,8 +28,7 @@ export default function Demo05_AppForm() {
           <ATextField name='count' type='number' label='Count' placeholder='需 6 筆以上。' size='small'
             min={[6, '需 6 筆以上']} />
           <SubmitCommand onSubmit={handler.qryDataList2} />
-          <ResetCommand />
-          <SubmitCommand onSubmit={handler.qryDataList2} label='匯出' />          
+          <ResetCommand />  
         </Stack>
       </FormContainer>
 

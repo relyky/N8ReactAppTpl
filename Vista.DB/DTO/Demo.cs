@@ -25,6 +25,17 @@ public record Demo05_QryArgs
 }
 
 [TsInterface]
+public record DemoBiz_UploadDetail
+{
+  public string UnitName { get; set; } = string.Empty;
+  public decimal Amount1 { get; set; }
+  public decimal Amount2 { get; set; }
+  public decimal Amount3 { get; set; }
+  public decimal Amount4 { get; set; }
+  public decimal Amount5 { get; set; }
+}
+
+[TsInterface]
 public record MyTestDto
 {
   [TsProperty(Type = "string")]
