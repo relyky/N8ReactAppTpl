@@ -1,23 +1,19 @@
-import { Box, Container, Typography } from "@mui/material"
 import { useAppSelector } from "../../store/hooks"
-import { selectAccount } from "../../store/accountSlice"
+import { selectFormState } from "./useFormSlice";
+import AddView from "./AddView";
+import EditView from "./EditView";
+import ListView from "./ListView";
 
 export default function Demo02_AppForm() {
-  const accountState = useAppSelector(selectAccount);
+  const { mode } = useAppSelector(selectFormState)
 
   return (
-    <Container>
-      <Typography variant='h3'>０２環境參數與授權狀態</Typography>
-      <Box typography='h6'>前端環境參數</Box>
-      <Box component='pre' sx={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
-        {JSON.stringify(import.meta.env, null, ' ')}
-      </Box>
+    <>
+      {mode === 'Add' && <AddView />}
 
-      <Box typography='h6'>授權狀態</Box>
-      <Box component='pre' sx={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
-        {JSON.stringify(accountState, null, ' ')}
-      </Box>
+      {mode === 'Edit' && <EditView />}
 
-    </Container>
+      <ListView />    
+    </>
   )
 }

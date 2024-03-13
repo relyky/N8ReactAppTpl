@@ -11,7 +11,13 @@ export function SubmitCommand<TFieldValues extends FieldValues>(props: {
   } = useFormContext<TFieldValues>()
 
   return (
-    <Button variant='contained' color='primary' onClick={handleSubmit((data) => props.onSubmit(data, reset))}>
+    <Button variant='contained' color='primary' onClick={handleSubmit((data) => {
+      if (import.meta.env.DEV) {
+        console.debug('SubmitCommand', { data })
+      }
+
+      props.onSubmit(data, reset)
+    })}>
       {props.label ?? '送出'}
     </Button>
   )

@@ -68,12 +68,11 @@ builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<AccountService>();
 
 //## 註冊 Vista.Biz 中名稱結尾為 "Biz" 的服務
-builder.Services.AddScoped<Vista.Biz.DemoBiz>();
-//foreach (var bizType in (Assembly.GetAssembly(typeof(SampleBiz))?.GetTypes() ?? Array.Empty<Type>())
-//  .Where(t => t.Name.EndsWith("Biz")))
-//{
-//  builder.Services.AddScoped(bizType);
-//}
+foreach (var bizType in (Assembly.GetAssembly(typeof(Vista.Biz.DemoBiz))?.GetTypes() ?? Array.Empty<Type>())
+  .Where(t => t.Name.EndsWith("Biz")))
+{
+  builder.Services.AddScoped(bizType);
+}
 
 var app = builder.Build(); //--------------------------------------------------
 
