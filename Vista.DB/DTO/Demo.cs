@@ -1,6 +1,8 @@
 using Reinforced.Typings.Attributes;
 
-// 配合 Reinforced.Typings 生成規則來設定 namespace。
+///※ Reinforced.Typings 已設定成依 namespace 產生標的目錄。
+/// 如：DTO.Domo => client\src\DTO\Demo。
+/// 如：DTO.Account => client\src\DTO\Account。
 namespace DTO.Demo;
 
 [TsInterface]
