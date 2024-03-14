@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Alert, AlertTitle, Box } from "@mui/material"
 import { useFormContext } from "react-hook-form"
 
 export function ValidationSummary() {
@@ -13,15 +13,30 @@ export function ValidationSummary() {
       message: value!.message
     }));
 
-  //console.log('TabPageC.errors', { errors, errorsMsg })
+  const hasError = Array.isArray(errorsMsg) && errorsMsg.length > 0;
+  if (!hasError) return;
+
+  if (import.meta.env.DEV)
+    console.debug('ValidationSummary', { errorsMsg })
+
   return (
-    <Box>
-      <Box typography='h6'>validation summary</Box>
-      <Box component='pre' sx={{ color: 'error.main' }}>
-        {Array.isArray(errorsMsg) && errorsMsg.map((msg, idx) =>
-          (<div key={idx}>{JSON.stringify(msg)}</div>)
-        )}
-      </Box>
-    </Box>
+    <Alert severity="error" sx={{ m: 2 }}>
+      <AlertTitle>Validation Summary</AlertTitle>
+      {errorsMsg.map((msg, idx) =>
+        (<Box key={idx}>{`${msg.message}`}</Box>)
+      )}
+    </Alert>
   )
+
+  //console.log('TabPageC.errors', { errors, errorsMsg })
+  //return (
+  //  <Box>
+  //    <Box typography='h6'>validation summary</Box>
+  //    <Box component='pre' sx={{ color: 'error.main' }}>
+  //      {Array.isArray(errorsMsg) && errorsMsg.map((msg, idx) =>
+  //        (<div key={idx}>{JSON.stringify(msg)}</div>)
+  //      )}
+  //    </Box>
+  //  </Box>
+  //)
 }
