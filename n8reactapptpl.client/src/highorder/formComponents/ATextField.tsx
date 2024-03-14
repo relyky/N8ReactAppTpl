@@ -13,7 +13,7 @@ import { FormRowContext, FormRowFieldSize } from "./FormRow"
 // pattern: RegEx: /^[A-Za-z]+$/i 
 // validate: ()=>boolean
 
-export default function ATextField(props: {
+export function ATextField(props: {
   name: string,
   type?: string,
   label?: string,

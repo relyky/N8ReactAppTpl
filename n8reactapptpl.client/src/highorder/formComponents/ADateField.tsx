@@ -9,7 +9,7 @@ import { OverridableStringUnion } from '@mui/types';
 // ※注意：此元件的 value 屬性只接受 Date 型別。
 // 因 DatePicker 與 date-fns 綁定所以只接受 Date 型別。
 // 讓人無言的 DatePicker！包了三層元件才做出想要的結果。
-export default function ADateField(props: {
+export function ADateField(props: {
   name: string,
   label?: string,
   required?: boolean,

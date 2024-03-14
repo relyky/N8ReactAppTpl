@@ -24,7 +24,7 @@ export type FormContainerProps<T extends FieldValues = FieldValues> =
     }
   >
 
-export default function FormContainer<
+export function FormContainer<
   TFieldValues extends FieldValues = FieldValues
 >({
   handleSubmit,

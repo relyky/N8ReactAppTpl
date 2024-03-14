@@ -4,9 +4,7 @@ import { useAppSelector } from '../../store/hooks'
 import { selectFormState } from './useFormSlice'
 import useFormHand from './useFormHand'
 import { IDemo05_QryArgs } from '../../DTO/Demo/IDemo05_QryArgs'
-import FormContainer from '../../highorder/formComponents/FormContainer'
-import ATextField from '../../highorder/formComponents/ATextField'
-import { ResetCommand, SubmitCommand } from '../../highorder/formComponents/FormCommands'
+import { ATextField, FormContainer, ResetCommand, SubmitCommand } from '../../highorder/formComponents/all'
 
 export default function Demo05_AppForm() {
   const { qryArgs, dataList } = useAppSelector(selectFormState)

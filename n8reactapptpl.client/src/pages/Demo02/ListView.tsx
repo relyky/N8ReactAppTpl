@@ -1,4 +1,4 @@
-import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectFormState, setEditMode } from "./useFormSlice";
 import useFormHand from "./useFormHand";
@@ -14,9 +14,10 @@ export default function ListView() {
     <Container>
       <Typography variant='h3'>CRUD-ListView</Typography>
 
-      <Button variant='contained' onClick={() => handler.qryDataList(qryArgs)}>查詢</Button>
-
-      <Button variant='outlined' onClick={() => dispatch(setEditMode('Add'))}>新增</Button>
+      <Toolbar sx={{ gap: 2, justifyContent: 'center' }}>
+        <Button variant='contained' onClick={() => handler.qryDataList(qryArgs)}>查詢</Button>
+        <Button variant='outlined' onClick={() => dispatch(setEditMode('Add'))}>新增</Button>
+      </Toolbar>
 
       {dataList && <TableContainer component={Paper}>
         <Table>

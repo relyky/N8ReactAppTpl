@@ -3,7 +3,7 @@ import { UseFormReturn, useFormContext } from "react-hook-form"
 /// 取出該 Form 所有狀態以呈現在前端 UI。
 /// 比如：用 getValues() 查看現在表單內容
 /// 比如：用 isValid, isDirty, isSubmitted 等查看表單狀態
-export default function FormStatePeeker(props: {
+export function FormStatePeeker(props: {
   render: (context: UseFormReturn) => JSX.Element
 }) {
   const context = useFormContext() // retrieve all hook methods

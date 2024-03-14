@@ -1,9 +1,5 @@
 import { Paper, Toolbar, Typography } from "@mui/material";
-import FormContainer from "../../highorder/formComponents/FormContainer";
-import ATextField from "../../highorder/formComponents/ATextField";
-import FormRow from "../../highorder/formComponents/FormRow";
-import { ResetCommand, SubmitCommand } from "../../highorder/formComponents/FormCommands";
-import ADateField from "../../highorder/formComponents/ADateField";
+import { ADateField, ATextField, FormContainer, FormRow, ResetCommand, SubmitCommand } from "../../highorder/formComponents/all";
 
 type FormValues = {
   firstName: string

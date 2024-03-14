@@ -35,12 +35,13 @@ export default function Demo02_Handler() {
     dispatch(setEditMode('Edit'))
   }, [dispatch])
 
-  const getFormData = useCallback((formNo: string) => {
+  const getFormData = useCallback((formNo?: string) => {
+    if (typeof formNo !== 'string') return; // validation
     postData<IDemo02_FormData>(`api/Demo02/GetFormData?formNo=${formNo}`)
       .then(formData => {
         dispatch(setFormData(formData))
       })
-  }, [dispatch, postData]) 
+  }, [dispatch, postData])
 
   // ¦^¶Ç handlers
   return useMemo(() =>

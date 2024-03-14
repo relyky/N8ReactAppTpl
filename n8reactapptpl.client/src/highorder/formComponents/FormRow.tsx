@@ -22,7 +22,7 @@ const initProps: FormRowProps = {
 
 export const FormRowContext = createContext<FormRowProps | null>(null);
 
-export default function FormRow(props: FormRowProps & { children?: React.ReactNode }) {
+export function FormRow(props: FormRowProps & { children?: React.ReactNode }) {
   return (
     <FormRowContext.Provider value={props}>
       <Grid container spacing={props?.spacing} >
