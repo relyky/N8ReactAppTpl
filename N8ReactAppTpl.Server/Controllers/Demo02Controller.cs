@@ -50,4 +50,29 @@ public class Demo02Controller(ILogger<Demo02Controller> _logger, Demo02Biz _biz)
     return Ok(formData);
   }
 
+  [HttpPost("[action]")]
+  public async Task<ActionResult<Demo02_Profile>> UpdFormData(Demo02_FormData formData)
+  {
+    var newFormData = _biz.UpdFormData(formData);
+    var newProfile = _biz.MapToProfile(newFormData);
+
+    // 模擬運算時間，正式版請移除。
+    await Task.Delay(800);
+
+    _logger.LogInformation($"Call {this.GetType().Name}.{nameof(UpdFormData)}");
+    return Ok(newProfile);
+  }
+
+  [HttpPost("[action]")]
+  public async Task<ActionResult> DelFormData(string formNo)
+  {
+    var delected = _biz.DelFormData(formNo);
+
+    // 模擬運算時間，正式版請移除。
+    await Task.Delay(800);
+
+    _logger.LogInformation($"Call {this.GetType().Name}.{nameof(DelFormData)}");
+    return NoContent();
+  }
+
 }

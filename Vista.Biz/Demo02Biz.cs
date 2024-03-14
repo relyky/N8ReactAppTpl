@@ -6,13 +6,13 @@ public class Demo02Biz
 {
   //# sims data base
   static List<Demo02_FormData> _simsRepo = new(new[] {
-    new Demo02_FormData { FormNo = "F001", FormTitle = "表單００１號", UpdDtm = DateTime.Now.AddDays(-7), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
-    new Demo02_FormData { FormNo = "F002", FormTitle = "表單００２號", UpdDtm = DateTime.Now.AddDays(-6), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
-    new Demo02_FormData { FormNo = "F003", FormTitle = "表單００３號", UpdDtm = DateTime.Now.AddDays(-5), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
-    new Demo02_FormData { FormNo = "F004", FormTitle = "表單００４號", UpdDtm = DateTime.Now.AddDays(-4), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
-    new Demo02_FormData { FormNo = "F005", FormTitle = "表單００５號", UpdDtm = DateTime.Now.AddDays(-3), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
-    new Demo02_FormData { FormNo = "F006", FormTitle = "表單００６號", UpdDtm = DateTime.Now.AddDays(-2), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
-    new Demo02_FormData { FormNo = "F007", FormTitle = "表單００７號", UpdDtm = DateTime.Now.AddDays(-1), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
+    new Demo02_FormData { FormNo = "F001", FormTitle = "表單００１號", ExpectDate = DateTime.Today.AddDays(1).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-7), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
+    new Demo02_FormData { FormNo = "F002", FormTitle = "表單００２號", ExpectDate = DateTime.Today.AddDays(2).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-6), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
+    new Demo02_FormData { FormNo = "F003", FormTitle = "表單００３號", ExpectDate = DateTime.Today.AddDays(3).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-5), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
+    new Demo02_FormData { FormNo = "F004", FormTitle = "表單００４號", ExpectDate = DateTime.Today.AddDays(4).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-4), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
+    new Demo02_FormData { FormNo = "F005", FormTitle = "表單００５號", ExpectDate = DateTime.Today.AddDays(5).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-3), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
+    new Demo02_FormData { FormNo = "F006", FormTitle = "表單００６號", ExpectDate = DateTime.Today.AddDays(6).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-2), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
+    new Demo02_FormData { FormNo = "F007", FormTitle = "表單００７號", ExpectDate = DateTime.Today.AddDays(7).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-1), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
   });
 
   internal List<Demo02_Profile> QryDataList(Demo02_QryArgs args)
@@ -44,6 +44,7 @@ public class Demo02Biz
     {
       FormNo = formNo, // id
       FormTitle = formData.FormTitle,
+      ExpectDate = formData.ExpectDate,
       FieldA = formData.FieldA,
       FieldB = formData.FieldB,
       FieldC = formData.FieldC,
@@ -58,16 +59,20 @@ public class Demo02Biz
   {
     var info = _simsRepo.Single(c => c.FormNo == formData.FormNo);
 
-    info = info with
+    var newInfo = info with
     {
       FormTitle = formData.FormTitle,
+      ExpectDate = formData.ExpectDate,
       FieldA = formData.FieldA,
       FieldB = formData.FieldB,
       FieldC = formData.FieldC,
       UpdDtm = DateTime.Now // 自動填入
     };
 
-    return info;
+    _simsRepo.Remove(info);
+    _simsRepo.Add(newInfo);
+
+    return newInfo;
   }
 
   internal bool DelFormData(string formNo)

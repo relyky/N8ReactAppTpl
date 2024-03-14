@@ -1,4 +1,4 @@
-import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from "@mui/material";
+import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography, styled, tableCellClasses } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectFormState, setEditMode } from "./useFormSlice";
 import useFormHand from "./useFormHand";
@@ -14,7 +14,7 @@ export default function ListView() {
     <Container>
       <Typography variant='h3'>CRUD-ListView</Typography>
 
-      <Toolbar sx={{ gap: 2, justifyContent: 'center' }}>
+      <Toolbar sx={{ gap: 1 }}>
         <Button variant='contained' onClick={() => handler.qryDataList(qryArgs)}>查詢</Button>
         <Button variant='outlined' onClick={() => dispatch(setEditMode('Add'))}>新增</Button>
       </Toolbar>
@@ -23,10 +23,10 @@ export default function ListView() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell></TableCell>
-              <TableCell>單號</TableCell>
-              <TableCell>抬頭</TableCell>
-              <TableCell>異動時間</TableCell>
+              <TableHeadCell></TableHeadCell>
+              <TableHeadCell>單號</TableHeadCell>
+              <TableHeadCell>抬頭</TableHeadCell>
+              <TableHeadCell>異動時間</TableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -46,3 +46,15 @@ export default function ListView() {
     </Container>
   )
 }
+
+//-----------------------------------------------------------------------------
+
+const TableHeadCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));

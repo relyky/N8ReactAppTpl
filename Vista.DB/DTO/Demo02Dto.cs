@@ -11,6 +11,11 @@ public record Demo02_FormData
   public string FormNo { get; set; } = string.Empty;
   public string FormTitle { get; set; } = string.Empty;
 
+  /// <summary>
+  /// 預計日期:yyyy/MM/dd
+  /// </summary>
+  public string ExpectDate { get; set; } = string.Empty;
+
   [TsProperty(Type = "string", ForceNullable = true)]
   public DateTime? UpdDtm { get; set; }
 

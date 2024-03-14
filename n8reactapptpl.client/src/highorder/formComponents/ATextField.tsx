@@ -18,6 +18,7 @@ export function ATextField(props: {
   type?: string,
   label?: string,
   required?: boolean,
+  readOnly?: boolean,
   placeholder?: string,
   helperText?: string,
   size?: OverridableStringUnion<'small' | 'medium', TextFieldPropsSizeOverrides>,
@@ -78,16 +79,24 @@ export function ATextField(props: {
     return rules
   }, [props.label, props.max, props.maxLength, props.min, props.minLength, props.pattern, props.required, props.validate])
 
+  const readOnlyStyle = useMemo(() =>
+    props.readOnly ? { bgcolor: 'grey.A100' } : undefined
+    , [props.readOnly])
+
   const fieldElement = (
     <TextField
       label={props.label}
       type={props.type}
       required={props.required}
+      InputProps={{
+        readOnly: props.readOnly,
+      }}
       placeholder={props.placeholder}
       error={Boolean(errors[props.name])}
       helperText={(errors[props.name] ? errors[props.name]?.message : props.helperText) as string}
       size={props.size}
       fullWidth={Boolean(formRow)} /* 有 FormRow 就填滿格子 */
+      sx={readOnlyStyle}
       {...register(props.name, rules)}
     />
   )

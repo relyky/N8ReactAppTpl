@@ -8,6 +8,7 @@ import { ATextField, FormContainer, FormRow, ResetCommand, SubmitCommand } from 
 const initFormData: IDemo02_FormData = {
   formNo: '',
   formTitle: '',
+  expectDate: '',
   updDtm: undefined,
   fieldA: '',
   fieldB: '',
@@ -25,6 +26,7 @@ export default function AddView() {
       <FormContainer<IDemo02_FormData> defaultValues={initFormData}>
         <FormRow>
           <ATextField name='formTitle' label='表單抬頭' gridSize={[12]} />
+          <ATextField name='expectDate' label='預計日期' placeholder='YYYY/MM/DD' />
           <ATextField name='fieldA' label='欄位Ａ' />
           <ATextField name='fieldB' label='欄位Ｂ' />
           <ATextField name='fieldC' label='欄位Ｃ' />

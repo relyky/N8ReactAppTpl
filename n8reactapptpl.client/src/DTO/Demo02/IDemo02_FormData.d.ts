@@ -6,6 +6,7 @@ export interface IDemo02_FormData
 {
 	formNo: string;
 	formTitle: string;
+	expectDate: string;
 	updDtm?: string;
 	fieldA: string;
 	fieldB: string;

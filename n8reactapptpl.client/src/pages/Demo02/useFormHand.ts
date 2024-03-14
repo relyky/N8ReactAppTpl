@@ -25,7 +25,7 @@ export default function Demo02_Handler() {
   const addFormData = useCallback((formData: IDemo02_FormData) => {
     postData<IDemo02_Profile>('api/Demo02/AddFormData', formData)
       .then(profile => {
-        dispatch(setDataList([...dataList, profile]))
+        dispatch(setDataList([profile, ...dataList]))
         dispatch(setEditMode('List'))
       })
   }, [dataList, dispatch, postData])
@@ -43,8 +43,30 @@ export default function Demo02_Handler() {
       })
   }, [dispatch, postData])
 
+  const updFormData = useCallback((formData: IDemo02_FormData) => {
+    postData<IDemo02_Profile>('api/Demo02/UpdFormData', formData)
+      .then(profile => {
+        const idx = dataList.findIndex(c => c.formNo === profile.formNo)
+        const before = dataList.slice(0, idx)
+        const after = dataList.slice(idx + 1)
+        dispatch(setDataList([...before, profile, ...after])) // splice at idx
+        dispatch(setEditMode('List'))
+      })
+  }, [dataList, dispatch, postData])
+
+  const delFormData = useCallback((formData: IDemo02_FormData) => {
+    postData<IDemo02_Profile>(`api/Demo02/DelFormData?formNo=${formData.formNo}`)
+      .then(() => {
+        const idx = dataList.findIndex(c => c.formNo === formData.formNo)
+        const before = dataList.slice(0, idx)
+        const after = dataList.slice(idx + 1)
+        dispatch(setDataList([...before, ...after])) // remove at idx
+        dispatch(setEditMode('List'))
+      })
+  }, [dataList, dispatch, postData])
+
   // ¦^¶Ç handlers
   return useMemo(() =>
-    ({ qryDataList, addFormData, pickItemToEdit, getFormData }),
-    [qryDataList, addFormData, pickItemToEdit, getFormData]);
+    ({ qryDataList, addFormData, pickItemToEdit, getFormData, updFormData, delFormData }),
+    [qryDataList, addFormData, pickItemToEdit, getFormData, updFormData, delFormData]);
 }
