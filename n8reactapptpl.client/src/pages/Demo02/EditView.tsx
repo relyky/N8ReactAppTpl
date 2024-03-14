@@ -17,14 +17,9 @@ export default function EditView() {
 
   return (
     <Container>
-      <Typography variant='h3'>CRUD-EditView</Typography>
-      <Typography variant='h4'>{dataAim}</Typography>
+      <Typography variant='h3' gutterBottom>CRUD-EditView</Typography>
 
       {Boolean(formData) && <FormContainer<IDemo02_FormData> values={formData}>
-        <pre>
-          {JSON.stringify(formData, null, ' ')}
-        </pre>
-
         <FormRow>
           <ATextField name='formNo' label='表單號碼' gridSize={[12, 3]} readOnly />
           <ATextField name='formTitle' label='表單抬頭' gridSize={[12, 9]} />

@@ -1,8 +1,8 @@
 import { FC, ReactNode, useState } from "react"
 import { Collapse, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom"
-import { useAppDispatch } from "./store/hooks";
-import { logoutAsync } from "./store/accountSlice";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { logoutAsync, selectAuthed, selectAuthing } from "./store/accountSlice";
 // Icons
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -11,6 +11,8 @@ import MenuGroupIcon from '@mui/icons-material/GridViewRounded'
 
 export default function NavMenu() {
   const dispatch = useAppDispatch()
+  const isAuthed = useAppSelector(selectAuthed)
+  const isAuthing = useAppSelector(selectAuthing)
   return (
     <div>
       <Toolbar /> {/* hat */}
@@ -65,18 +67,23 @@ export default function NavMenu() {
             <ListItemText primary='首頁' />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to="/login">
-            <ListItemIcon children={<LoginIcon color='primary' />} />
-            <ListItemText primary='登入' />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => dispatch(logoutAsync())}>
-            <ListItemIcon children={<LogoutIcon color='primary' />} />
-            <ListItemText primary='登出' />
-          </ListItemButton>
-        </ListItem>
+
+        {!isAuthed && !isAuthing &&
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/login">
+              <ListItemIcon children={<LoginIcon color='primary' />} />
+              <ListItemText primary='登入' />
+            </ListItemButton>
+          </ListItem>}
+
+        {isAuthed &&
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => dispatch(logoutAsync())}>
+              <ListItemIcon children={<LogoutIcon color='primary' />} />
+              <ListItemText primary='登出' />
+            </ListItemButton>
+          </ListItem>}
+
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/labbing">
             <ListItemIcon children={<HomeIcon color='primary' />} />

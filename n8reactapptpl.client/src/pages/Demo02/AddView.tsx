@@ -21,7 +21,7 @@ export default function AddView() {
 
   return (
     <Container>
-      <Typography variant='h3'>CRUD-AddView</Typography>
+      <Typography variant='h3' gutterBottom>CRUD-AddView</Typography>
 
       <FormContainer<IDemo02_FormData> defaultValues={initFormData}>
         <FormRow>
