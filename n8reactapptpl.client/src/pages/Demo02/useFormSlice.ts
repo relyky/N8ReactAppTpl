@@ -1,26 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { IDemo02_QryArgs } from "../../DTO/Demo02/IDemo02_QryArgs"
 import { IDemo02_Profile } from "../../DTO/Demo02/IDemo02_Profile"
 import { IDemo02_FormData } from "../../DTO/Demo02/IDemo02_FormData"
 
 export interface Demo02_FormState {
   mode: EditMode,
   dataList: IDemo02_Profile[],
-  qryArgs: IDemo02_QryArgs,
+  qryArgs: string,  // keyword query
   dataAim?: string, // the id of the dataList
   formData?: IDemo02_FormData,
-}
-
-const initQryArgs: IDemo02_QryArgs = {
-  formNo: '',
-  formTitle: '',
 }
 
 const initialState: Demo02_FormState = {
   mode: 'List',
   dataList: [],
-  qryArgs: initQryArgs,
+  qryArgs: '',
   dataAim: undefined,
   formData: undefined,
 }
@@ -36,7 +30,7 @@ const formSlice = createSlice({
     setDataList: (state, action: PayloadAction<IDemo02_Profile[]>) => {
       state.dataList = action.payload
     },
-    setQryArgs: (state, action: PayloadAction<IDemo02_QryArgs>) => {
+    setQryArgs: (state, action: PayloadAction<string>) => {
       state.qryArgs = action.payload
     },
     setDataAim: (state, action: PayloadAction<string>) => {

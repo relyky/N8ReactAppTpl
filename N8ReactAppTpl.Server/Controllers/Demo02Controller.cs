@@ -14,9 +14,9 @@ namespace N8ReactAppTpl.Server.Controllers;
 public class Demo02Controller(ILogger<Demo02Controller> _logger, Demo02Biz _biz) : ControllerBase
 {
   [HttpPost("[action]")]
-  public async Task<ActionResult<List<Demo02_Profile>>> QryDataList(Demo02_QryArgs qryArgs)
+  public async Task<ActionResult<List<Demo02_Profile>>> QryDataList(string? keyword)
   {
-    var dataList = _biz.QryDataList(qryArgs);
+    var dataList = _biz.QryDataList(keyword);
 
     // 模擬運算時間，正式版請移除。
     await Task.Delay(800);

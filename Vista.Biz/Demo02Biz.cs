@@ -15,15 +15,16 @@ public class Demo02Biz
     new Demo02_FormData { FormNo = "F007", FormTitle = "表單００７號", ExpectDate = DateTime.Today.AddDays(7).ToString("yyyy/MM/dd"), UpdDtm = DateTime.Now.AddDays(-1), FieldA = "AAA", FieldB = "BBB", FieldC = "CCC" },
   });
 
-  internal List<Demo02_Profile> QryDataList(Demo02_QryArgs args)
+  internal List<Demo02_Profile> QryDataList(string? keyword)
   {
     var qry = _simsRepo.AsQueryable();
 
-    if (!string.IsNullOrEmpty(args.FormNo))
-      qry = qry.Where(c => c.FormNo == args.FormNo);
-
-    if (!String.IsNullOrWhiteSpace(args.FormTitle))
-      qry = qry.Where(c => c.FormTitle.IndexOf(args.FormTitle) > -1);
+    // 關鍵字查詢
+    if (!string.IsNullOrEmpty(keyword))
+    {
+      qry = qry.Where(c => c.FormNo.StartsWith(keyword)
+                        || c.FormTitle.IndexOf(keyword) > -1);
+    }
 
     var dataList = qry.Select(this.MapToProfile).ToList();
 

@@ -34,9 +34,3 @@ public record Demo02_Profile
   public string? UpdDtm { get; set; } = string.Empty;
 }
 
-[TsInterface]
-public record Demo02_QryArgs
-{
-  public string FormNo { get; set; } = string.Empty;
-  public string FormTitle { get; set; } = string.Empty;
-}

@@ -2,7 +2,6 @@ import { useCallback, useMemo } from 'react'
 import { usePostData } from '../../hooks/useHttp';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectFormState, setDataAim, setDataList, setEditMode, setFormData, setQryArgs } from './useFormSlice';
-import { IDemo02_QryArgs } from '../../DTO/Demo02/IDemo02_QryArgs';
 import { IDemo02_Profile } from '../../DTO/Demo02/IDemo02_Profile';
 import { IDemo02_FormData } from '../../DTO/Demo02/IDemo02_FormData';
 
@@ -14,10 +13,10 @@ export default function Demo02_Handler() {
   /// ※一般來說 dispatch 放在最後一行。
 
   // 直接用 call Promise
-  const qryDataList = useCallback((qryArgs: IDemo02_QryArgs) => {
-    postData<IDemo02_Profile[]>('api/Demo02/QryDataList', qryArgs)
+  const qryDataList = useCallback((keyword?: string) => {
+    postData<IDemo02_Profile[]>(`api/Demo02/QryDataList?keyword=${keyword}`)
       .then(dataList => {
-        dispatch(setQryArgs(qryArgs))
+        dispatch(setQryArgs(keyword ?? ''))
         dispatch(setDataList(dataList))
       })
   }, [dispatch, postData])
