@@ -1,7 +1,12 @@
 # N8ReactAppTpl
  NET8 + React.v18  
- Web API + Swagger + Rin + healthz + Cookie Authentication +   
- React + vite + 
+ Web API + 
+[Swashbuckle/Swagger](https://learn.microsoft.com/zh-tw/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio) + 
+[Rin](https://github.com/mayuki/Rin) + 
+[healthz](https://learn.microsoft.com/zh-tw/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-8.0) + 
+[Cookie Authentication](https://learn.microsoft.com/zh-tw/aspnet/core/security/authentication/cookie?view=aspnetcore-8.0) +   
+ [React](https://react.dev/reference/react) + 
+[vite](https://vitejs.dev/guide/) + 
 [Redux Toolkit](https://redux-toolkit.js.org/) + 
 [React Router](https://reactrouter.com/en/main/start/tutorial) + 
 [Material UI](https://mui.com/core/) +
