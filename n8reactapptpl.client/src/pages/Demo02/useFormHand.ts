@@ -64,8 +64,12 @@ export default function Demo02_Handler() {
       })
   }, [dataList, dispatch, postData])
 
+  const setMode = useCallback((mode: EditMode) => {
+    dispatch(setEditMode(mode))
+  }, [dispatch])
+
   // ¦^¶Ç handlers
   return useMemo(() =>
-    ({ qryDataList, addFormData, pickItemToEdit, getFormData, updFormData, delFormData }),
-    [qryDataList, addFormData, pickItemToEdit, getFormData, updFormData, delFormData]);
+    ({ setMode, qryDataList, addFormData, pickItemToEdit, getFormData, updFormData, delFormData }),
+    [setMode, qryDataList, addFormData, pickItemToEdit, getFormData, updFormData, delFormData]);
 }

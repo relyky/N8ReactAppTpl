@@ -1,6 +1,4 @@
 import { Button, Container, Toolbar, Typography } from "@mui/material";
-import { useAppDispatch } from "../../store/hooks";
-import { setEditMode } from "./useFormSlice";
 import { IDemo02_FormData } from "../../DTO/Demo02/IDemo02_FormData";
 import useFormHand from "./useFormHand";
 import { ATextField, FormContainer, FormRow, ResetCommand, SubmitCommand, ValidationSummary } from "../../highorder/formComponents/all";
@@ -16,7 +14,6 @@ const initFormData: IDemo02_FormData = {
 }
 
 export default function AddView() {
-  const dispatch = useAppDispatch()
   const handler = useFormHand()
 
   return (
@@ -35,7 +32,7 @@ export default function AddView() {
         <Toolbar sx={{ gap: 2, justifyContent: 'center' }}>
           <SubmitCommand onSubmit={handler.addFormData} />
           <ResetCommand />
-          <Button variant='outlined' onClick={() => dispatch(setEditMode('List'))}>返回</Button>
+          <Button variant='outlined' onClick={() => handler.setMode('List')}>返回</Button>
         </Toolbar>
         <ValidationSummary />
       </FormContainer>

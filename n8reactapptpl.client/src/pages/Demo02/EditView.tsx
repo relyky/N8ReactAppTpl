@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import { Button, Chip, Container, Paper, Stack, Toolbar, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { ATextField, FormContainer, FormRow, FormStatePeeker, ReconfirmCommand, ResetCommand, SubmitCommand, ValidationSummary } from "../../highorder/formComponents/all";
 import { IDemo02_FormData } from "../../DTO/Demo02/IDemo02_FormData";
-import { selectFormState, setEditMode } from "./useFormSlice";
+import { selectFormState } from "./useFormSlice";
 import useFormHand from "./useFormHand";
 
 export default function EditView() {
-  const dispatch = useAppDispatch()
   const { dataAim, formData } = useAppSelector(selectFormState)
   const handler = useFormHand()
 
@@ -53,7 +52,7 @@ export default function EditView() {
           <SubmitCommand onSubmit={handler.updFormData} />
           <ReconfirmCommand onSubmit={handler.delFormData} label="刪除" />
           <ResetCommand />
-          <Button variant='outlined' onClick={() => dispatch(setEditMode('List'))}>返回</Button>
+          <Button variant='outlined' onClick={() => handler.setMode('List')}>返回</Button>
         </Toolbar>
 
         <ValidationSummary />
