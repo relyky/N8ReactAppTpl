@@ -107,6 +107,7 @@ export default defineConfig({
 - [ ]  Demo3: fileDownload 之 PDF 送印
 - [x]  Demo4: fileUpload, Excel
 - [x]  Demo5: FetchData 查詢報表。
+- [x]  AssemblyInfo.cs 
 - [ ]  widgets\highorder 元件之 ADateField 改以 string YYYY/MM/DD 溝通
 - [ ]  NavMenu 選單項目由授權項目決定
 - [ ]  試著部署到 Docker。
