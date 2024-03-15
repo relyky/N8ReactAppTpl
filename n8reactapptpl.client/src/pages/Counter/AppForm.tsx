@@ -13,7 +13,7 @@ export default function Counter_AppForm() {
   return (
     <Container>      
       <Typography variant='h3'>計數器</Typography>
-      <Box typography='body1'>展示三種不同實作方法的計數器。</Box>
+      <Box typography='body1'>以官方範例來實作。展示三種不同實作方法的計數器。</Box>
 
       {/* 第一種計數器 */}
       <MyCounter value={count0} onChange={setCount0} />

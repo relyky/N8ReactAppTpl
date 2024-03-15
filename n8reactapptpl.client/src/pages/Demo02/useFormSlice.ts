@@ -24,19 +24,19 @@ const formSlice = createSlice({
   name: "demo02",
   initialState,
   reducers: {
-    setEditMode: (state, action: PayloadAction<EditMode>) => {
+    setEditMode(state, action: PayloadAction<EditMode>) {
       state.mode = action.payload
     },
-    setDataList: (state, action: PayloadAction<IDemo02_Profile[]>) => {
+    setDataList(state, action: PayloadAction<IDemo02_Profile[]>) {
       state.dataList = action.payload
     },
-    setQryArgs: (state, action: PayloadAction<string>) => {
+    setQryArgs(state, action: PayloadAction<string>) {
       state.qryArgs = action.payload
     },
-    setDataAim: (state, action: PayloadAction<string>) => {
+    setDataAim(state, action: PayloadAction<string>) {
       state.dataAim = action.payload
     },
-    setFormData: (state, action: PayloadAction<IDemo02_FormData>) => {
+    setFormData(state, action: PayloadAction<IDemo02_FormData>) {
       state.formData = action.payload
     },
   },

@@ -22,10 +22,10 @@ const metaSlice = createSlice({
   name: "meta",
   initialState,
   reducers: {
-    setBlocking: (state, action: PayloadAction<boolean>) => {
+    setBlocking(state, action: PayloadAction<boolean>) {
       state.blocking = action.payload
     },
-    setTopAlert: (state, action: PayloadAction<{ severity: AlertColor, text: string } | null>) => {
+    setTopAlert(state, action: PayloadAction<{ severity: AlertColor, text: string } | null>) {
       if (action.payload) {
         const { severity, text } = action.payload
         state.topAlertSeverity = severity
@@ -36,10 +36,10 @@ const metaSlice = createSlice({
         state.topAlertText = null
       }
     },
-    toggleTheme: (state) => {
+    toggleTheme(state) {
       state.darkTheme = !state.darkTheme
     },
-    assignMeta: (state, action: PayloadAction<object>) => {
+    assignMeta(state, action: PayloadAction<object>) {
       return { ...state, ...action.payload }
     },
   },

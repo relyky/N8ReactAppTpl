@@ -23,14 +23,10 @@ const formSlice = createSlice({
   name: "demo05",
   initialState,
   reducers: {
-    //inputQryArgs: (state, action: PayloadAction<{ name: string, value: unknown }>) => {
-    //  const { name, value } = action.payload
-    //  state.qryArgs = { ...state.qryArgs, [name]: value }
-    //},
-    setQryArgs: (state, action: PayloadAction<IDemo05_QryArgs>) => {
+    setQryArgs(state, action: PayloadAction<IDemo05_QryArgs>) {
       state.qryArgs = { ...action.payload }
     },
-    setDataList: (state, action: PayloadAction<IWeatherForecast[]>) => {
+    setDataList(state, action: PayloadAction<IWeatherForecast[]>) {
       state.dataList = [...action.payload]
     },
   },

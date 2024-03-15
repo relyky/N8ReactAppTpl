@@ -23,10 +23,10 @@ const formSlice = createSlice({
   name: "demo04",
   initialState,
   reducers: {
-    setFileInfo: (state, action: PayloadAction<FileInfo>) => {
+    setFileInfo(state, action: PayloadAction<FileInfo>) {
       state.fileInfo = action.payload
     },
-    setDataList: (state, action: PayloadAction<IDemoBiz_UploadDetail[]>) => {
+    setDataList(state, action: PayloadAction<IDemoBiz_UploadDetail[]>) {
       state.dataList = action.payload
     },
   },
