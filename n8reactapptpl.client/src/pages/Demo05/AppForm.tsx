@@ -11,8 +11,12 @@ export default function Demo05_AppForm() {
   const handler = useFormHand()
 
   // form init
+  useEffect(() => {
+    // dataList 為空值時才自動初始查詢。保留狀態。
+    if (dataList.length <= 0)
+      handler.qryDataList2(qryArgs)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => handler.qryDataList2(qryArgs), [])
+  }, [])
 
   return (
     <Container>
@@ -26,7 +30,7 @@ export default function Demo05_AppForm() {
           <ATextField name='count' type='number' label='Count' placeholder='需 6 筆以上。' size='small'
             min={[6, '需 6 筆以上']} />
           <SubmitCommand onSubmit={handler.qryDataList2} />
-          <ResetCommand />  
+          <ResetCommand />
         </Stack>
       </FormContainer>
 
