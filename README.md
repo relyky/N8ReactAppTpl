@@ -1,18 +1,7 @@
 # N8ReactAppTpl
  NET8 + React.v18 with TypeScript    
- Web API + 
-[Swashbuckle/Swagger](https://learn.microsoft.com/zh-tw/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio) + 
-[Rin](https://github.com/mayuki/Rin) + 
-[healthz](https://learn.microsoft.com/zh-tw/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-8.0) + 
-[Cookie Authentication](https://learn.microsoft.com/zh-tw/aspnet/core/security/authentication/cookie?view=aspnetcore-8.0) +   
- [React](https://react.dev/reference/react) + 
-[vite](https://vitejs.dev/guide/) + 
-[Redux Toolkit](https://redux-toolkit.js.org/) + 
-[React Router](https://reactrouter.com/en/main/start/tutorial) + 
-[Material UI](https://mui.com/core/) +
-[SweetAlert2](https://sweetalert2.github.io/) +
-[date-fns](https://date-fns.org/) +
-[React Hook Form](https://react-hook-form.com/)
+ Web API + Swagger + Rin + healthz + Cookie Authentication + Reinforced.Typings   
+ React + vite + Redux + React Router + Material UI + SweetAlert2 + date-fns + React Hook Form   
 
  起始專案：`React and ASP.NET Core`   
  IDE: Visual Studio 2022   
@@ -23,6 +12,7 @@
 * 加掛 [Swashbuckle/Swagger](https://learn.microsoft.com/zh-tw/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio): 生成 Swagger UI。開發期間有效。
 * 加掛 [Rin](https://github.com/mayuki/Rin): Request/response Inspector。檢驗封包內容與預期是否相同。開發期間有效。
 * 加掛 [healthz](https://learn.microsoft.com/zh-tw/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-8.0): 自主健康檢查。
+* 加掛 [Reinforced.Typings/DTO Transformer](https://github.com/reinforced/Reinforced.Typings): converts .NET DTO classes into TypeScript code。
 * 認證方法：Cookie 為預設，JwtBearer 為選項。 
 * 啟用 GDPR 政策檢查(GDPR Consent)
 * 登入程序中加入客製 XSRF Token 驗證。
@@ -36,7 +26,8 @@
 * [Material UI](https://mui.com/core/): CSS framework。
 * [SweetAlert2](https://sweetalert2.github.io/): message box，雖然 @MUI 也有不過就是不好用。
 * [date-fns](https://date-fns.org/): 日期運算(無言啊)。
-* [React Hook Form](https://react-hook-form.com/): 表單輸入檢驗(form input validation)，有 required、min、max、regex 等等。 
+* [React Hook Form](https://react-hook-form.com/): 表單輸入檢驗(form input validation)，有 required、min、max、regex 等等。
+* [Fetch API](https://developer.mozilla.org/zh-TW/docs/Web/API/Fetch_API/Using_Fetch): 不管用那套通訊指令都要再包裝二、三層來做成高階通訊指令，綜合評估後原生的 fetch 指令分數最高。
 
 # vite 組態
 主要組態檔``。大體上用起始專案 `React and ASP.NET Core` 給的組態就行了。   
@@ -75,5 +66,14 @@ export default defineConfig({
 - [x] Uranus
 - [x] Neptune
 - [ ] Comet Haley
+
+# 沒圖沒真象
+react hook form 測試畫面
+
+
+
+
+
+
 
 
