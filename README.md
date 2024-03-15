@@ -12,7 +12,7 @@
 * 加掛 [Swashbuckle/Swagger](https://learn.microsoft.com/zh-tw/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio): 生成 Swagger UI。開發期間有效。
 * 加掛 [Rin](https://github.com/mayuki/Rin): Request/response Inspector。檢驗封包內容與預期是否相同。開發期間有效。
 * 加掛 [healthz](https://learn.microsoft.com/zh-tw/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-8.0): 自主健康檢查。
-* 加掛 [Reinforced.Typings/DTO Transformer](https://github.com/reinforced/Reinforced.Typings): converts .NET DTO classes into TypeScript code。
+* 加掛 [Reinforced.Typings/DTO Transformer](https://github.com/reinforced/Reinforced.Typings): C# DTO to TypeScript。
 * 認證方法：Cookie 為預設，JwtBearer 為選項。 
 * 啟用 GDPR 政策檢查(GDPR Consent)
 * 登入程序中加入客製 XSRF Token 驗證。
@@ -63,17 +63,45 @@ export default defineConfig({
 ```
 
 # 工作項目
-- [x] Uranus
-- [x] Neptune
-- [ ] Comet Haley
+- [x]  React and ASP.NET Core + TypeScript
+- [x]  Web API: Swagger + Rin + Healthz
+- [x]  Web API 全部以 “/api/FooBar” 命名
+- [x]  SPA & CSR: BrowserRouter
+- [x]  CSS Framework: Material UI
+- [x]  Custom Thema
+- [x]  MainLayout
+- [x]  NavMenu
+- [x]  Overlay & TopAlert
+- [x]  dark / light theme switch
+- [x]  C# DTO to TypeScript : with Reinforced.Typings
+- [x]  Banner with AuthStatus
+- [x]  setup Redux
+- [x]  AuthToken with JwtBearer
+- [x]  AuthToken 改存入 cookie with sccure + http only + lax
+- [x]  前端環境變數 [vite.env](https://vitejs.dev/guide/env-and-mode)
+- [x]  首頁為特例不用登入
+- [x]  useFormHand - CRUD handler
+- [ ]  用422送回 FluentValidation 格式錯誤的物件訊息。--- abort
+- [x]  用400送回字串格式的錯誤訊息
+- [x]  widgets\highorder 元件
+- [x]  setup SwalAlert
+- [x]  Demo\Counter: CSS isolation, 基本操作 etc 
+- [x]  Login Auth 程過，考慮 AnitForgery 機制
+- [ ]  Login UI with X-Api-Key --- abort
+- [x]  Logout
+- [ ]  Refresh Token & GetPrincipalFromToken
+- [ ]  試用 react-auth-kit https://authkit.arkadip.dev/ —- abort 無預期效益
+- [ ]  測試 RequiresClaim
+- [ ]  用 **Fluent Validation** 在後端做基本驗證 WebAPI 封包
+- [x]  把 asyncThunk 改以 useHook 實作 => useFormHand
+- [x]  Demo1: auth status
+- [x]  Demo2: Form CRUD
+- [x]  Demo3: fileDownload, Excel 下載
+- [ ]  Demo3: fileDownload 之 PDF 送印
+- [x]  Demo4: fileUpload, Excel
+- [x]  Demo5: FetchData 查詢報表。
+- [ ]  widgets\highorder 元件之 ADateField 改以 string YYYY/MM/DD 溝通
+- [ ]  NavMenu 選單項目由授權項目決定
 
 # 沒圖沒真象
 react hook form 測試畫面
-
-
-
-
-
-
-
-
