@@ -66,8 +66,10 @@ export default defineConfig({
 - [x]  React and ASP.NET Core + TypeScript
 - [x]  Web API: Swagger + Rin + Healthz
 - [x]  Web API 全部以 “/api/FooBar” 命名
-- [x]  SPA & CSR: BrowserRouter
+- [x]  SPA & CSR: BrowserRouter(react-router-dom)
+- [x]  是否預設就有 CSS isolation。YES。
 - [x]  CSS Framework: Material UI
+- [ ]  ~CSS Framework: Tailwind CSS。--- abort 最終還是會選用 Material UI。~
 - [x]  Custom Thema
 - [x]  MainLayout
 - [x]  NavMenu
@@ -75,33 +77,40 @@ export default defineConfig({
 - [x]  dark / light theme switch
 - [x]  C# DTO to TypeScript : with Reinforced.Typings
 - [x]  Banner with AuthStatus
-- [x]  setup Redux
+- [x]  setup Redux --- 未找到更好的。
 - [x]  AuthToken with JwtBearer
 - [x]  AuthToken 改存入 cookie with sccure + http only + lax
 - [x]  前端環境變數 [vite.env](https://vitejs.dev/guide/env-and-mode)
 - [x]  首頁為特例不用登入
 - [x]  useFormHand - CRUD handler
-- [ ]  用422送回 FluentValidation 格式錯誤的物件訊息。--- abort
 - [x]  用400送回字串格式的錯誤訊息
-- [x]  widgets\highorder 元件
-- [x]  setup SwalAlert
+- [ ]  ~用422送回 JSON|FluentValidation 格式錯誤的物件訊息。--- abort 預期效益 < 副作用。~
+- [x]  setup SweetAlert2
 - [x]  Demo\Counter: CSS isolation, 基本操作 etc 
 - [x]  Login Auth 程過，考慮 AnitForgery 機制
-- [ ]  Login UI with X-Api-Key --- abort
+- [ ]  ~Login UI with X-Api-Key --- abort~
+- [ ]  ~試用 react-auth-kit https://authkit.arkadip.dev/ —- abort 無預期效益~
 - [x]  Logout
 - [ ]  Refresh Token & GetPrincipalFromToken
-- [ ]  試用 react-auth-kit https://authkit.arkadip.dev/ —- abort 無預期效益
 - [ ]  測試 RequiresClaim
 - [ ]  用 **Fluent Validation** 在後端做基本驗證 WebAPI 封包
+- [x]  通訊方式改以 fetch 實作 postData 並整合 redux
+- [ ]  ~通訊方式考慮 use-http\`useFetch` --- abort 綜合分數不如 fetch。~
+- [ ]  ~通訊方式考慮 axios-hooks\`useAxios` --- abort 綜合分數不如 fetch。~
+- [x]  實作 usePostData
+- [ ]  實作 useLoadData
 - [x]  把 asyncThunk 改以 useHook 實作 => useFormHand
+- [x]  widgets\highorder 元件
 - [x]  Demo1: auth status
-- [x]  Demo2: Form CRUD
+- [x]  Demo2: Form CRUD, Form Submit
 - [x]  Demo3: fileDownload, Excel 下載
 - [ ]  Demo3: fileDownload 之 PDF 送印
 - [x]  Demo4: fileUpload, Excel
 - [x]  Demo5: FetchData 查詢報表。
 - [ ]  widgets\highorder 元件之 ADateField 改以 string YYYY/MM/DD 溝通
 - [ ]  NavMenu 選單項目由授權項目決定
+- [ ]  試著部署到 Docker。
+
 
 # 沒圖沒真象
 react hook form 測試畫面
