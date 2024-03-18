@@ -15,8 +15,6 @@ builder.Logging.AddRinLogger(); // for Rin ºÊÅ¥ HTTP «Ê¥]
 // for JwtBearer Auth
 var jwtTokenValidationParameters = JwtAuthenticationTool.GenerateTokenValidationParameters(_config);
 
-// for COOKIE Auth
-// ref ¡÷ https://blazorhelpwebsite.com/ViewBlogPost/36
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
   options.MinimumSameSitePolicy = SameSiteMode.Lax; // SameSiteMode.Strict;
@@ -31,6 +29,8 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
   options.ConsentCookie.Expiration = TimeSpan.FromDays(365);
 });
 
+// for COOKIE Auth
+// ref ¡÷ https://blazorhelpwebsite.com/ViewBlogPost/36
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
   .AddCookie(cfg =>
   {
