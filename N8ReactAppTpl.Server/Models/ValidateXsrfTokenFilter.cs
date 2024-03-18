@@ -61,7 +61,7 @@ public class ValidateXsrfTokenFilter(ILogger<ValidateXsrfTokenFilter> _logger, I
     string token = Utils.AesSimpleEncrypt(loginSid);
     cache.Set($"XSRF-TOKEN:{loginSid}", token, TimeSpan.FromMinutes(3)); // ３分鐘內需完成登入
 
-    // 可以送回 cookie - 正式部署後無效的樣子！
+    // 送回 cookie
     context.Response.Cookies.Append(XSRF_TOKEN_NAME, token, new CookieOptions()
     {
       Expires = DateTimeOffset.Now.AddMinutes(3),

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import type { FC, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material'
@@ -31,7 +31,7 @@ export default function LoginForm() {
     postData('api/Account/GetXsrfToken')
   }, [])
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget);
     const loginArgs: ILoginArgs = {
@@ -41,7 +41,7 @@ export default function LoginForm() {
     };
 
     dispatch(loginAsync(loginArgs))
-  };
+  },[dispatch]);
 
   //# 成功後轉址到主畫面
   useEffect(() => {
