@@ -59,12 +59,14 @@ public class ValidateXsrfTokenFilter(ILogger<ValidateXsrfTokenFilter> _logger, I
   {
     Guid loginSid = Guid.NewGuid();
     string token = Utils.AesSimpleEncrypt(loginSid);
+    /// 此 anit-forgery-token 只能做到不能重複 post 同一個封包。 
+    /// 正式版的 anit-forgery-token 檢驗依據項目應加入 client side 一些識別資訊！
     cache.Set($"XSRF-TOKEN:{loginSid}", token, TimeSpan.FromMinutes(3)); // ３分鐘內需完成登入
 
     // 送回 cookie
     context.Response.Cookies.Append(XSRF_TOKEN_NAME, token, new CookieOptions()
     {
-      Expires = DateTimeOffset.Now.AddMinutes(3),
+      Expires = DateTimeOffset.Now.AddMinutes(3), 
       SameSite = SameSiteMode.Lax, // SameSiteMode.Strict,
       Secure = true,
       HttpOnly = true,
