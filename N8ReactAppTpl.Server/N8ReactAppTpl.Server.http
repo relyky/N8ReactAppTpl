@@ -1,14 +1,14 @@
 @N8ReactAppTpl.Server_HostAddress = http://localhost:5062
 
-### WebAPI ´ú¸Õ 
+### WebAPI æ¸¬è©¦ 
 GET {{N8ReactAppTpl.Server_HostAddress}}/api/weatherforecast/
 Accept: application/json
 
-### °·±d´ú¸Õ
+### å¥åº·æ¸¬è©¦
 GET {{N8ReactAppTpl.Server_HostAddress}}/healthz
 Accept: application/json
 
-### µn¤J´ú¸Õ
+### ç™»å…¥æ¸¬è©¦
 POST {{N8ReactAppTpl.Server_HostAddress}}/api/account/login
 Content-Type: application/json
 
@@ -18,3 +18,10 @@ Content-Type: application/json
   "vcode": "123456",
   "returnUrl": "/"
 }
+
+
+### Fil Handling 200 - æˆåŠŸ
+POST {{N8ReactAppTpl.Server_HostAddress}}/api/Demo05/FailHandlingLab/200
+
+### Fil Handling 400
+POST {{N8ReactAppTpl.Server_HostAddress}}/api/Demo05/FailHandlingLab/204

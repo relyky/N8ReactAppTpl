@@ -1,10 +1,13 @@
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using DTO.Demo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using N8ReactAppTpl.Server.Models;
 using Swashbuckle.AspNetCore.Annotations;
 using Vista.Biz;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace N8ReactAppTpl.Server.Controllers;
 
@@ -16,7 +19,7 @@ public class Demo05Controller(ILogger<Demo05Controller> _logger, DemoBiz _biz) :
   private static readonly string[] Summaries = new[]
   {
       //"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-      "¦B§N", "²M²n", "§N", "²D²n", "·Å©M", "·Å·x", "·Å©M", "ª¢¼ö", "´e¼ö", "¨`¼ö"
+      "å†°å†·", "æ¸…çˆ½", "å†·", "æ¶¼çˆ½", "æº«å’Œ", "æº«æš–", "æº«å’Œ", "ç‚ç†±", "æ‚¶ç†±", "ç¼ç†±"
   };
 
   [SwaggerResponse(200, Type = typeof(IEnumerable<WeatherForecast>))]
@@ -25,20 +28,20 @@ public class Demo05Controller(ILogger<Demo05Controller> _logger, DemoBiz _biz) :
   [HttpPost("[action]")]
   public async Task<IActionResult> GetWeatherForecast(Demo05_QryArgs qryArgs)
   {
-    // ¼ÒÀÀ¬d¸ß®É¶¡
+    // æ¨¡æ“¬æŸ¥è©¢æ™‚é–“
     await Task.Delay(800);
 
-    //// ¥Î422°e¦^ FluentValidation ®æ¦¡¿ù»~ªºª«¥ó°T®§¡C
-    //// ¥Î400°e¦^¦r¦ê®æ¦¡ªº¿ù»~°T®§
+    //// ç”¨422é€å› FluentValidation æ ¼å¼éŒ¯èª¤çš„ç‰©ä»¶è¨Šæ¯ã€‚
+    //// ç”¨400é€å›å­—ä¸²æ ¼å¼çš„éŒ¯èª¤è¨Šæ¯
     //if (qryArgs.Count < 10)
     //  return UnprocessableEntity(new
     //  {
     //    FieldName = "Count",
-    //    ErrorDescription = "¿é¤J°Ñ¼Æ®æ¦¡¿ù»~¡I"
+    //    ErrorDescription = "è¼¸å…¥åƒæ•¸æ ¼å¼éŒ¯èª¤ï¼"
     //  });
 
     if (qryArgs.Count < 5)
-      return BadRequest("¿é¤J°Ñ¼Æ®æ¦¡¿ù»~¡I ¥²»İ 5 µ§¥H¤W¡C");
+      return BadRequest("è¼¸å…¥åƒæ•¸æ ¼å¼éŒ¯èª¤ï¼ å¿…éœ€ 5 ç­†ä»¥ä¸Šã€‚");
 
     if (qryArgs.Count < 0)
     {
@@ -62,9 +65,9 @@ public class Demo05Controller(ILogger<Demo05Controller> _logger, DemoBiz _biz) :
   [HttpPost("[action]")]
   public IActionResult DownloadFile([FromQuery] string filename)
   {
-    //return BadRequest("¼ÒÀÀ¤U¸üÀÉ®×¥¢±Ñ¡I");
+    //return BadRequest("æ¨¡æ“¬ä¸‹è¼‰æª”æ¡ˆå¤±æ•—ï¼");
 
-    FileInfo file = new FileInfo("Assets/ªş¥ó¤@¡G¥Á°ê112¦~¬F©²¦æ¬F¾÷Ãö¿ì¤½¤é¾äªí.xls");
+    FileInfo file = new FileInfo("Assets/é™„ä»¶ä¸€ï¼šæ°‘åœ‹112å¹´æ”¿åºœè¡Œæ”¿æ©Ÿé—œè¾¦å…¬æ—¥æ›†è¡¨.xls");
     using var fs = file.OpenRead();
     using var ms = new MemoryStream();
     fs.CopyTo(ms);
@@ -91,4 +94,57 @@ public class Demo05Controller(ILogger<Demo05Controller> _logger, DemoBiz _biz) :
   }
 
 
+  [AllowAnonymous]
+  [HttpPost("[action]/{num}")]
+  public IActionResult FailHandlingLab(int num)
+  {
+    try
+    {
+      if (num == 400)
+        return BadRequest(new { Message = "æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ JSONã€‚" });
+
+      if (num == 4002)
+        return BadRequest("æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ TEXTã€‚");
+
+      if (num == 4003)
+        return ValidationProblem("æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ TEXTã€‚");
+
+      if (num == 4004)
+        return ValidationProblem("æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ TEXTã€‚", "æˆ‘æ˜¯ instance", 400, "æˆ‘æ˜¯ title", "æˆ‘æ˜¯ type");
+
+      if (num == 4005)
+      {
+        this.ModelState.AddModelError("æŸå€‹æ¬„ä½", "æ¨¡æ“¬æŸå€‹æ¬„ä½éŒ¯èª¤è¨Šæ¯!");
+        return ValidationProblem(this.ModelState);
+      }
+
+      if (num == 422)
+        return UnprocessableEntity("æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ TEXTã€‚");
+
+      if (num == 4222)
+        return UnprocessableEntity(new { Message = "æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ JSONã€‚" });
+
+      if (num == 500)
+        return Problem("æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ TEXTã€‚");
+
+      if (num == 600)
+        throw new ApplicationException("æ¨¡æ“¬éŒ¯èª¤è¨Šæ¯ TEXTã€‚");
+
+      if (num == 200)
+        return Ok(new { Message = $"ä½ è¼¸å…¥äº†{num} JSON" });
+
+      if (num == 204)
+        return NoContent();
+
+      return Ok($"ä½ è¼¸å…¥äº†{num}");
+    }
+    catch (Exception ex)
+    {
+      throw ex;
+//      return ValidationProblem(); // 400
+//      return Problem(ex.Message, statusCode: 422); // 500
+//      return UnprocessableEntity(ex);
+//      return BadRequest(ex.Message);
+    }
+  }
 }
