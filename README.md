@@ -30,8 +30,8 @@
 * [Fetch API](https://developer.mozilla.org/zh-TW/docs/Web/API/Fetch_API/Using_Fetch): 不管用那套通訊指令都要再包裝二、三層來做成高階通訊指令，綜合評估後原生的 fetch 指令分數最高。
 
 # vite 組態
-主要組態檔``。大體上用起始專案 `React and ASP.NET Core` 給的組態就行了。   
-此設定啟用了 proxy 另建開發伺服器(dev server) port:5173。  
+主要組態檔`vite.config.ts`。大體上用起始專案 `React and ASP.NET Core` 給的組態就行了。   
+此設定啟用了 proxy 另建開發伺服器(dev server) port:5173，好處是熱重載與後端無關會很順。  
 其中 api 預設只打開 `^/weatherforecast` 將它改成 `'^/api/(\\w+)'` (RegEx 語法)這樣其他 web api 才會通。
 
 ```TypeScript
