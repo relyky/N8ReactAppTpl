@@ -1,10 +1,10 @@
 import { Box, Container, Typography } from "@mui/material"
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { useAppSelector } from "../../store/hooks"
-import { selectFormState } from "./useFormSlice"
+import { useRecoilValue } from "recoil";
 import InputFileUpload from "./InputFileUpload"
 import useFormHand from "./useFormHand"
 import { IDemoBiz_UploadDetail } from "../../DTO/Demo/IDemoBiz_UploadDetail"
+import { demo04Atom } from "./useFormAtom";
 
 const columns: GridColDef[] = [
   { field: 'unitName', headerName: '單位', width:200 },
@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
 ];
 
 export default function Demo04_AppForm() {
-  const { fileInfo, dataList } = useAppSelector(selectFormState)
+  const { fileInfo, dataList } = useRecoilValue(demo04Atom)
   const handler = useFormHand()
 
   return (
