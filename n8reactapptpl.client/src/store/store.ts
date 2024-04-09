@@ -3,7 +3,7 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit"
 //import metaSlice from "./metaSlice"
 //import counterSlice from "../pages/Counter/counterSlice";
 import accountSlice from "./accountSlice"
-import demo02Slice from "../pages/Demo02/useFormSlice"
+//import demo02Slice from "../pages/Demo02/useFormSlice"
 //import demo04Slice from "../pages/Demo04/useFormSlice"
 //import demo05Slice from "../pages/Demo05/useFormSlice"
 
@@ -14,7 +14,7 @@ const rootReducer = combineSlices(
   accountSlice,
   //metaSlice,
   //counterSlice,
-  demo02Slice,
+  //demo02Slice,
   //demo04Slice,
   //demo05Slice
 );

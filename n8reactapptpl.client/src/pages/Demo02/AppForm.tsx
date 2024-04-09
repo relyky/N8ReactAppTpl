@@ -1,11 +1,11 @@
-import { useAppSelector } from "../../store/hooks"
-import { selectFormState } from "./useFormSlice";
+import { useRecoilValue } from "recoil";
 import AddView from "./AddView";
 import EditView from "./EditView";
 import ListView from "./ListView";
+import { selectMode } from "./useFormAtom";
 
 export default function Demo02_AppForm() {
-  const { mode } = useAppSelector(selectFormState)
+  const mode = useRecoilValue(selectMode)
 
   return (
     <>

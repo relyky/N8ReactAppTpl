@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Button, Chip, Container, Paper, Stack, Toolbar, Typography } from "@mui/material";
-import { useAppSelector } from "../../store/hooks";
 import { ATextField, FormContainer, FormRow, FormStatePeeker, ReconfirmCommand, ResetCommand, SubmitCommand, ValidationSummary } from "../../highorder/formComponents/all";
 import { IDemo02_FormData } from "../../DTO/Demo02/IDemo02_FormData";
-import { selectFormState } from "./useFormSlice";
 import useFormHand from "./useFormHand";
+import { demo02Atom } from "./useFormAtom";
+import { useRecoilValue } from "recoil";
 
 export default function EditView() {
-  const { dataAim, formData } = useAppSelector(selectFormState)
+  const { dataAim, formData } = useRecoilValue(demo02Atom)
   const handler = useFormHand()
 
   // form init
