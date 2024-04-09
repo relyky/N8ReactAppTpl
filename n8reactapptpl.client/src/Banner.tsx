@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { AppBar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "./store/hooks"
 import { logoutAsync, selectAccount, selectAuthed, selectAuthing } from "./store/accountSlice"
-import { selectDarkTheme, toggleTheme } from "./store/metaSlice"
+import { selectDarkTheme } from "./atoms/metaAtom"
 // Icons
 import MenuIcon from '@mui/icons-material/Menu'
 import DarkIcon from '@mui/icons-material/DarkMode'
@@ -13,17 +13,18 @@ import LoginIcon from '@mui/icons-material/Login'
 import AccountIcon from '@mui/icons-material/AccountCircle'
 import SettingIcon from '@mui/icons-material/Settings'
 import LoopIcon from '@mui/icons-material/Loop'
+import { useRecoilState } from "recoil"
 
 export default function Banner(props: {
   onOpenDrawer: () => void
 }) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const f_darkTheme = useAppSelector(selectDarkTheme)
   const isAuthed = useAppSelector(selectAuthed)
   const isAuthing = useAppSelector(selectAuthing)
   const accountState = useAppSelector(selectAccount)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [f_darkTheme, toggleTheme] = useRecoilState(selectDarkTheme)
 
   return (
     <>
@@ -67,7 +68,7 @@ export default function Banner(props: {
               </IconButton>
           }
 
-          <IconButton color="inherit" onClick={() => dispatch(toggleTheme())}>
+          <IconButton color="inherit" onClick={() => toggleTheme()}>
             {f_darkTheme ? <DarkIcon /> : <LightIcon />}
           </IconButton>
         </Toolbar>

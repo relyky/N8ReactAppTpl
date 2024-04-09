@@ -1,67 +1,67 @@
 import { useCallback } from "react";
 import { ResponseError, downloadFile, postData, uploadFile } from "../tools/httpHelper";
-import { useAppDispatch } from "../store/hooks";
-import { setBlocking } from "../store/metaSlice";
 import Swal from "sweetalert2";
+import { useSetRecoilState } from "recoil";
+import { selectBlocking } from "../atoms/metaAtom";
 
-///¡° Âà¦¨ hooks ¤~¯à¨ú¥Î§ó¦h¸ê·½¡C
-///¡° ¦]§ï¥Î cookie §¨±a»{ÃÒ¡A¬G¤£»İ¥Î header °e access token¡C
+///â€» è½‰æˆ hooks æ‰èƒ½å–ç”¨æ›´å¤šè³‡æºã€‚
+///â€» å› æ”¹ç”¨ cookie å¤¾å¸¶èªè­‰ï¼Œæ•…ä¸éœ€ç”¨ header é€ access tokenã€‚
 export function usePostData() {
-  const dispatch = useAppDispatch()
+  const setBlocking = useSetRecoilState(selectBlocking)
 
   const post = useCallback(
     <T>(url: string, args?: object) =>
       new Promise<T>((resolve, reject) => {
-        dispatch(setBlocking(true))
+        setBlocking(true)
         postData<T>(url, args)
           .then(resolve)
           .catch((err: ResponseError) => {
             Swal.fire(`${err.status} ${err.statusText}`, err.message, 'error')
             reject(err)
           })
-          .finally(() => dispatch(setBlocking(false)))
+          .finally(() => setBlocking(false))
       })
-    , [dispatch]);
+    , [setBlocking]);
 
   return post;
 }
 
 export function useDownloadFile() {
-  const dispatch = useAppDispatch()
+  const setBlocking = useSetRecoilState(selectBlocking)
 
   const post = useCallback(
     (url: string, args?: object) =>
       new Promise<void>((resolve, reject) => {
-        dispatch(setBlocking(true))
+        setBlocking(true)
         downloadFile(url, args)
           .then(resolve)
           .catch((err: ResponseError) => {
             Swal.fire(`${err.status} ${err.statusText}`, err.message, 'error')
             reject(err)
           })
-          .finally(() => dispatch(setBlocking(false)))
+          .finally(() => setBlocking(false))
       })
-    , [dispatch]);
+    , [setBlocking]);
 
   return post;
 }
 
 export function useUploadFile() {
-  const dispatch = useAppDispatch()
+  const setBlocking = useSetRecoilState(selectBlocking)
 
   const post = useCallback(
     <T>(url: string, formData: FormData) =>
       new Promise<T>((resolve, reject) => {
-        dispatch(setBlocking(true))
+        setBlocking(true)
         uploadFile<T>(url, formData)
           .then(resolve)
           .catch((err: ResponseError) => {
             Swal.fire(`${err.status} ${err.statusText}`, err.message, 'error')
             reject(err)
           })
-          .finally(() => dispatch(setBlocking(false)))
+          .finally(() => setBlocking(false))
       })
-    , [dispatch]);
+    , [setBlocking]);
 
   return post;
 }

@@ -1,16 +1,17 @@
+import { useEffect } from "react"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
 import { zhTW } from '@mui/material/locale'
 import { appRoutes } from "./AppRoutes"
 import { useAppDispatch, useAppSelector } from "./store/hooks"
-import { selectDarkTheme } from "./store/metaSlice"
 import { refillLoginUserAsync, selectAuthed } from "./store/accountSlice"
-import { useEffect } from "react"
 import { LocalizationProvider } from '@mui/x-date-pickers';
 //import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 //import 'dayjs/locale/zh-tw'
 import { zhTW as datefns_zhTW } from 'date-fns/locale/zh-TW'
+import { selectDarkTheme } from "./atoms/metaAtom"
+import { useRecoilValue } from "recoil"
 //-----------------------------------------------------------------------------
 //## Resource
 
@@ -38,8 +39,8 @@ const router = createBrowserRouter(appRoutes);
 
 export default function App() {
   const dispatch = useAppDispatch()
-  const f_darkTheme = useAppSelector(selectDarkTheme)
   const isAuthed = useAppSelector(selectAuthed)
+  const f_darkTheme = useRecoilValue(selectDarkTheme)
 
   useEffect(() => {
     if (!isAuthed) {

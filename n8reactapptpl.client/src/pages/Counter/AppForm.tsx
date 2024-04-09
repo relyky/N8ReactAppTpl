@@ -1,17 +1,17 @@
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material"
 import { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { decrement, increment, incrementAsync, incrementByAmount, incrementIfOdd, selectCount, selectStatus } from "./counterSlice"
+import { useRecoilValue } from "recoil"
+import { selectCount, selectStatus, useCounterAction } from "./counterAtom"
 import MyCounter from "./MyCounter"
 
 export default function Counter_AppForm() {
-  const dispatch = useAppDispatch()
-  const count = useAppSelector(selectCount)
-  const status = useAppSelector(selectStatus)
+  const handler = useCounterAction()
+  const count = useRecoilValue(selectCount)
+  const status = useRecoilValue(selectStatus)
   const [count0, setCount0] = useState(3)
 
   return (
-    <Container>      
+    <Container>
       <Typography variant='h3'>計數器</Typography>
       <Box typography='body1'>以官方範例來實作。展示三種不同實作方法的計數器。</Box>
 
@@ -34,16 +34,16 @@ export default function Counter_AppForm() {
       {/* 第三種計數器 */}
       <Typography variant='h4'>Redux 計數器</Typography>
       <Box typography='h1' textAlign='center'>
-        {count}&nbsp;<span style={{ fontSize:'0.5em'}}>{status}</span>
+        {count}&nbsp;<span style={{ fontSize: '0.5em' }}>{status}</span>
       </Box>
 
       {/* command-bar */}
       <Stack direction="row" justifyContent='center' spacing={2}>
-        <Button variant='contained' onClick={() => dispatch(increment())}>＋１</Button>
-        <Button variant='contained' onClick={() => dispatch(decrement())}>－１</Button>
-        <Button variant='contained' onClick={() => dispatch(incrementByAmount(count0))}>Add Amount</Button>
-        <Button variant='contained' onClick={() => dispatch(incrementIfOdd(count0))}>Add If Odd</Button>
-        <Button variant='contained' onClick={() => dispatch(incrementAsync(count0))}>Add Async</Button>
+        <Button variant='contained' onClick={() => handler.increment()}>＋１</Button>
+        <Button variant='contained' onClick={() => handler.decrement()}>－１</Button>
+        <Button variant='contained' onClick={() => handler.incrementByAmount(count0)}>Add Amount</Button>
+        <Button variant='contained' onClick={() => handler.incrementIfOdd(count0)}>Add If Odd</Button>
+        <Button variant='contained' onClick={() => handler.incrementAsync(count0)}>Add Async</Button>
       </Stack>
 
     </Container>

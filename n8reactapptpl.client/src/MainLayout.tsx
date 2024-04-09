@@ -4,7 +4,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Drawer, Typography, Toolbar, useMediaQuery, Divider, Backdrop, CircularProgress, Container, Snackbar, Alert } from '@mui/material'
 import { useAppDispatch, useAppSelector } from './store/hooks';
-import { selectBlocking, selectTopAlert, setTopAlert } from './store/metaSlice';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { selectBlocking, selectTopAlert } from "./atoms/metaAtom"
 import { selectAuthed, selectAuthing } from './store/accountSlice';
 import Banner from './Banner';
 import NavMenu from './NavMenu'
@@ -109,14 +110,13 @@ const Main = styled('main')<{
 
 //-----------------------------------------------------------------------------
 const TopAlert: FC = () => {
-  const dispatch = useAppDispatch()
-  const topAlert = useAppSelector(selectTopAlert);
+  const [topAlert, setTopAlert] = useRecoilState(selectTopAlert);
 
   const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway')
       return;
 
-    dispatch(setTopAlert(null))
+    setTopAlert(undefined)
   };
 
   if (!topAlert) return; // 不顯示離開。
@@ -140,7 +140,7 @@ const TopAlert: FC = () => {
 
 //-----------------------------------------------------------------------------
 const Overlay: FC = () => {
-  const blocking = useAppSelector(selectBlocking)
+  const blocking = useRecoilValue(selectBlocking)
   const isAuthing = useAppSelector(selectAuthing)
   return (
     <Backdrop
