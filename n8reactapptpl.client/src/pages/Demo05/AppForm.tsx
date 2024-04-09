@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { Box, Container, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import { useAppSelector } from '../../store/hooks'
-import { selectFormState } from './useFormSlice'
 import useFormHand from './useFormHand'
 import { IDemo05_QryArgs } from '../../DTO/Demo/IDemo05_QryArgs'
 import { ATextField, FormContainer, ResetCommand, SubmitCommand } from '../../highorder/formComponents/all'
+import { useRecoilValue } from 'recoil'
+import { demo05Atom } from './useFormAtom'
 
 export default function Demo05_AppForm() {
-  const { qryArgs, dataList } = useAppSelector(selectFormState)
+  const { qryArgs, dataList } = useRecoilValue(demo05Atom)
   const handler = useFormHand()
 
   // form init
