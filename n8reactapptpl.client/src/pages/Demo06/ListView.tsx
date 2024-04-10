@@ -1,12 +1,11 @@
 import { useRef } from "react";
 import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Toolbar, Typography, styled, tableCellClasses } from "@mui/material";
 import useFormHand from "./useFormHand";
-import { useRecoilValue } from "recoil";
-import { demo02Atom } from "./atoms";
+import { useFormValue } from "../../atoms/formStateAtom";
 
 export default function ListView() {
   const refKeyword = useRef<HTMLInputElement>()
-  const { qryArgs: keyword, dataList, mode } = useRecoilValue(demo02Atom)
+  const { qryArgs: keyword, dataList, mode } = useFormValue<Demo06_FormState>()
   const handler = useFormHand()
 
   if (mode !== 'List') return; // d-none

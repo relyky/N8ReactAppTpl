@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { useUploadFile } from '../../hooks/useHttp';
 import { IDemoBiz_UploadDetail } from '../../DTO/Demo/IDemoBiz_UploadDetail';
 import { useSetRecoilState } from 'recoil';
-import { selectDataList, selectFileInfo } from './useFormAtom';
+import { selectDataList, selectFileInfo } from './atoms';
 
 export default function Demo05_Handler() {
   const setFileInfo = useSetRecoilState(selectFileInfo)

@@ -3,7 +3,7 @@ import { IWeatherForecast } from '../../DTO/Demo/IWeatherForecast'
 import { usePostData } from '../../hooks/useHttp';
 import { IDemo05_QryArgs } from '../../DTO/Demo/IDemo05_QryArgs';
 import { useSetRecoilState } from 'recoil';
-import { selectDataList, selectQryArgs } from './useFormAtom';
+import { selectDataList, selectQryArgs } from './atoms';
 
 export default function Demo05_Handler() {
   const setQryArgs = useSetRecoilState(selectQryArgs)

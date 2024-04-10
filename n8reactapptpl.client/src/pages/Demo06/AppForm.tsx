@@ -1,11 +1,10 @@
-import { useRecoilValue } from "recoil";
+import { useFormReset } from "../../atoms/formStateAtom";
 import AddView from "./AddView";
 import EditView from "./EditView";
 import ListView from "./ListView";
-import { selectMode } from "./atoms";
 
-export default function Demo02_AppForm() {
-  const mode = useRecoilValue(selectMode)
+export default function Demo06_AppForm() {
+  const { mode } = useFormReset<Demo06_FormState>()
 
   return (
     <>

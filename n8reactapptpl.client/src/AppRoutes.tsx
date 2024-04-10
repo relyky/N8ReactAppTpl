@@ -9,6 +9,7 @@ import Demo02 from './pages/Demo02/AppForm'
 import Demo03 from './pages/Demo03/AppForm'
 import Demo04 from './pages/Demo04/AppForm'
 import Demo05 from './pages/Demo05/AppForm'
+import Demo06 from './pages/Demo06/AppForm'
 import Lab01 from './pages/Lab01/AppForm'
 import Labbing from "./pages/Labbing/AppForm"
 
@@ -39,6 +40,7 @@ export const appRoutes: RouteObject[] = [
       { path: "demo03", element: <Demo03 /> },
       { path: "demo04", element: <Demo04 /> },
       { path: "demo05", element: <Demo05 /> },
+      { path: "demo06", element: <Demo06 /> },
       { path: "lab01", element: <Lab01 /> },
     ]
   },

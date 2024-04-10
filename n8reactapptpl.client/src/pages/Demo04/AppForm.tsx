@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import InputFileUpload from "./InputFileUpload"
 import useFormHand from "./useFormHand"
 import { IDemoBiz_UploadDetail } from "../../DTO/Demo/IDemoBiz_UploadDetail"
-import { demo04Atom } from "./useFormAtom";
+import { demo04Atom } from "./atoms";
 
 const columns: GridColDef[] = [
   { field: 'unitName', headerName: '單位', width:200 },
