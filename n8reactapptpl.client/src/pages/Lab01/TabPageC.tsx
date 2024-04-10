@@ -148,9 +148,10 @@ export default function TabPageC() {
                   required: true,
                   error: !!fieldState.error,
                   helperText: fieldState.error?.message || '我是此欄位說明',
-                  onChange: (value: Date) => {
+                  onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
                     //※ 此處 onChange: (value:Date) => void 已驗證為正確。系統此處推論了錯誤的型別！
                     //console.log('DatePicker.textField.onChange', { value }) // for debug
+                    const value = event as unknown as Date
                     setValue(field.name, dfs.isValid(value) ? value : null, { shouldDirty: true, shouldValidate: true })
                   }
                 },

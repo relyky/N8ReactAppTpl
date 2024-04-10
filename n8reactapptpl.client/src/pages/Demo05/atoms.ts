@@ -2,12 +2,14 @@ import { DefaultValue, atom, selector } from "recoil"
 import { IWeatherForecast } from "../../DTO/Demo/IWeatherForecast"
 import { IDemo05_QryArgs } from "../../DTO/Demo/IDemo05_QryArgs"
 
-export interface Demo05_FormState {
+interface Demo05_FormState {
   dataList: IWeatherForecast[]
   qryArgs: IDemo05_QryArgs
 }
 
-export const initQryArgs: IDemo05_QryArgs = {
+//-----------------------------------------------------------------------------
+
+const initQryArgs: IDemo05_QryArgs = {
   count: 5,
   city: '',
 }

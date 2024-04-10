@@ -1,16 +1,18 @@
 import { DefaultValue, atom, selector } from "recoil"
 import { IDemoBiz_UploadDetail } from "../../DTO/Demo/IDemoBiz_UploadDetail"
 
-export interface FileInfo {
+interface FileInfo {
   name: string,
   size: number,
   type: string,
 }
 
-export interface Demo04_FormState {
+interface Demo04_FormState {
   dataList: IDemoBiz_UploadDetail[]
   fileInfo?: FileInfo
 }
+
+//-----------------------------------------------------------------------------
 
 const initialState: Demo04_FormState = {
   dataList: [],

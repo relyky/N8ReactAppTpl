@@ -64,7 +64,7 @@ export function ADateField(props: {
           {...field}
           label={props.label}
           minDate={props.minDate}
-          maxDate={props.maxDate}          
+          maxDate={props.maxDate}
           slotProps={{
             textField: { // fill-in TextField
               required: props.required,
@@ -73,9 +73,10 @@ export function ADateField(props: {
               helperText: fieldState.error?.message || props.helperText,
               size: props.size,
               fullWidth: Boolean(formRow), // 有 FormRow 就填滿格子
-              onChange: (value: Date) => {
+              onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
                 //※ 此處 onChange: (value:Date) => void 已驗證為正確。系統此處推論了錯誤的型別！
                 //console.log('DatePicker.textField.onChange', { value }) // for debug
+                const value = event as unknown as Date
                 setValue(field.name, dfs.isValid(value) ? value : null, { shouldDirty: true, shouldValidate: true })
               }
             },

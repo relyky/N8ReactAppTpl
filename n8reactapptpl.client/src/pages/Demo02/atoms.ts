@@ -2,7 +2,7 @@ import { IDemo02_Profile } from "../../DTO/Demo02/IDemo02_Profile"
 import { IDemo02_FormData } from "../../DTO/Demo02/IDemo02_FormData"
 import { atom } from "recoil"
 
-export interface Demo02_FormState {
+interface Demo02_FormState {
   mode: EditMode,
   dataList: IDemo02_Profile[],
   qryArgs: string,  // keyword query
@@ -20,8 +20,7 @@ const initialState: Demo02_FormState = {
   formData: undefined,
 }
 
-const ATOM_KEY = 'demo02'
 export const demo02Atom = atom<Demo02_FormState>({
-  key: ATOM_KEY,
+  key: 'demo02',
   default: initialState
 })
