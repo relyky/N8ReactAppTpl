@@ -17,8 +17,9 @@ const initialState: Demo05_FormState = {
   qryArgs: initQryArgs
 }
 
+const ATOM_KEY = 'demo05'
 export const demo05Atom = atom({
-  key: 'demo05',
+  key: ATOM_KEY,
   default: initialState
 })
 
@@ -28,7 +29,7 @@ export const demo05Atom = atom({
  */
 
 export const selectQryArgs = selector<IDemo05_QryArgs>({
-  key: 'demo05/selectQryArgs',
+  key: `${ATOM_KEY}/qryArgs`,
   get: ({ get }) => (get(demo05Atom).qryArgs),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))
@@ -37,7 +38,7 @@ export const selectQryArgs = selector<IDemo05_QryArgs>({
 });
 
 export const selectDataList = selector<IWeatherForecast[]>({
-  key: 'demo05/selectDataList',
+  key: `${ATOM_KEY}/dataList`,
   get: ({ get }) => (get(demo05Atom).dataList),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))

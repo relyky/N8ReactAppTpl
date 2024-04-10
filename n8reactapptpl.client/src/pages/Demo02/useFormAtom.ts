@@ -18,8 +18,9 @@ const initialState: Demo02_FormState = {
   formData: undefined,
 }
 
+const ATOM_KEY = 'demo02'
 export const demo02Atom = atom<Demo02_FormState>({
-  key: 'demo02',
+  key: ATOM_KEY,
   default: initialState
 })
 
@@ -29,7 +30,7 @@ export const demo02Atom = atom<Demo02_FormState>({
  */
 
 export const selectMode = selector<EditMode>({
-  key: 'demo04/mode',
+  key: `${ATOM_KEY}/mode`,
   get: ({ get }) => (get(demo02Atom).mode),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))
@@ -38,7 +39,7 @@ export const selectMode = selector<EditMode>({
 });
 
 export const selectDataList = selector<IDemo02_Profile[]>({
-  key: 'demo04/dataList',
+  key: `${ATOM_KEY}/dataList`,
   get: ({ get }) => (get(demo02Atom).dataList),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))
@@ -47,7 +48,7 @@ export const selectDataList = selector<IDemo02_Profile[]>({
 });
 
 export const selectQryArgs = selector<string>({
-  key: 'demo04/qryArgs',
+  key: `${ATOM_KEY}/qryArgs`,
   get: ({ get }) => (get(demo02Atom).qryArgs),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))
@@ -56,7 +57,7 @@ export const selectQryArgs = selector<string>({
 });
 
 export const selectDataAim = selector<string | undefined>({
-  key: 'demo04/dataAim',
+  key: `${ATOM_KEY}/dataAim`,
   get: ({ get }) => (get(demo02Atom).dataAim),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))
@@ -65,7 +66,7 @@ export const selectDataAim = selector<string | undefined>({
 });
 
 export const selectFormData = selector<IDemo02_FormData | undefined>({
-  key: 'demo04/formData',
+  key: `${ATOM_KEY}/formData`,
   get: ({ get }) => (get(demo02Atom).formData),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))

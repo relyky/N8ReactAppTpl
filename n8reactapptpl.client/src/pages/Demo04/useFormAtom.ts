@@ -17,8 +17,9 @@ const initialState: Demo04_FormState = {
   fileInfo: undefined,
 }
 
+const ATOM_KEY = 'demo04'
 export const demo04Atom = atom<Demo04_FormState>({
-  key: 'demo04',
+  key: ATOM_KEY,
   default: initialState
 })
 
@@ -28,7 +29,7 @@ export const demo04Atom = atom<Demo04_FormState>({
  */
 
 export const selectFileInfo = selector<FileInfo | undefined>({
-  key: 'demo04/selectFileInfo',
+  key: `${ATOM_KEY}/fileInfo`,
   get: ({ get }) => (get(demo04Atom).fileInfo),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))
@@ -37,7 +38,7 @@ export const selectFileInfo = selector<FileInfo | undefined>({
 });
 
 export const selectDataList = selector<IDemoBiz_UploadDetail[]>({
-  key: 'demo04/selectDataList',
+  key: `${ATOM_KEY}/dataList`,
   get: ({ get }) => (get(demo04Atom).dataList),
   set: ({ set }, newValue) => {
     if (!(newValue instanceof DefaultValue))

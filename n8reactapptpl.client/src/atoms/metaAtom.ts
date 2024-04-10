@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { DefaultValue, atom, selector, useRecoilCallback } from "recoil"
 import type { AlertColor } from "@mui/material"
 
-export interface MetaState {
+interface MetaState {
   blocking: boolean
   topAlertSeverity?: AlertColor
   topAlertText?: string
@@ -14,6 +14,8 @@ interface ITopAlert {
   severity: AlertColor,
   text: string
 }
+
+//-----------------------------------------------------------------------------
 
 const initialState: MetaState = {
   blocking: false,
@@ -75,16 +77,3 @@ export function useMetaAction() {
     ({ toggleTheme }),
     [toggleTheme])
 }
-
-//export function useMetaAction() {
-//  const setDarkTheme = useSetRecoilState(selectDarkTheme)
-
-//  // 回傳 handlers
-//  return useMemo(() =>
-//  ({
-//    toggleTheme: () => {
-//      setDarkTheme(prev => !prev);
-//      console.log('toggleTheme');
-//    },
-//  }), [setDarkTheme]);
-//}

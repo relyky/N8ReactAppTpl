@@ -6,41 +6,40 @@ import { selectBlocking, selectTopAlert } from "../../atoms/metaAtom"
 
 type CounterStatusType = "idle" | "loading" | "failed"
 
-export interface CounterSliceState {
+interface CounterState {
   value: number
   status: CounterStatusType
 }
 
-const initialState: CounterSliceState = {
+//-----------------------------------------------------------------------------
+
+const initialState: CounterState = {
   value: 0,
   status: "idle",
 }
 
-export const counterAtom = atom({
-  key: 'counter',
+const ATOM_KEY = 'counter'
+export const counterAtom = atom<CounterState>({
+  key: ATOM_KEY,
   default: initialState
 })
 
 //-----------------------------------------------------------------------------
+/**
+ * 一般並不需要拆開單一 auto 取各個屬性值。而是自多個 atoms 組合出複合狀態值才對。
+ */
 
 export const selectCount = selector<number>({
-  key: 'selectCount',
+  key: `${ATOM_KEY}/value`,
   get: ({ get }) => (get(counterAtom).value),
 });
 
 export const selectStatus = selector<CounterStatusType>({
-  key: 'selectStatus',
+  key: `${ATOM_KEY}/status`,
   get: ({ get }) => (get(counterAtom).status),
 });
 
 //-----------------------------------------------------------------------------
-
-//export const incrementAction = selector({
-//  key: 'increment',
-//  get: () => undefined,
-//  set: ({ set }) => (set(counterAtom, prev => ({ ...prev, value: prev.value + 1 }))),
-//});
-
 export function useCounterAction() {
   const setCounter = useSetRecoilState(counterAtom)
   const setBlocking = useSetRecoilState(selectBlocking)
