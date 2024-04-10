@@ -1,8 +1,8 @@
 import { FC, ReactNode, useState } from "react"
 import { Collapse, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom"
-import { useAppDispatch, useAppSelector } from "./store/hooks";
-import { logoutAsync, selectAuthed, selectAuthing } from "./store/accountSlice";
+import { useRecoilValue } from "recoil";
+import { selectAuthed, selectAuthing, useAccountAction } from "./atoms/accountAtom";
 // Icons
 import LoginIcon from '@mui/icons-material/Login'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -10,9 +10,9 @@ import HomeIcon from '@mui/icons-material/Home'
 import MenuGroupIcon from '@mui/icons-material/GridViewRounded'
 
 export default function NavMenu() {
-  const dispatch = useAppDispatch()
-  const isAuthed = useAppSelector(selectAuthed)
-  const isAuthing = useAppSelector(selectAuthing)
+  const isAuthed = useRecoilValue(selectAuthed)
+  const isAuthing = useRecoilValue(selectAuthing)
+  const { logoutAsync } = useAccountAction()
   return (
     <div>
       <Toolbar /> {/* hat */}
@@ -78,7 +78,7 @@ export default function NavMenu() {
 
         {isAuthed &&
           <ListItem disablePadding>
-            <ListItemButton onClick={() => dispatch(logoutAsync())}>
+            <ListItemButton onClick={async () => await logoutAsync()}>
               <ListItemIcon children={<LogoutIcon color='primary' />} />
               <ListItemText primary='登出' />
             </ListItemButton>

@@ -1,9 +1,9 @@
 import { Box, Container, Typography } from "@mui/material"
-import { useAppSelector } from "../../store/hooks"
-import { selectAccount } from "../../store/accountSlice"
+import { useRecoilValue } from "recoil";
+import { accountAtom } from "../../atoms/accountAtom";
 
 export default function Demo01_AppForm() {
-  const accountState = useAppSelector(selectAccount);
+  const accountState = useRecoilValue(accountAtom);
 
   return (
     <Container>

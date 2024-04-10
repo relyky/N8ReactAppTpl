@@ -3,10 +3,11 @@ import type { FC } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Drawer, Typography, Toolbar, useMediaQuery, Divider, Backdrop, CircularProgress, Container, Snackbar, Alert } from '@mui/material'
-import { useAppDispatch, useAppSelector } from './store/hooks';
+//import { useAppDispatch, useAppSelector } from './store/hooks';
+//import { selectAuthed, selectAuthing } from './store/accountSlice';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectBlocking, selectTopAlert } from "./atoms/metaAtom"
-import { selectAuthed, selectAuthing } from './store/accountSlice';
+import { selectAuthed, selectAuthing } from './atoms/accountAtom';
 import Banner from './Banner';
 import NavMenu from './NavMenu'
 // Icons
@@ -20,7 +21,7 @@ export default function ResponsiveDrawer() {
   const matchXs = useMediaQuery(theme.breakpoints.only('xs'))
   const [open, setOpen] = useState(() => matchXs ? false : true) // 畫面開啟時，若是`手機模式`則預設不顯示選單。
   const [isClosing, setIsClosing] = useState(false)
-  const isAuthed = useAppSelector(selectAuthed)
+  const isAuthed = useRecoilValue(selectAuthed)
   const location = useLocation()
 
   const isHomePage = useMemo(()=> location.pathname === '/', [location.pathname])
@@ -141,7 +142,7 @@ const TopAlert: FC = () => {
 //-----------------------------------------------------------------------------
 const Overlay: FC = () => {
   const blocking = useRecoilValue(selectBlocking)
-  const isAuthing = useAppSelector(selectAuthing)
+  const isAuthing = useRecoilValue(selectAuthing)
   return (
     <Backdrop
       sx={{ color: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}

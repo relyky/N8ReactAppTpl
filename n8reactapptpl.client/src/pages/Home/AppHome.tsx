@@ -1,10 +1,10 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import { useAppSelector } from "../../store/hooks";
-import { selectAuthed, selectAuthing } from "../../store/accountSlice";
+import { useRecoilValue } from "recoil";
+import { selectAuthed, selectAuthing } from "../../atoms/accountAtom";
 
 export default function Home_AppForm() {
-  const isAuthed = useAppSelector(selectAuthed)
-  const isAuthing = useAppSelector(selectAuthing)
+  const isAuthed = useRecoilValue(selectAuthed)
+  const isAuthing = useRecoilValue(selectAuthing)
 
   return (
     <Container>

@@ -3,9 +3,9 @@ import type { FC, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useRecoilValue } from 'recoil'
+import { selectAuthed, selectAuthing, useAccountAction } from '../../atoms/accountAtom'
 import { postData } from '../../tools/httpHelper'
-import { loginAsync, selectAuthed, selectAuthing } from '../../store/accountSlice'
 import { ILoginArgs } from '../../DTO/Account/ILoginArgs'
 // icons
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
@@ -22,16 +22,16 @@ const Copyright: FC = () => (
 )
 
 export default function LoginForm() {
-  const dispatch = useAppDispatch()
+  const { loginAsync } = useAccountAction()
   const navigate = useNavigate()
-  const isAuthed = useAppSelector(selectAuthed)
-  const isAuthing = useAppSelector(selectAuthing)
+  const isAuthed = useRecoilValue(selectAuthed)
+  const isAuthing = useRecoilValue(selectAuthing)
 
   useEffect(() => {
     postData('api/Account/GetXsrfToken')
   }, [])
 
-  const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget);
     const loginArgs: ILoginArgs = {
@@ -40,8 +40,8 @@ export default function LoginForm() {
       vcode: '123456'
     };
 
-    dispatch(loginAsync(loginArgs))
-  },[dispatch]);
+    await loginAsync(loginArgs)
+  },[loginAsync]);
 
   //# 成功後轉址到主畫面
   useEffect(() => {

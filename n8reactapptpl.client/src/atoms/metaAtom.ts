@@ -1,7 +1,8 @@
-import { atom, selector } from "recoil"
+import { useMemo } from "react"
+import { DefaultValue, atom, selector, useRecoilCallback } from "recoil"
 import type { AlertColor } from "@mui/material"
 
-export interface MetaSliceState {
+export interface MetaState {
   blocking: boolean
   topAlertSeverity?: AlertColor
   topAlertText?: string
@@ -14,14 +15,14 @@ interface ITopAlert {
   text: string
 }
 
-const initialState: MetaSliceState = {
+const initialState: MetaState = {
   blocking: false,
   topAlertSeverity: undefined,
   topAlertText: undefined,
   darkTheme: false,
 }
 
-export const metaAtom = atom({
+export const metaAtom = atom<MetaState>({
   key: 'meta',
   default: initialState
 })
@@ -44,20 +45,46 @@ export const selectTopAlert = selector<ITopAlert | undefined>({
     return undefined
   },
   set: ({ set }, newValue) => {
-    const { severity, text } = newValue as ITopAlert
-    set(metaAtom, prev => ({
-      ...prev,
-      severity: severity,
-      text: text
-    }))
+    if (!(newValue instanceof DefaultValue))
+      set(metaAtom, prev => ({
+        ...prev,
+        topAlertSeverity: newValue?.severity,
+        topAlertText: newValue?.text
+      }))
   },
 });
 
 export const selectDarkTheme = selector<boolean>({
   key: 'selectDarkTheme',
   get: ({ get }) => (get(metaAtom).darkTheme),
-  set: ({ set }) => {
-    /* toggleTheme */
-    set(metaAtom, prev => ({ ...prev, darkTheme: !prev.darkTheme }))
+  set: ({ set }, newValue) => {
+    if (!(newValue instanceof DefaultValue))
+      set(metaAtom, prev => ({ ...prev, darkTheme: newValue }))
   },
 });
+
+//-----------------------------------------------------------------------------
+
+export function useMetaAction() {
+
+  const toggleTheme = useRecoilCallback(({ set }) => () => {
+    set(selectDarkTheme, prev => !prev);
+  }, []);
+
+  return useMemo(() =>
+    ({ toggleTheme }),
+    [toggleTheme])
+}
+
+//export function useMetaAction() {
+//  const setDarkTheme = useSetRecoilState(selectDarkTheme)
+
+//  // ¦^¶Ç handlers
+//  return useMemo(() =>
+//  ({
+//    toggleTheme: () => {
+//      setDarkTheme(prev => !prev);
+//      console.log('toggleTheme');
+//    },
+//  }), [setDarkTheme]);
+//}

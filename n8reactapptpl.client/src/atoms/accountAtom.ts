@@ -1,9 +1,24 @@
+import { useMemo } from "react";
 import { atom, selector, useResetRecoilState, useSetRecoilState } from "recoil";
-import { AuthStatus, AccountState } from '@/store/accountSlice'
 import { ResponseError, postData } from "../tools/httpHelper";
 import { ILoginUserInfo } from "../DTO/Account/ILoginUserInfo";
 import { ILoginArgs } from "../DTO/Account/ILoginArgs";
 import Swal from "sweetalert2";
+
+enum AuthStatus {
+  Guest = "Guest",
+  Authing = "Authing",
+  Authed = "Authed"
+}
+
+interface AccountState {
+  loginUserId: string
+  loginUserName: string
+  status: AuthStatus
+  expiredTime?: Date
+}
+
+//-----------------------------------------------------------------------------
 
 const initialState: AccountState = {
   loginUserId: '',
@@ -16,6 +31,8 @@ export const accountAtom = atom({
   key: 'account',
   default: initialState
 })
+
+//-----------------------------------------------------------------------------
 
 export const selectAuthed = selector({
   key: 'selectAuthed',
@@ -51,50 +68,56 @@ async function doLoginAsync(args: ILoginArgs): Promise<ILoginUserInfo> {
   }
 }
 
-export function useAccountHook() {
+export function useAccountAction() {
   const setAccount = useSetRecoilState(accountAtom)
   const resetAccount = useResetRecoilState(accountAtom);
 
-  async function loginAsync(args: ILoginArgs): Promise<void> {
-    try {
-      setAccount(prev => ({ ...prev, status: AuthStatus.Authing }))
-      const { loginUserId, loginUserName, expiredTime } = await doLoginAsync(args);
-      setAccount({
-        loginUserId: loginUserId,
-        loginUserName: loginUserName,
-        status: AuthStatus.Authed,
-        expiredTime: expiredTime,
-      })
-    }
-    catch (err: unknown) {
-      resetAccount()
-    }
-  }
-
-  async function logoutAsync() {
-    try {
-      setAccount(prev => ({ ...prev, status: AuthStatus.Authing }))
-      await postData('api/Account/Logout');
-      resetAccount()
-    } catch (err: unknown) {
-      resetAccount()
-    }
-  }
-
-  async function refillLoginUserAsync() {
-    try {
-      setAccount(prev => ({ ...prev, status: AuthStatus.Authing }))
-      const { loginUserId, loginUserName, expiredTime } = await postData<ILoginUserInfo>('api/Account/GetLoginUser')
-      setAccount({
-        loginUserId: loginUserId,
-        loginUserName: loginUserName,
-        status: AuthStatus.Authed,
-        expiredTime: expiredTime,
-      })
-    } catch (err: unknown) {
-      resetAccount()
-    }
-  }
-
-  return [loginAsync, logoutAsync, refillLoginUserAsync]
+  // 回傳 handlers
+  return useMemo(() =>
+  ({
+    loginAsync: async (args: ILoginArgs) => {
+      try {
+        setAccount(prev => ({ ...prev, status: AuthStatus.Authing }))
+        const { loginUserId, loginUserName, expiredTime } = await doLoginAsync(args);
+        setAccount({
+          loginUserId: loginUserId,
+          loginUserName: loginUserName,
+          status: AuthStatus.Authed,
+          expiredTime: expiredTime,
+        })
+      }
+      catch (err: unknown) {
+        resetAccount()
+      }
+    },
+    logoutAsync: async () => {
+      try {
+        setAccount(prev => ({ ...prev, status: AuthStatus.Authing }))
+        await postData('api/Account/Logout');
+        resetAccount()
+      } catch (err: unknown) {
+        resetAccount()
+      }
+    },
+    refillLoginUserAsync: async () => {
+      try {
+        setAccount(prev => ({ ...prev, status: AuthStatus.Authing }))
+        const { loginUserId, loginUserName, expiredTime } = await postData<ILoginUserInfo>('api/Account/GetLoginUser')
+        setAccount({
+          loginUserId: loginUserId,
+          loginUserName: loginUserName,
+          expiredTime: expiredTime,
+          status: AuthStatus.Authed,
+        })
+      } catch (err: unknown) {
+        resetAccount()
+      }
+    },
+    requestAccessTokenAsync: async () => {
+      throw new Error('未實作！');
+    },
+    refreshAccessTokenAsync: async () => {
+      throw new Error('未實作！');
+    },
+  }), [resetAccount, setAccount]);
 }
