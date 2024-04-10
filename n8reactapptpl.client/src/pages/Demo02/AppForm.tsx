@@ -2,10 +2,10 @@ import { useRecoilValue } from "recoil";
 import AddView from "./AddView";
 import EditView from "./EditView";
 import ListView from "./ListView";
-import { selectMode } from "./atoms";
+import { demo02Atom } from "./atoms";
 
 export default function Demo02_AppForm() {
-  const mode = useRecoilValue(selectMode)
+  const { mode } = useRecoilValue(demo02Atom)
 
   return (
     <>
@@ -13,7 +13,7 @@ export default function Demo02_AppForm() {
 
       {mode === 'Edit' && <EditView />}
 
-      <ListView />    
+      <ListView />
     </>
   )
 }

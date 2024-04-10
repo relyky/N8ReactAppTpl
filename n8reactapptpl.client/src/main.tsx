@@ -13,8 +13,8 @@ import './index.css'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RecoilRoot>
-      {import.meta.env.DEV && <RecoilDevTools/> }
       <App />
+      {import.meta.env.DEV && <RecoilDevTools />}
     </RecoilRoot>
   </React.StrictMode>,
 )
