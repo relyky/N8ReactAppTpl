@@ -22,7 +22,7 @@ interface AccountState {
 
 const initialState: AccountState = {
   loginUserId: '',
-  loginUserName: '¨Ó»«',
+  loginUserName: 'ä¾†è³“',
   status: AuthStatus.Guest,
   expiredTime: undefined,
 }
@@ -63,8 +63,8 @@ async function doLoginAsync(args: ILoginArgs): Promise<ILoginUserInfo> {
   }
   catch (err: unknown) {
     if (err instanceof ResponseError)
-      Swal.fire("µn¤J¥¢±Ñ¡I", `${err.status} ${err.statusText}`, 'error');
-    throw err; //¡°¤@©w­n throw §_«h±N§P©w¬°¦¨¥\¡C
+      Swal.fire("ç™»å…¥å¤±æ•—ï¼", `${err.status} ${err.statusText}`, 'error');
+    throw err; //â€»ä¸€å®šè¦ throw å¦å‰‡å°‡åˆ¤å®šç‚ºæˆåŠŸã€‚
   }
 }
 
@@ -72,7 +72,7 @@ export function useAccountAction() {
   const setAccount = useSetRecoilState(accountAtom)
   const resetAccount = useResetRecoilState(accountAtom);
 
-  // ¦^¶Ç handlers
+  // å›å‚³ handlers
   return useMemo(() =>
   ({
     loginAsync: async (args: ILoginArgs) => {
@@ -114,10 +114,10 @@ export function useAccountAction() {
       }
     },
     requestAccessTokenAsync: async () => {
-      throw new Error('¥¼¹ê§@¡I');
+      throw new Error('æœªå¯¦ä½œï¼');
     },
     refreshAccessTokenAsync: async () => {
-      throw new Error('¥¼¹ê§@¡I');
+      throw new Error('æœªå¯¦ä½œï¼');
     },
   }), [resetAccount, setAccount]);
 }
