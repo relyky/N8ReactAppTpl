@@ -69,11 +69,22 @@ export const selectDarkTheme = selector<boolean>({
 
 export function useMetaAction() {
 
+  /// 將得到同步函式
+  /// toggleTheme(): void
   const toggleTheme = useRecoilCallback(({ set }) => () => {
     set(selectDarkTheme, prev => !prev);
   }, []);
 
+  /// 將得到非同步函式
+  /// customActionAsync(args: string): Promise<string>
+  const customActionAsync = useRecoilCallback(({ snapshot, set }) => async (args: string) => {
+    const metaValue = await snapshot.getPromise(metaAtom) // 效果同 get(metaAtom) 取 atom 值。
+    console.debug('customAction →', { metaValue })
+    set(selectDarkTheme, prev => !prev); // 更新到目標 atom。
+    return `來自 customAction 的輸入 ${args}`
+  }, []);
+
   return useMemo(() =>
-    ({ toggleTheme }),
-    [toggleTheme])
+    ({ toggleTheme, customActionAsync }),
+    [toggleTheme, customActionAsync])
 }

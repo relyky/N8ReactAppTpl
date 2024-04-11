@@ -27,7 +27,7 @@ const initialState: AccountState = {
   expiredTime: undefined,
 }
 
-export const accountAtom = atom({
+export const accountAtom = atom<AccountState>({
   key: 'account',
   default: initialState
 })

@@ -10,6 +10,7 @@ import Demo03 from './pages/Demo03/AppForm'
 import Demo04 from './pages/Demo04/AppForm'
 import Demo05 from './pages/Demo05/AppForm'
 import Lab01 from './pages/Lab01/AppForm'
+import Lab02 from './pages/Lab02/AppForm'
 import Labbing from "./pages/Labbing/AppForm"
 
 /// To register the routing pages 
@@ -40,6 +41,7 @@ export const appRoutes: RouteObject[] = [
       { path: "demo04", element: <Demo04 /> },
       { path: "demo05", element: <Demo05 /> },
       { path: "lab01", element: <Lab01 /> },
+      { path: "lab02", element: <Lab02 /> },
     ]
   },
 ];
