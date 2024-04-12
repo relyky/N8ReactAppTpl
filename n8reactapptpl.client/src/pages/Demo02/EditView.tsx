@@ -4,10 +4,10 @@ import { ATextField, FormContainer, FormRow, FormStatePeeker, ReconfirmCommand, 
 import { IDemo02_FormData } from "../../DTO/Demo02/IDemo02_FormData";
 import useFormHand from "./useFormHand";
 import { demo02Atom } from "./atoms";
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 
 export default function EditView() {
-  const { dataAim, formData } = useRecoilValue(demo02Atom)
+  const { dataAim, formData } = useAtomValue(demo02Atom)
   const handler = useFormHand()
 
   // form init

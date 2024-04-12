@@ -1,7 +1,7 @@
 import { FC, ReactNode, useState } from "react"
 import { Collapse, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom"
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import { selectAuthed, selectAuthing, useAccountAction } from "./atoms/accountAtom";
 // Icons
 import LoginIcon from '@mui/icons-material/Login'
@@ -10,8 +10,8 @@ import HomeIcon from '@mui/icons-material/Home'
 import MenuGroupIcon from '@mui/icons-material/GridViewRounded'
 
 export default function NavMenu() {
-  const isAuthed = useRecoilValue(selectAuthed)
-  const isAuthing = useRecoilValue(selectAuthing)
+  const isAuthed = useAtomValue(selectAuthed)
+  const isAuthing = useAtomValue(selectAuthing)
   const { logoutAsync } = useAccountAction()
   return (
     <div>

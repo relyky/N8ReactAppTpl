@@ -2,14 +2,14 @@ import { useCallback, useMemo } from 'react'
 import { usePostData } from '../../hooks/useHttp';
 import { IDemo02_Profile } from '../../DTO/Demo02/IDemo02_Profile';
 import { IDemo02_FormData } from '../../DTO/Demo02/IDemo02_FormData';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { demo02Atom } from './atoms';
-import { useRecoilUpdater } from '../../atoms/extention';
+import { useAtomUpdater } from '../../atoms/extention';
 
 export default function Demo02_Handler() {
   const postData = usePostData()
-  const { dataList } = useRecoilValue(demo02Atom)
-  const { assignProps, assignValue } = useRecoilUpdater(demo02Atom)
+  const { dataList } = useAtomValue(demo02Atom)
+  const { assignProps, assignValue } = useAtomUpdater(demo02Atom)
 
   // ª½±µ¥Î call Promise
   const qryDataList = useCallback((keyword?: string) => {

@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react"
-import { atom, selector, useSetRecoilState } from "recoil"
 import { fetchCount } from "./counterAPI"
 import Swal from "sweetalert2"
 import { selectBlocking, selectTopAlert } from "../../atoms/metaAtom"
+import { atom, useSetAtom } from "jotai"
 
 type CounterStatusType = "idle" | "loading" | "failed"
 
@@ -18,32 +18,41 @@ const initialState: CounterState = {
   status: "idle",
 }
 
-const ATOM_KEY = 'counter'
-export const counterAtom = atom<CounterState>({
-  key: ATOM_KEY,
-  default: initialState
-})
+export const counterAtom = atom(initialState)
+counterAtom.debugLabel = 'counterAtom'
 
 //-----------------------------------------------------------------------------
 /**
  * 一般並不需要拆開單一 auto 取各個屬性值。而是自多個 atoms 組合出複合狀態值才對。
  */
 
-export const selectCount = selector<number>({
-  key: `${ATOM_KEY}/value`,
-  get: ({ get }) => (get(counterAtom).value),
-});
+// derivedAtom / selector
+export const selectCount = atom(
+  (get) => get(counterAtom).value
+)
+selectCount.debugLabel = 'selectCount'
 
-export const selectStatus = selector<CounterStatusType>({
-  key: `${ATOM_KEY}/status`,
-  get: ({ get }) => (get(counterAtom).status),
-});
+//export const selectCount = selector<number>({
+//  key: `${ATOM_KEY}/value`,
+//  get: ({ get }) => (get(counterAtom).value),
+//});
+
+// derivedAtom / selector
+export const selectStatus = atom(
+  (get) => get(counterAtom).status
+)
+selectCount.debugLabel = 'selectStatus'
+
+//export const selectStatus = selector<CounterStatusType>({
+//  key: `${ATOM_KEY}/status`,
+//  get: ({ get }) => (get(counterAtom).status),
+//});
 
 //-----------------------------------------------------------------------------
 export function useCounterAction() {
-  const setCounter = useSetRecoilState(counterAtom)
-  const setBlocking = useSetRecoilState(selectBlocking)
-  const setTopAlert = useSetRecoilState(selectTopAlert)
+  const setCounter = useSetAtom(counterAtom)
+  const setBlocking = useSetAtom(selectBlocking)
+  const setTopAlert = useSetAtom(selectTopAlert)
 
   const increment = useCallback(() => {
     setCounter(prev => ({ ...prev, value: prev.value + 1 }))

@@ -1,7 +1,7 @@
 import { useState, type FC } from "react"
 import { useNavigate } from "react-router-dom"
 import { AppBar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from "@mui/material"
-import { useRecoilValue } from "recoil"
+import { useAtomValue } from "jotai"
 import { accountAtom, selectAuthed, selectAuthing, useAccountAction } from "./atoms/accountAtom"
 import { selectDarkTheme, useMetaAction } from "./atoms/metaAtom"
 // Icons
@@ -18,12 +18,12 @@ export default function Banner(props: {
   onOpenDrawer: () => void
 }) {
   const navigate = useNavigate()
-  const isAuthed = useRecoilValue(selectAuthed)
-  const isAuthing = useRecoilValue(selectAuthing)
-  const accountState = useRecoilValue(accountAtom)
+  const isAuthed = useAtomValue(selectAuthed)
+  const isAuthing = useAtomValue(selectAuthing)
+  const accountState = useAtomValue(accountAtom)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { logoutAsync } = useAccountAction()
-  const f_darkTheme = useRecoilValue(selectDarkTheme)
+  const f_darkTheme = useAtomValue(selectDarkTheme)
   const { toggleTheme } = useMetaAction()
 
   return (

@@ -1,13 +1,13 @@
 import { useCallback } from "react";
 import { ResponseError, downloadFile, postData, uploadFile } from "../tools/httpHelper";
 import Swal from "sweetalert2";
-import { useSetRecoilState } from "recoil";
+import { useSetAtom } from "jotai";
 import { selectBlocking } from "../atoms/metaAtom";
 
 ///※ 轉成 hooks 才能取用更多資源。
 ///※ 因改用 cookie 夾帶認證，故不需用 header 送 access token。
 export function usePostData() {
-  const setBlocking = useSetRecoilState(selectBlocking)
+  const setBlocking = useSetAtom(selectBlocking)
 
   const post = useCallback(
     <T>(url: string, args?: object) =>
@@ -27,7 +27,7 @@ export function usePostData() {
 }
 
 export function useDownloadFile() {
-  const setBlocking = useSetRecoilState(selectBlocking)
+  const setBlocking = useSetAtom(selectBlocking)
 
   const post = useCallback(
     (url: string, args?: object) =>
@@ -47,7 +47,7 @@ export function useDownloadFile() {
 }
 
 export function useUploadFile() {
-  const setBlocking = useSetRecoilState(selectBlocking)
+  const setBlocking = useSetAtom(selectBlocking)
 
   const post = useCallback(
     <T>(url: string, formData: FormData) =>

@@ -3,7 +3,7 @@ import type { FC, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { selectAuthed, selectAuthing, useAccountAction } from '../../atoms/accountAtom'
 import { postData } from '../../tools/httpHelper'
 import { ILoginArgs } from '../../DTO/Account/ILoginArgs'
@@ -24,8 +24,8 @@ const Copyright: FC = () => (
 export default function LoginForm() {
   const { loginAsync } = useAccountAction()
   const navigate = useNavigate()
-  const isAuthed = useRecoilValue(selectAuthed)
-  const isAuthing = useRecoilValue(selectAuthing)
+  const isAuthed = useAtomValue(selectAuthed)
+  const isAuthing = useAtomValue(selectAuthing)
 
   useEffect(() => {
     postData('api/Account/GetXsrfToken')

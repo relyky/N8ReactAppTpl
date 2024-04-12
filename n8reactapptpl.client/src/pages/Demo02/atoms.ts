@@ -1,6 +1,6 @@
 import { IDemo02_Profile } from "../../DTO/Demo02/IDemo02_Profile"
 import { IDemo02_FormData } from "../../DTO/Demo02/IDemo02_FormData"
-import { atom } from "recoil"
+import { atom } from "jotai"
 
 interface Demo02_FormState {
   mode: EditMode,
@@ -20,7 +20,10 @@ const initialState: Demo02_FormState = {
   formData: undefined,
 }
 
-export const demo02Atom = atom<Demo02_FormState>({
-  key: 'demo02',
-  default: initialState
-})
+export const demo02Atom = atom(initialState)
+demo02Atom.debugLabel = 'demo02Atom '
+
+//export const demo02Atom = atom<Demo02_FormState>({
+//  key: 'demo02',
+//  default: initialState
+//})

@@ -3,11 +3,11 @@ import { Box, Container, Paper, Stack, Table, TableBody, TableCell, TableContain
 import useFormHand from './useFormHand'
 import { IDemo05_QryArgs } from '../../DTO/Demo/IDemo05_QryArgs'
 import { ATextField, FormContainer, ResetCommand, SubmitCommand } from '../../highorder/formComponents/all'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { demo05Atom } from './atoms'
 
 export default function Demo05_AppForm() {
-  const { qryArgs, dataList } = useRecoilValue(demo05Atom)
+  const { qryArgs, dataList } = useAtomValue(demo05Atom)
   const handler = useFormHand()
 
   // form init

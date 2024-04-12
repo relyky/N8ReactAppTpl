@@ -1,6 +1,6 @@
 import { Box, Container, Typography } from "@mui/material"
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import InputFileUpload from "./InputFileUpload"
 import useFormHand from "./useFormHand"
 import { IDemoBiz_UploadDetail } from "../../DTO/Demo/IDemoBiz_UploadDetail"
@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
 ];
 
 export default function Demo04_AppForm() {
-  const { fileInfo, dataList } = useRecoilValue(demo04Atom)
+  const { fileInfo, dataList } = useAtomValue(demo04Atom)
   const handler = useFormHand()
 
   return (

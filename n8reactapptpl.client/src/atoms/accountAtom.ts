@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { atom, selector, useResetRecoilState, useSetRecoilState } from "recoil";
+import { atom, useSetAtom } from "jotai";
 import { ResponseError, postData } from "../tools/httpHelper";
 import { ILoginUserInfo } from "../DTO/Account/ILoginUserInfo";
 import { ILoginArgs } from "../DTO/Account/ILoginArgs";
@@ -27,28 +27,38 @@ const initialState: AccountState = {
   expiredTime: undefined,
 }
 
-export const accountAtom = atom<AccountState>({
-  key: 'account',
-  default: initialState
-})
+export const accountAtom = atom<AccountState>(initialState)
+accountAtom.debugLabel = 'accountAtom'
 
 //-----------------------------------------------------------------------------
 
-export const selectAuthed = selector({
-  key: 'selectAuthed',
-  get: ({ get }) => {
-    const state = get(accountAtom)
-    return state.status === AuthStatus.Authed // // && state.expiredTime < NOW,
-  },
-});
+// derivedAtom / selector
+export const selectAuthed = atom(
+  (get) => get(accountAtom).status === AuthStatus.Authed // && state.expiredTime < NOW,
+)
+selectAuthed.debugLabel = 'selectAuthed'
 
-export const selectAuthing = selector({
-  key: 'selectAuthing',
-  get: ({ get }) => {
-    const state = get(accountAtom)
-    return state.status === AuthStatus.Authing // // && state.expiredTime < NOW,
-  },
-});
+//export const selectAuthed = selector({
+//  key: 'selectAuthed',
+//  get: ({ get }) => {
+//    const state = get(accountAtom)
+//    return state.status === AuthStatus.Authed // && state.expiredTime < NOW,
+//  },
+//});
+
+// derivedAtom / selector
+export const selectAuthing = atom(
+  (get) => get(accountAtom).status === AuthStatus.Authing
+)
+selectAuthing.debugLabel = 'selectAuthing'
+
+//export const selectAuthing = selector({
+//  key: 'selectAuthing',
+//  get: ({ get }) => {
+//    const state = get(accountAtom)
+//    return state.status === AuthStatus.Authing
+//  },
+//});
 
 //-----------------------------------------------------------------------------
 
@@ -69,8 +79,7 @@ async function doLoginAsync(args: ILoginArgs): Promise<ILoginUserInfo> {
 }
 
 export function useAccountAction() {
-  const setAccount = useSetRecoilState(accountAtom)
-  const resetAccount = useResetRecoilState(accountAtom);
+  const setAccount = useSetAtom(accountAtom)
 
   // 回傳 handlers
   return useMemo(() =>
@@ -87,16 +96,16 @@ export function useAccountAction() {
         })
       }
       catch (err: unknown) {
-        resetAccount()
+        setAccount(initialState)
       }
     },
     logoutAsync: async () => {
       try {
         setAccount(prev => ({ ...prev, status: AuthStatus.Authing }))
         await postData('api/Account/Logout');
-        resetAccount()
+        setAccount(initialState)
       } catch (err: unknown) {
-        resetAccount()
+        setAccount(initialState)
       }
     },
     refillLoginUserAsync: async () => {
@@ -110,7 +119,7 @@ export function useAccountAction() {
           status: AuthStatus.Authed,
         })
       } catch (err: unknown) {
-        resetAccount()
+        setAccount(initialState)
       }
     },
     requestAccessTokenAsync: async () => {
@@ -119,5 +128,5 @@ export function useAccountAction() {
     refreshAccessTokenAsync: async () => {
       throw new Error('未實作！');
     },
-  }), [resetAccount, setAccount]);
+  }), [setAccount]);
 }

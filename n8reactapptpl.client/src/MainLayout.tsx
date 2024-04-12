@@ -3,9 +3,7 @@ import type { FC } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Drawer, Typography, Toolbar, useMediaQuery, Divider, Backdrop, CircularProgress, Container, Snackbar, Alert } from '@mui/material'
-//import { useAppDispatch, useAppSelector } from './store/hooks';
-//import { selectAuthed, selectAuthing } from './store/accountSlice';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { selectBlocking, selectTopAlert } from "./atoms/metaAtom"
 import { selectAuthed, selectAuthing } from './atoms/accountAtom';
 import Banner from './Banner';
@@ -21,7 +19,7 @@ export default function ResponsiveDrawer() {
   const matchXs = useMediaQuery(theme.breakpoints.only('xs'))
   const [open, setOpen] = useState(() => matchXs ? false : true) // 畫面開啟時，若是`手機模式`則預設不顯示選單。
   const [isClosing, setIsClosing] = useState(false)
-  const isAuthed = useRecoilValue(selectAuthed)
+  const isAuthed = useAtomValue(selectAuthed)
   const location = useLocation()
 
   const isHomePage = useMemo(()=> location.pathname === '/', [location.pathname])
@@ -111,7 +109,7 @@ const Main = styled('main')<{
 
 //-----------------------------------------------------------------------------
 const TopAlert: FC = () => {
-  const [topAlert, setTopAlert] = useRecoilState(selectTopAlert);
+  const [topAlert, setTopAlert] = useAtom(selectTopAlert);
 
   const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway')
@@ -141,8 +139,8 @@ const TopAlert: FC = () => {
 
 //-----------------------------------------------------------------------------
 const Overlay: FC = () => {
-  const blocking = useRecoilValue(selectBlocking)
-  const isAuthing = useRecoilValue(selectAuthing)
+  const blocking = useAtomValue(selectBlocking)
+  const isAuthing = useAtomValue(selectAuthing)
   return (
     <Backdrop
       sx={{ color: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}

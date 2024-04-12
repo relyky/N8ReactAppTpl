@@ -1,13 +1,13 @@
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material"
 import { useState } from "react"
-import { useRecoilValue } from "recoil"
+import { useAtomValue } from "jotai"
 import { selectCount, selectStatus, useCounterAction } from "./atoms"
 import MyCounter from "./MyCounter"
 
 export default function Counter_AppForm() {
   const handler = useCounterAction()
-  const count = useRecoilValue(selectCount)
-  const status = useRecoilValue(selectStatus)
+  const count = useAtomValue(selectCount)
+  const status = useAtomValue(selectStatus)
   const [count0, setCount0] = useState(3)
 
   return (

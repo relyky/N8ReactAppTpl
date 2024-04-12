@@ -5,7 +5,7 @@ import { zhTW } from '@mui/material/locale'
 import { appRoutes } from "./AppRoutes"
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import { zhTW as datefns_zhTW } from 'date-fns/locale/zh-TW'
-import { useRecoilValue } from "recoil"
+import { useAtomValue } from "jotai"
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { selectDarkTheme } from "./atoms/metaAtom"
 import { selectAuthed, useAccountAction } from "./atoms/accountAtom"
@@ -35,8 +35,8 @@ const darkTheme = createTheme(
 const router = createBrowserRouter(appRoutes);
 
 export default function App() {
-  const isAuthed = useRecoilValue(selectAuthed)
-  const f_darkTheme = useRecoilValue(selectDarkTheme)
+  const isAuthed = useAtomValue(selectAuthed)
+  const f_darkTheme = useAtomValue(selectDarkTheme)
   const { refillLoginUserAsync } = useAccountAction()
 
   useEffect(() => {

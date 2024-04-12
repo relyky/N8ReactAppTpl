@@ -1,10 +1,10 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import { selectAuthed, selectAuthing } from "../../atoms/accountAtom";
 
 export default function Home_AppForm() {
-  const isAuthed = useRecoilValue(selectAuthed)
-  const isAuthing = useRecoilValue(selectAuthing)
+  const isAuthed = useAtomValue(selectAuthed)
+  const isAuthing = useAtomValue(selectAuthing)
 
   return (
     <Container>

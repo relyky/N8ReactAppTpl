@@ -1,9 +1,9 @@
 import { Box, Container, Typography } from "@mui/material"
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import { accountAtom } from "../../atoms/accountAtom";
 
 export default function Demo01_AppForm() {
-  const accountState = useRecoilValue(accountAtom);
+  const accountState = useAtomValue(accountAtom);
 
   return (
     <Container>
