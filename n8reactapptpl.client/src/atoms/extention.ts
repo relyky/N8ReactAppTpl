@@ -1,4 +1,4 @@
-import { PrimitiveAtom, WritableAtom } from "jotai";
+import { PrimitiveAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { useCallback } from "react";
 
@@ -12,11 +12,6 @@ type WithInitialValue<Value> = {
 
 // 宣告 useAtomUpdater 成多載函式。
 export function useAtomUpdater<Value>(atom: PrimitiveAtom<Value> & WithInitialValue<Value>): {
-  assignProps: (info: object) => void
-  assignValue: (name: string, value: unknown) => void
-};
-
-export function useAtomUpdater<AtomType extends WritableAtom<object, unknown[], unknown>>(atom: AtomType): {
   assignProps: (info: object) => void
   assignValue: (name: string, value: unknown) => void
 } {
