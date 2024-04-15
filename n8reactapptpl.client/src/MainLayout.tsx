@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Drawer, Typography, Toolbar, useMediaQuery, Divider, Backdrop, CircularProgress, Container, Snackbar, Alert } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai';
-import { selectBlocking, selectTopAlert } from "./atoms/metaAtom"
+import { topAlertAtom, blockingAtom } from './atoms/metaAtom';
 import { selectAuthed, selectAuthing } from './atoms/accountAtom';
 import Banner from './Banner';
 import NavMenu from './NavMenu'
@@ -109,7 +109,7 @@ const Main = styled('main')<{
 
 //-----------------------------------------------------------------------------
 const TopAlert: FC = () => {
-  const [topAlert, setTopAlert] = useAtom(selectTopAlert);
+  const [topAlert, setTopAlert] = useAtom(topAlertAtom);
 
   const handleClose = (_: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway')
@@ -139,7 +139,7 @@ const TopAlert: FC = () => {
 
 //-----------------------------------------------------------------------------
 const Overlay: FC = () => {
-  const blocking = useAtomValue(selectBlocking)
+  const blocking = useAtomValue(blockingAtom)
   const isAuthing = useAtomValue(selectAuthing)
   return (
     <Backdrop

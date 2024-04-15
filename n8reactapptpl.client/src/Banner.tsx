@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { AppBar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from "@mui/material"
 import { useAtomValue } from "jotai"
 import { accountAtom, selectAuthed, selectAuthing, useAccountAction } from "./atoms/accountAtom"
-import { selectDarkTheme, useMetaAction } from "./atoms/metaAtom"
+import { darkThemeAtom, useMetaAction } from "./atoms/metaAtom"
 // Icons
 import MenuIcon from '@mui/icons-material/Menu'
 import DarkIcon from '@mui/icons-material/DarkMode'
@@ -23,7 +23,7 @@ export default function Banner(props: {
   const accountState = useAtomValue(accountAtom)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { logoutAsync } = useAccountAction()
-  const f_darkTheme = useAtomValue(selectDarkTheme)
+  const f_darkTheme = useAtomValue(darkThemeAtom)
   const { toggleTheme } = useMetaAction()
 
   return (

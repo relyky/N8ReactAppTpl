@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react"
 import { fetchCount } from "./counterAPI"
 import Swal from "sweetalert2"
-import { selectBlocking, selectTopAlert } from "../../atoms/metaAtom"
+import { blockingAtom, topAlertAtom } from "../../atoms/metaAtom"
 import { atom, useSetAtom } from "jotai"
 
 type CounterStatusType = "idle" | "loading" | "failed"
@@ -51,8 +51,8 @@ selectCount.debugLabel = 'selectStatus'
 //-----------------------------------------------------------------------------
 export function useCounterAction() {
   const setCounter = useSetAtom(counterAtom)
-  const setBlocking = useSetAtom(selectBlocking)
-  const setTopAlert = useSetAtom(selectTopAlert)
+  const setBlocking = useSetAtom(blockingAtom)
+  const setTopAlert = useSetAtom(topAlertAtom)
 
   const increment = useCallback(() => {
     setCounter(prev => ({ ...prev, value: prev.value + 1 }))
