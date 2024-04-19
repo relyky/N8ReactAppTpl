@@ -21,9 +21,11 @@
  各主要模組職責:
 * [React](https://react.dev/reference/react): 前端核心。
 * [vite](https://vitejs.dev/guide/): 建構工具(build tool)與開發伺服器(dev server)。
-* [Redux Toolkit](https://redux-toolkit.js.org/): 前端 data store。
+* ~~[Redux Toolkit](https://redux-toolkit.js.org/): 前端 data store。~~
+* [Jotai](https://jotai.org/): 前端 data store。取代 Redex。  
 * [React Router](https://reactrouter.com/en/main/start/tutorial): page routing。
 * [Material UI](https://mui.com/core/): CSS framework。
+* [useForm](https://react-hook-form.com/docs/useform): 表單 CRUD 操作介面。
 * [SweetAlert2](https://sweetalert2.github.io/): message box，雖然 @MUI 也有不過就是不好用。
 * [date-fns](https://date-fns.org/): 日期運算(無言啊)。
 * [React Hook Form](https://react-hook-form.com/): 表單輸入檢驗(form input validation)，有 required、min、max、regex 等等。
@@ -111,7 +113,8 @@ export default defineConfig({
 - [ ]  widgets\highorder 元件之 ADateField 改以 string YYYY/MM/DD 溝通
 - [ ]  NavMenu 選單項目由授權項目決定
 - [ ]  試著部署到 Docker。
-
+- [x]  用 Jotai 取代 Redux。
+- [x]  導入 useFormHook 
 
 # 沒圖沒真象
 後台:   
