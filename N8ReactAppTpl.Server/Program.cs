@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+ï»¿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using N8ReactAppTpl.Server.Models;
@@ -9,7 +9,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args); //--------------------------------------------------
 var _config = builder.Configuration;
 
-builder.Logging.AddRinLogger(); // for Rin ºÊÅ¥ HTTP «Ê¥]
+builder.Logging.AddRinLogger(); // for Rin ç›£è½ HTTP å°åŒ…
 
 //## for Authentication & Authorization
 // for JwtBearer Auth
@@ -19,18 +19,18 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 {
   options.MinimumSameSitePolicy = SameSiteMode.Lax; // SameSiteMode.Strict;
 
-  //¡±¡± for GDPR Consent
+  //Â§Â§ for GDPR Consent
   // AspNetCore2.1 supports the GDPR specification introduced on May 25, 2018,
   // which considers cookies to be private data of users.If they are to be used,
   // they must obtain user consent.
-  options.CheckConsentNeeded = context => true; // ±Ò¥Î GDPR ¬Fµ¦ÀË¬d
+  options.CheckConsentNeeded = context => true; // å•Ÿç”¨ GDPR æ”¿ç­–æª¢æŸ¥
   options.ConsentCookie.Name = ".AspNet.Consent"; // ".AspNet.Consent"
   options.ConsentCookie.HttpOnly = false;
   options.ConsentCookie.Expiration = TimeSpan.FromDays(365);
 });
 
 // for COOKIE Auth
-// ref ¡÷ https://blazorhelpwebsite.com/ViewBlogPost/36
+// ref â†’ https://blazorhelpwebsite.com/ViewBlogPost/36
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
   .AddCookie(cfg =>
   {
@@ -48,7 +48,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddSingleton(jwtTokenValidationParameters);
 
-//¡± for Anit-Forgery
+//Â§ for Anit-Forgery
 builder.Services.AddScoped<ValidateXsrfTokenFilter>();
 
 // Add services to the container.
@@ -58,16 +58,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddRin(); // for Rin ºÊÅ¥ HTTP «Ê¥]
+builder.Services.AddRin(); // for Rin ç›£è½ HTTP å°åŒ…
 
-//## for °·±dª¬ºAÀË¬d
+//## for å¥åº·ç‹€æ…‹æª¢æŸ¥
 builder.Services.AddHealthChecks()
        .AddCheck<SimpleHealthCheck>(nameof(SimpleHealthCheck));
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<AccountService>();
 
-//## µù¥U Vista.Biz ¤¤¦WºÙµ²§À¬° "Biz" ªºªA°È
+//## è¨»å†Š Vista.Biz ä¸­åç¨±çµå°¾ç‚º "Biz" çš„æœå‹™
 foreach (var bizType in (Assembly.GetAssembly(typeof(Vista.Biz.DemoBiz))?.GetTypes() ?? Array.Empty<Type>())
   .Where(t => t.Name.EndsWith("Biz")))
 {
@@ -82,10 +82,10 @@ app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  app.UseRin(); // for Rin ºÊÅ¥ HTTP «Ê¥]
+  app.UseRin(); // for Rin ç›£è½ HTTP å°åŒ…
   app.UseSwagger();
   app.UseSwaggerUI();
-  app.UseRinDiagnosticsHandler(); // for Rin ºÊÅ¥ HTTP «Ê¥]
+  app.UseRinDiagnosticsHandler(); // for Rin ç›£è½ HTTP å°åŒ…
 }
 
 app.UseHttpsRedirection();
