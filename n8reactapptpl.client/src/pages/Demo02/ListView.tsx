@@ -36,9 +36,9 @@ export default function ListView() {
                 <TableCell>
                   <Button onClick={() => handler.pickItemToEdit(item)} size='small'>編輯</Button>
                 </TableCell>
-                <TableCell>{item.formNo}</TableCell>
-                <TableCell>{item.formTitle}</TableCell>
-                <TableCell>{item.updDtm}</TableCell>
+                <TableBodyCell>{item.formNo}</TableBodyCell>
+                <TableBodyCell>{item.formTitle}</TableBodyCell>
+                <TableBodyCell>{item.updDtm}</TableBodyCell>
               </TableRow>
             ))}
           </TableBody>
@@ -55,7 +55,11 @@ const TableHeadCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
   },
+}));
+
+const TableBodyCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 34,
+    color: theme.palette.text.secondary,
   },
 }));
