@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useLayoutEffect } from 'react'
 import type { FC, FormEvent } from 'react'
 import { useNavigate } from "react-router-dom"
 import { Avatar, TextField, FormControlLabel, Checkbox, Link, Box, Grid, Typography } from '@mui/material'
@@ -27,7 +27,7 @@ export default function LoginForm() {
   const isAuthed = useAtomValue(selectAuthed)
   const isAuthing = useAtomValue(selectAuthing)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     postData('api/Account/GetXsrfToken')
   }, [])
 
