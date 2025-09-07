@@ -14,6 +14,9 @@ import { selectAuthed, useAccountAction } from "./atoms/accountAtom"
 
 const whiteTheme = createTheme(
   {
+    typography: {
+      htmlFontSize: 16, // default: 16px; 字型大小基準
+    },
     palette: {
       primary: { main: '#BF4690' },
     },
