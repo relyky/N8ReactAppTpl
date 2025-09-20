@@ -137,7 +137,7 @@ public class AccountController(ILogger<AccountController> _logger, IMemoryCache 
       if (auth == null)
         return Unauthorized();
 
-      var token = _account.GenerateJwtToken(auth);
+      var token = _account.GenerateJwtToken(auth, 20d); // _config["JwtSettings:ExpireMinutes"]
 
       _logger.LogInformation($"RequestAccessToken[{auth.UserId}].");
       return Ok(new AccessTokenResult
@@ -169,7 +169,7 @@ public class AccountController(ILogger<AccountController> _logger, IMemoryCache 
       if (auth == null)
         return Unauthorized();
 
-      var token = _account.GenerateJwtToken(auth);
+      var token = _account.GenerateJwtToken(auth, 20d); // _config["JwtSettings:ExpireMinutes"]
 
       _logger.LogInformation($"RefreshAccessToken[{auth.UserId}].");
       return Ok(new AccessTokenResult
